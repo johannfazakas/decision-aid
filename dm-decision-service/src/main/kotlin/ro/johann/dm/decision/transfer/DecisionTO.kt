@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class DecisionTO (
   val id: UUID?,
-  val name: String,
+  val name: String?,
   val description: String?,
   val criteria: List<CriteriaTO> = emptyList(),
   val alternatives: List<AlternativeTO> = emptyList()

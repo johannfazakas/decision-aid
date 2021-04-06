@@ -1,20 +1,23 @@
 package ro.johann.dm.decision.domain
 
 import java.util.UUID
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.Table
 
-class Decision(
-  val id: UUID?,
+@Entity
+@Table(name = "decision")
+data class Decision(
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  val id: UUID = UUID.randomUUID(),
+  @Column(nullable = false)
   val name: String,
-  val description: String?,
-  val criteria: List<Criteria> = emptyList(),
-  val alternatives: List<Alternative> = emptyList()
-) {
-  constructor(
-    name: String,
-    description: String?
-  ): this(
-    id = null,
-    name = name,
-    description = description
-  )
-}
+  @Column
+  val description: String? = null
+//  val criteria: List<Criteria> = emptyList(),
+//  val alternatives: List<Alternative> = emptyList()
+)

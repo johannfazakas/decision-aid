@@ -16,6 +16,6 @@ class DeleteDecisionCommand(
 
   fun execute(id: UUID) {
     logger.info("delete decision >> id = $id")
-    decisionRepository.delete(id)
+    decisionRepository.deleteById(id)
   }
 }

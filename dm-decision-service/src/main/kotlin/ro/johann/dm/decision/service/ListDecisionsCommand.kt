@@ -14,7 +14,7 @@ class ListDecisionsCommand(
     val logger: Logger = LoggerFactory.getLogger(ListDecisionsCommand::class.java)
   }
 
-  fun execute(): List<Decision> {
+  fun execute(): Iterable<Decision> {
     logger.info("list decisions")
     return decisionRepository.findAll()
   }
