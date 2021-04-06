@@ -2,7 +2,7 @@ package ro.johann.dm.decision.domain
 
 import java.util.UUID
 
-class Candidate(
+class Alternative(
   val id: UUID,
   val name: String,
   val link: String?,

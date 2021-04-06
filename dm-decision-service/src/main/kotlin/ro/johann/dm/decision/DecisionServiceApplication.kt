@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DmDecisionServiceApplication
+class DecisionServiceApplication
 
 fun main(args: Array<String>) {
-	runApplication<DmDecisionServiceApplication>(*args)
+	runApplication<DecisionServiceApplication>(*args)
 }
