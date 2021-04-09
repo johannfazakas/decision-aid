@@ -3,4 +3,4 @@ Feature: Create decision
 
   Scenario:
     When I create a decision with name "fridge"
-    Then the response is 200
+    Then the response is 201
