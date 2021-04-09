@@ -1,7 +1,5 @@
 package ro.johann.dm.decision.api
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.http.HttpStatus.OK
@@ -19,7 +17,7 @@ import ro.johann.dm.decision.service.GetDecisionCommand
 import ro.johann.dm.decision.service.ListDecisionsCommand
 import ro.johann.dm.decision.transfer.CreateDecisionRequest
 import ro.johann.dm.decision.transfer.DecisionTO
-import ro.johann.dm.decision.transfer.DecisionsTO
+import ro.johann.dm.decision.transfer.ListTO
 import java.util.UUID
 
 @RestController
@@ -30,39 +28,27 @@ class DecisionController(
   private val createDecisionCommand: CreateDecisionCommand,
   private val deleteDecisionCommand: DeleteDecisionCommand
 ) {
-  private companion object {
-    val logger: Logger = LoggerFactory.getLogger(DecisionController::class.java)
-  }
-
   @GetMapping
   @ResponseStatus(OK)
-  fun list(): DecisionsTO {
-    logger.info("list decisions")
-    return listDecisionsCommand.execute()
-      .map(::DecisionTO)
-      .let(::DecisionsTO)
-  }
+  fun list(): ListTO<DecisionTO> =
+    listDecisionsCommand.execute()
+    .map(::DecisionTO)
+    .let(::ListTO)
 
   @GetMapping("/{decisionId}")
   @ResponseStatus(OK)
-  fun get(@PathVariable("decisionId") id: UUID): DecisionTO {
-    logger.info("get decision >> id = $id")
-    return getDecisionCommand.execute(id)
-      .let(::DecisionTO)
-  }
+  fun get(@PathVariable("decisionId") id: UUID): DecisionTO =
+    getDecisionCommand.execute(id)
+    .let(::DecisionTO)
 
   @PostMapping
   @ResponseStatus(CREATED)
-  fun create(@RequestBody request: CreateDecisionRequest): DecisionTO {
-    logger.info("create decision >> request = $request")
-    return createDecisionCommand.execute(request)
-      .let(::DecisionTO)
-  }
+  fun create(@RequestBody request: CreateDecisionRequest): DecisionTO =
+    createDecisionCommand.execute(request)
+    .let(::DecisionTO)
 
   @DeleteMapping("/{decisionId}")
   @ResponseStatus(NO_CONTENT)
-  fun delete(@PathVariable("decisionId") id: UUID) {
-    logger.info("delete decision >> id = $id")
+  fun delete(@PathVariable("decisionId") id: UUID) =
     deleteDecisionCommand.execute(id)
-  }
 }

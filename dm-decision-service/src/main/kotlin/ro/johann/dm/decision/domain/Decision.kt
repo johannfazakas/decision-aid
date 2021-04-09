@@ -1,11 +1,14 @@
 package ro.johann.dm.decision.domain
 
 import java.util.UUID
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
@@ -13,11 +16,16 @@ import javax.persistence.Table
 data class Decision(
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  val id: UUID = UUID.randomUUID(),
+  var id: UUID = UUID.randomUUID(),
   @Column(nullable = false)
-  val name: String,
+  var name: String,
   @Column
-  val description: String? = null
-//  val criteria: List<Criteria> = emptyList(),
+  var description: String? = null,
+  @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+  @JoinColumn(name = "decision_id")
+  private val criteriaList: MutableList<Criteria> = mutableListOf(),
 //  val alternatives: List<Alternative> = emptyList()
-)
+) {
+  val criteria: List<Criteria>
+    get() = criteriaList
+}

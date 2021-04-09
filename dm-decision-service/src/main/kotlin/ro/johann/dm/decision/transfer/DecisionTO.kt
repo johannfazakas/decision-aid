@@ -15,6 +15,7 @@ data class DecisionTO (
   ): this(
     id = decision.id,
     name = decision.name,
-    description = decision.description
+    description = decision.description,
+    criteria = decision.criteria.map(::CriteriaTO)
   )
 }
