@@ -8,5 +8,4 @@ import lombok.Data;
 public class Decision {
     String id;
     String name;
-    String description;
 }

@@ -9,5 +9,4 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @Value
 public class CreateDecision {
     String name;
-    String description;
 }

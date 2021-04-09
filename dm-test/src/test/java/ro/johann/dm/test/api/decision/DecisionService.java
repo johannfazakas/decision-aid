@@ -17,8 +17,9 @@ public class DecisionService {
     private static final String APPLICATION_JSON = "application/json";
     private static final String CREATE_DECISION_URI = "http://localhost:7023/decision/v1/decisions";
 
-    private HttpClient client = HttpClient.newHttpClient();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    // TODO inject
+    private final HttpClient client = HttpClient.newHttpClient();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @SneakyThrows
     public Response<Decision> createDecision(CreateDecision createDecision) {
