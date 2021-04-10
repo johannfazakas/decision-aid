@@ -15,9 +15,9 @@ import ro.johann.dm.decision.service.CreateDecisionCommand
 import ro.johann.dm.decision.service.DeleteDecisionCommand
 import ro.johann.dm.decision.service.GetDecisionCommand
 import ro.johann.dm.decision.service.ListDecisionsCommand
-import ro.johann.dm.decision.transfer.CreateDecisionRequest
-import ro.johann.dm.decision.transfer.DecisionTO
-import ro.johann.dm.decision.transfer.ListTO
+import ro.johann.dm.decision.transfer.CreateDecisionInput
+import ro.johann.dm.decision.transfer.DecisionOutput
+import ro.johann.dm.decision.transfer.ListOutput
 import java.util.UUID
 import javax.validation.Valid
 
@@ -31,22 +31,22 @@ class DecisionController(
 ) {
   @GetMapping
   @ResponseStatus(OK)
-  fun list(): ListTO<DecisionTO> =
+  fun list(): ListOutput<DecisionOutput> =
     listDecisionsCommand.execute()
-      .map(::DecisionTO)
-      .let(::ListTO)
+      .map(::DecisionOutput)
+      .let(::ListOutput)
 
   @GetMapping("/{decisionId}")
   @ResponseStatus(OK)
-  fun get(@PathVariable("decisionId") id: UUID): DecisionTO =
+  fun get(@PathVariable("decisionId") id: UUID): DecisionOutput =
     getDecisionCommand.execute(id)
-      .let(::DecisionTO)
+      .let(::DecisionOutput)
 
   @PostMapping
   @ResponseStatus(CREATED)
-  fun create(@Valid @RequestBody request: CreateDecisionRequest): DecisionTO =
-    createDecisionCommand.execute(request)
-      .let(::DecisionTO)
+  fun create(@Valid @RequestBody input: CreateDecisionInput): DecisionOutput =
+    createDecisionCommand.execute(input)
+      .let(::DecisionOutput)
 
   @DeleteMapping("/{decisionId}")
   @ResponseStatus(NO_CONTENT)

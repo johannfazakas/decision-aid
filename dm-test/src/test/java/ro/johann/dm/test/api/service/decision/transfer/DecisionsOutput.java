@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Decisions {
-    List<Decision> items;
+public class DecisionsOutput {
+    List<DecisionOutput> items;
 }

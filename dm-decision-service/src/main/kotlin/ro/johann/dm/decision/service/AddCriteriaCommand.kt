@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ro.johann.dm.decision.domain.Criteria
+import ro.johann.dm.decision.error.Errors
 import ro.johann.dm.decision.persistence.CriteriaRepository
 import ro.johann.dm.decision.persistence.DecisionRepository
-import ro.johann.dm.decision.transfer.AddCriteriaRequest
-import java.lang.RuntimeException
+import ro.johann.dm.decision.transfer.AddCriteriaInput
 import java.util.UUID
 
 @Service
@@ -20,11 +20,11 @@ class AddCriteriaCommand(
     val logger: Logger = LoggerFactory.getLogger(AddCriteriaCommand::class.java)
   }
 
-  fun execute(decisionId: UUID, request: AddCriteriaRequest): Criteria {
-    logger.info("add criteria >> decisionId = $decisionId, request = $request")
+  fun execute(decisionId: UUID, input: AddCriteriaInput): Criteria {
+    logger.info("add criteria >> decisionId = $decisionId, input = $input")
 
-    val decision = decisionRepository.findByIdOrNull(decisionId)
-      ?: throw RuntimeException("Decision not found")
-    return criteriaRepository.save(request.toModel(decision))
+    return decisionRepository.findByIdOrNull(decisionId)
+      ?.let { decision -> criteriaRepository.save(input.toModel(decision)) }
+      ?: throw Errors.decisionNotFound(decisionId)
   }
 }

@@ -3,19 +3,19 @@ package ro.johann.dm.decision.transfer
 import ro.johann.dm.decision.domain.Decision
 import java.util.UUID
 
-data class DecisionTO (
+data class DecisionOutput(
   val id: UUID?,
   val name: String?,
   val description: String?,
-  val criteria: List<CriteriaTO> = emptyList(),
-  val alternatives: List<AlternativeTO> = emptyList()
+  val criteria: List<CriteriaOutput> = emptyList(),
+  val alternatives: List<AlternativeOutput> = emptyList()
 ) {
   constructor(
     decision: Decision
-  ): this(
+  ) : this(
     id = decision.id,
     name = decision.name,
     description = decision.description,
-    criteria = decision.criteria.map(::CriteriaTO)
+    criteria = decision.criteria.map(::CriteriaOutput)
   )
 }

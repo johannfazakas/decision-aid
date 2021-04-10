@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RestController
 import ro.johann.dm.decision.service.AddCriteriaCommand
 import ro.johann.dm.decision.service.DeleteCriteriaCommand
 import ro.johann.dm.decision.service.UpdateCriteriaCommand
-import ro.johann.dm.decision.transfer.AddCriteriaRequest
-import ro.johann.dm.decision.transfer.CriteriaTO
-import ro.johann.dm.decision.transfer.UpdateCriteriaRequest
+import ro.johann.dm.decision.transfer.AddCriteriaInput
+import ro.johann.dm.decision.transfer.CriteriaOutput
+import ro.johann.dm.decision.transfer.UpdateCriteriaInput
 import java.util.UUID
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/decision/v1/decisions/{decisionId}/criteria")
@@ -28,20 +29,20 @@ class CriteriaController(
   @ResponseStatus(HttpStatus.CREATED)
   fun addCriteria(
     @PathVariable("decisionId") decisionId: UUID,
-    @RequestBody request: AddCriteriaRequest
-  ): CriteriaTO =
-    addCriteriaCommand.execute(decisionId, request)
-      .let(::CriteriaTO)
+    @Valid @RequestBody input: AddCriteriaInput
+  ): CriteriaOutput =
+    addCriteriaCommand.execute(decisionId, input)
+      .let(::CriteriaOutput)
 
   @PatchMapping("/{criteriaId}")
   @ResponseStatus(HttpStatus.OK)
   fun updateCriteria(
     @PathVariable("decisionId") decisionId: UUID,
     @PathVariable("criteriaId") criteriaId: UUID,
-    @RequestBody request: UpdateCriteriaRequest
-  ): CriteriaTO =
-    updateCriteriaCommand.execute(decisionId, criteriaId, request)
-      .let(::CriteriaTO)
+    @RequestBody input: UpdateCriteriaInput
+  ): CriteriaOutput =
+    updateCriteriaCommand.execute(decisionId, criteriaId, input)
+      .let(::CriteriaOutput)
 
   @DeleteMapping("/{criteriaId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)

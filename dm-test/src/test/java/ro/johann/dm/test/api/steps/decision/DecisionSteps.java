@@ -6,18 +6,17 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.DecisionService;
-import ro.johann.dm.test.api.service.decision.transfer.CreateDecision;
-import ro.johann.dm.test.api.service.decision.transfer.Decisions;
+import ro.johann.dm.test.api.service.decision.transfer.CreateDecisionInput;
+import ro.johann.dm.test.api.service.decision.transfer.DecisionsOutput;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
-import static ro.johann.dm.test.api.steps.Errors.decisionNotFoundByName;
 
 public class DecisionSteps {
 
-    private final DecisionService decisionService;
     private final Storage storage;
+    private final DecisionService decisionService;
 
     @Inject
     public DecisionSteps(Storage storage, DecisionService decisionService) {
@@ -31,24 +30,20 @@ public class DecisionSteps {
         storage.getDecisions().stream()
                 .filter(it -> name.equals(it.getName()))
                 .findFirst()
-                .ifPresentOrElse(
-                        storage::setDecision,
-                        () -> {
-                            throw decisionNotFoundByName(name);
-                        });
+                .ifPresent(storage::setDecision);
     }
 
     @When("I create a decision with name {string}")
     public void createDecision(String name) {
-        createDecision(new CreateDecision(name));
+        createDecision(new CreateDecisionInput(name));
     }
 
     @When("I create a decision without name")
     public void createDecisionWithoutName() {
-        createDecision(new CreateDecision(null));
+        createDecision(new CreateDecisionInput(null));
     }
 
-    private void createDecision(CreateDecision request) {
+    private void createDecision(CreateDecisionInput request) {
         decisionService.createDecision(request)
                 .ifPresent(storage::setDecision);
     }
@@ -71,7 +66,7 @@ public class DecisionSteps {
     @When("I list the decisions")
     public void listDecisions() {
         decisionService.listDecisions()
-                .map(Decisions::getItems)
+                .map(DecisionsOutput::getItems)
                 .ifPresent(storage::setDecisions);
     }
 

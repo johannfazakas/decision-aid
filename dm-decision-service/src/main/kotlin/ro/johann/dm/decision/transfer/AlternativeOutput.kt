@@ -2,7 +2,7 @@ package ro.johann.dm.decision.transfer
 
 import java.util.UUID
 
-data class AlternativeTO(
+data class AlternativeOutput(
   val id: UUID
   // TODO define
 )

@@ -5,9 +5,9 @@ import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.BaseService;
 import ro.johann.dm.test.api.service.HttpService;
 import ro.johann.dm.test.api.service.Mapper;
-import ro.johann.dm.test.api.service.decision.transfer.CreateDecision;
-import ro.johann.dm.test.api.service.decision.transfer.Decision;
-import ro.johann.dm.test.api.service.decision.transfer.Decisions;
+import ro.johann.dm.test.api.service.decision.transfer.CreateDecisionInput;
+import ro.johann.dm.test.api.service.decision.transfer.DecisionOutput;
+import ro.johann.dm.test.api.service.decision.transfer.DecisionsOutput;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -22,30 +22,27 @@ public class DecisionService extends BaseService {
     private static final String LIST_DECISION_URI = DECISION_MAKER_HOST + "/decision/v1/decisions";
     private static final String DELETE_DECISION_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}";
 
-    private final Mapper mapper;
-
     @Inject
     public DecisionService(HttpService httpService, Mapper mapper, Storage storage) {
-        super(httpService, storage);
-        this.mapper = mapper;
+        super(httpService, storage, mapper);
     }
 
     @SneakyThrows
-    public Optional<Decision> createDecision(CreateDecision request) {
+    public Optional<DecisionOutput> createDecision(CreateDecisionInput request) {
         return post(CREATE_DECISION_URI, mapper.serialize(request))
-                .map(response -> mapper.deserialize(response, Decision.class));
+                .map(response -> mapper.deserialize(response, DecisionOutput.class));
     }
 
     @SneakyThrows
-    public Optional<Decision> getDecision(String decisionId) {
+    public Optional<DecisionOutput> getDecision(String decisionId) {
         return get(GET_DECISION_URI.replace("{decisionId}", decisionId))
-                .map(response -> mapper.deserialize(response, Decision.class));
+                .map(response -> mapper.deserialize(response, DecisionOutput.class));
     }
 
     @SneakyThrows
-    public Optional<Decisions> listDecisions() {
+    public Optional<DecisionsOutput> listDecisions() {
         return get(LIST_DECISION_URI)
-                .map(response -> mapper.deserialize(response, Decisions.class));
+                .map(response -> mapper.deserialize(response, DecisionsOutput.class));
     }
 
     @SneakyThrows
@@ -56,10 +53,10 @@ public class DecisionService extends BaseService {
     // TODO extract cleanup logic
     public void cleanUp() {
         listDecisions()
-                .map(Decisions::getItems)
+                .map(DecisionsOutput::getItems)
                 .orElseGet(List::of)
                 .stream()
-                .map(Decision::getId)
+                .map(DecisionOutput::getId)
                 .forEach(this::deleteDecision);
     }
 }

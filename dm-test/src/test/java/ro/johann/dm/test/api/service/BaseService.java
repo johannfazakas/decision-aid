@@ -9,10 +9,12 @@ public class BaseService {
 
     protected final HttpService httpService;
     protected final Storage storage;
+    protected final Mapper mapper;
 
-    public BaseService(HttpService httpService, Storage storage) {
+    public BaseService(HttpService httpService, Storage storage, Mapper mapper) {
         this.httpService = httpService;
         this.storage = storage;
+        this.mapper = mapper;
     }
 
     protected Optional<byte[]> get(String uri) {

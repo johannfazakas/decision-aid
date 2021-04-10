@@ -1,5 +1,5 @@
 package ro.johann.dm.decision.transfer
 
-data class UpdateCriteriaRequest(
+data class UpdateCriteriaInput(
   val weight: Int?
 )

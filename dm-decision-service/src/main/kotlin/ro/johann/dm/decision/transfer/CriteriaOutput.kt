@@ -3,7 +3,7 @@ package ro.johann.dm.decision.transfer
 import ro.johann.dm.decision.domain.Criteria
 import java.util.UUID
 
-data class CriteriaTO(
+data class CriteriaOutput(
   val id: UUID,
   val name: String,
   val weight: Int

@@ -7,7 +7,7 @@ Feature: Create decision
     Then the response is 200
     And the decision name is "fridge"
 
-  Scenario: Create decision without name
+  Scenario: Create decision with invalid input
     When I create a decision without name
     Then the response is 400
     When I create a decision with name ""

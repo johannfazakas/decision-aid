@@ -1,5 +1,5 @@
 package ro.johann.dm.decision.transfer
 
-data class ErrorTO(
+data class ErrorOutput(
   val message: String
 )

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import ro.johann.dm.decision.error.NotFoundException
-import ro.johann.dm.decision.transfer.ErrorTO
+import ro.johann.dm.decision.transfer.ErrorOutput
 
 @ControllerAdvice
 class DecisionExceptionHandler : ResponseEntityExceptionHandler() {
@@ -18,8 +18,8 @@ class DecisionExceptionHandler : ResponseEntityExceptionHandler() {
 
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ExceptionHandler(value = [NotFoundException::class])
-  fun handleNotFound(exception: NotFoundException): ErrorTO {
+  fun handleNotFound(exception: NotFoundException): ErrorOutput {
     log.warn(exception.message)
-    return ErrorTO(exception.message)
+    return ErrorOutput(exception.message)
   }
 }

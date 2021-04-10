@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ro.johann.dm.decision.domain.Decision
 import ro.johann.dm.decision.persistence.DecisionRepository
-import ro.johann.dm.decision.transfer.CreateDecisionRequest
+import ro.johann.dm.decision.transfer.CreateDecisionInput
 
 @Service
 class CreateDecisionCommand(
@@ -15,12 +15,12 @@ class CreateDecisionCommand(
     val logger: Logger = LoggerFactory.getLogger(CreateDecisionCommand::class.java)
   }
 
-  fun execute(request: CreateDecisionRequest): Decision {
-    logger.info("create decision >> request = $request")
+  fun execute(input: CreateDecisionInput): Decision {
+    logger.info("create decision >> input = $input")
     return decisionRepository.save(
       Decision(
-        name = request.name,
-        description = request.description
+        name = input.name,
+        description = input.description
       )
     )
   }

@@ -10,11 +10,14 @@ import org.junit.runner.RunWith;
                 "pretty"
         },
         features = {
+                // decisions
                 "src/test/resources/features/decision/create_decision.feature",
                 "src/test/resources/features/decision/get_decision.feature",
                 "src/test/resources/features/decision/list_decisions.feature",
                 "src/test/resources/features/decision/delete_decision.feature",
+                // criteria
+                "src/test/resources/features/decision/add_criteria.feature",
         }
 )
-public class DecisionMakerApiTests {
+public class DecisionOutputMakerApiTests {
 }

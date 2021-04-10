@@ -7,6 +7,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
 @Value
-public class CreateDecision {
+public class CreateDecisionInput {
     String name;
 }
