@@ -10,7 +10,7 @@ import ro.johann.dm.test.api.decision.transfer.Decisions;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static ro.johann.dm.test.api.common.Errors.decisionNotFoundByName;
 
 public class DecisionSteps {
