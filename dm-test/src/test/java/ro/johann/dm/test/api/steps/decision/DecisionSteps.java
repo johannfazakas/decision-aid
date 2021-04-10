@@ -1,17 +1,18 @@
-package ro.johann.dm.test.api.decision;
+package ro.johann.dm.test.api.steps.decision;
 
 import com.google.inject.Inject;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import ro.johann.dm.test.api.common.Storage;
-import ro.johann.dm.test.api.decision.transfer.CreateDecision;
-import ro.johann.dm.test.api.decision.transfer.Decisions;
+import ro.johann.dm.test.api.service.decision.DecisionService;
+import ro.johann.dm.test.api.service.decision.transfer.CreateDecision;
+import ro.johann.dm.test.api.service.decision.transfer.Decisions;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
-import static ro.johann.dm.test.api.common.Errors.decisionNotFoundByName;
+import static ro.johann.dm.test.api.steps.Errors.decisionNotFoundByName;
 
 public class DecisionSteps {
 

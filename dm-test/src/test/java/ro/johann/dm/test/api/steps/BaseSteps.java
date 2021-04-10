@@ -1,7 +1,8 @@
-package ro.johann.dm.test.api.common;
+package ro.johann.dm.test.api.steps;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import ro.johann.dm.test.api.common.Storage;
 
 import javax.inject.Inject;
 import java.util.Objects;

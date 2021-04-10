@@ -1,4 +1,4 @@
-package ro.johann.dm.test.api.common;
+package ro.johann.dm.test.api.steps;
 
 public class Errors {
     public static RuntimeException decisionNotFoundByName(String name) {

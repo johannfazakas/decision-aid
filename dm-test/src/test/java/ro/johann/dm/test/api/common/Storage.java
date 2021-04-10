@@ -2,7 +2,7 @@ package ro.johann.dm.test.api.common;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import ro.johann.dm.test.api.decision.transfer.Decision;
+import ro.johann.dm.test.api.service.decision.transfer.Decision;
 
 import java.util.List;
 
