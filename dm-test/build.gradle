@@ -13,9 +13,9 @@ repositories {
 
 dependencies {
     testImplementation 'io.cucumber:cucumber-java:6.8.1'
+    testImplementation 'io.cucumber:cucumber-guice:6.8.1'
     testImplementation 'com.google.inject:guice:4.1.0'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
-    testImplementation 'io.cucumber:cucumber-guice:6.8.1'
     testImplementation 'org.projectlombok:lombok:1.18.16'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

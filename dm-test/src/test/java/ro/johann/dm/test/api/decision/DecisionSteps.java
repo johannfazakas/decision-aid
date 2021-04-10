@@ -1,17 +1,22 @@
 package ro.johann.dm.test.api.decision;
 
 import com.google.inject.Inject;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import ro.johann.dm.test.api.Storage;
+import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.decision.transfer.CreateDecision;
-import ro.johann.dm.test.api.decision.transfer.Decision;
+import ro.johann.dm.test.api.decision.transfer.Decisions;
+
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ro.johann.dm.test.api.common.Errors.decisionNotFoundByName;
 
 public class DecisionSteps {
 
     private final DecisionService decisionService;
     private final Storage storage;
-
-    private Decision decision = null;
 
     @Inject
     public DecisionSteps(Storage storage, DecisionService decisionService) {
@@ -19,20 +24,77 @@ public class DecisionSteps {
         this.decisionService = decisionService;
     }
 
+
+    @Given("I peek at the decision with name {string}")
+    public void iPeekAtTheDecisionWithName(String name) {
+        storage.getDecisions().stream()
+                .filter(it -> name.equals(it.getName()))
+                .findFirst()
+                .ifPresentOrElse(
+                        storage::setDecision,
+                        () -> {
+                            throw decisionNotFoundByName(name);
+                        });
+    }
+
     @When("I create a decision with name {string}")
     public void createDecision(String name) {
-        var response = decisionService.createDecision(new CreateDecision(name));
-        this.decision = response.getObject();
-        this.storage.setResponseStatusCode(response.getStatusCode());
+        createDecision(new CreateDecision(name));
     }
 
-    @When("I store the decision as {string}")
-    public void storeDecisionAs(String alias) {
-        this.storage.addDecision(alias, this.decision);
+    @When("I create a decision without name")
+    public void createDecisionWithoutName() {
+        createDecision(new CreateDecision(null));
     }
 
-    @When("I delete the decision {string}")
-    public void deleteDecision(String alias) {
-        // TODO johann
+    private void createDecision(CreateDecision request) {
+        decisionService.createDecision(request)
+                .ifPresent(storage::setDecision);
+    }
+
+    @When("I get the decision")
+    public void getDecision() {
+        getDecision(storage.getDecision().getId());
+    }
+
+    @When("I get a decision by random id")
+    public void getDecisionByRandomId() {
+        getDecision(UUID.randomUUID().toString());
+    }
+
+    private void getDecision(String id) {
+        decisionService.getDecision(id)
+                .ifPresent(storage::setDecision);
+    }
+
+    @When("I list the decisions")
+    public void listDecisions() {
+        decisionService.listDecisions()
+                .map(Decisions::getItems)
+                .ifPresent(storage::setDecisions);
+    }
+
+    @When("I delete the decision")
+    public void deleteDecision() {
+        deleteDecision(storage.getDecision().getId());
+    }
+
+    @When("I delete a decision with random id")
+    public void deleteDecisionByRandomId() {
+        deleteDecision(UUID.randomUUID().toString());
+    }
+
+    private void deleteDecision(String id) {
+        decisionService.deleteDecision(id);
+    }
+
+    @Then("the decision name is {string}")
+    public void decisionNameIs(String name) {
+        assertEquals(name, storage.getDecision().getName());
+    }
+
+    @Then("the decisions count is {int}")
+    public void theDecisionsCountIs(int count) {
+        assertEquals(count, storage.getDecisions().size());
     }
 }

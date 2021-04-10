@@ -6,7 +6,8 @@ import com.google.inject.Stage;
 import io.cucumber.core.backend.ObjectFactory;
 import io.cucumber.guice.CucumberModules;
 import io.cucumber.guice.ScenarioScope;
-import ro.johann.dm.test.api.Storage;
+import ro.johann.dm.test.api.common.Storage;
+import ro.johann.dm.test.api.decision.DecisionService;
 
 public class DecisionMakerObjectFactory implements ObjectFactory {
 
@@ -27,7 +28,8 @@ public class DecisionMakerObjectFactory implements ObjectFactory {
     @Override
     public void stop() {
         this.injector.getInstance(ScenarioScope.class).exitScope();
-        this.injector.getInstance(Storage.class).clear();
+        this.injector.getInstance(DecisionService.class).cleanUp();
+        this.injector.getInstance(Storage.class).cleanUp();
     }
 
     @Override

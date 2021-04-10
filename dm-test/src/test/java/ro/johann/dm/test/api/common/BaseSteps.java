@@ -1,4 +1,4 @@
-package ro.johann.dm.test.api;
+package ro.johann.dm.test.api.common;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

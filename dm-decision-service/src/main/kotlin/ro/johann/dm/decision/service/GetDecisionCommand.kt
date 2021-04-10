@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ro.johann.dm.decision.domain.Decision
+import ro.johann.dm.decision.error.Errors.decisionNotFound
 import ro.johann.dm.decision.persistence.DecisionRepository
 import java.util.UUID
 
@@ -19,6 +20,6 @@ class GetDecisionCommand(
   fun execute(id: UUID): Decision {
     logger.info("get decision >> id = $id")
     return decisionRepository.findByIdOrNull(id)
-      ?: throw RuntimeException("Decision not found")
+      ?: throw decisionNotFound(id)
   }
 }

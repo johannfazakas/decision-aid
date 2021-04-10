@@ -19,6 +19,7 @@ import ro.johann.dm.decision.transfer.CreateDecisionRequest
 import ro.johann.dm.decision.transfer.DecisionTO
 import ro.johann.dm.decision.transfer.ListTO
 import java.util.UUID
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/decision/v1/decisions")
@@ -32,20 +33,20 @@ class DecisionController(
   @ResponseStatus(OK)
   fun list(): ListTO<DecisionTO> =
     listDecisionsCommand.execute()
-    .map(::DecisionTO)
-    .let(::ListTO)
+      .map(::DecisionTO)
+      .let(::ListTO)
 
   @GetMapping("/{decisionId}")
   @ResponseStatus(OK)
   fun get(@PathVariable("decisionId") id: UUID): DecisionTO =
     getDecisionCommand.execute(id)
-    .let(::DecisionTO)
+      .let(::DecisionTO)
 
   @PostMapping
   @ResponseStatus(CREATED)
-  fun create(@RequestBody request: CreateDecisionRequest): DecisionTO =
+  fun create(@Valid @RequestBody request: CreateDecisionRequest): DecisionTO =
     createDecisionCommand.execute(request)
-    .let(::DecisionTO)
+      .let(::DecisionTO)
 
   @DeleteMapping("/{decisionId}")
   @ResponseStatus(NO_CONTENT)

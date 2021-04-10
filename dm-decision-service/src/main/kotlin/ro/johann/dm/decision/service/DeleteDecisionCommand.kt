@@ -2,7 +2,9 @@ package ro.johann.dm.decision.service
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import ro.johann.dm.decision.error.Errors
 import ro.johann.dm.decision.persistence.DecisionRepository
 import java.util.UUID
 
@@ -16,6 +18,8 @@ class DeleteDecisionCommand(
 
   fun execute(id: UUID) {
     logger.info("delete decision >> id = $id")
-    decisionRepository.deleteById(id)
+    decisionRepository.findByIdOrNull(id)
+      ?.also { decisionRepository.deleteById(id) }
+      ?: throw Errors.decisionNotFound(id)
   }
 }
