@@ -9,13 +9,13 @@ import ro.johann.dm.test.api.steps.decision.DecisionSteps;
 import java.net.http.HttpClient;
 
 public class DecisionMakerModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        bind(Storage.class).in(Scopes.SINGLETON);
+  @Override
+  protected void configure() {
+    bind(Storage.class).in(Scopes.SINGLETON);
 
-        bind(HttpClient.class).toInstance(HttpClient.newHttpClient());
+    bind(HttpClient.class).toInstance(HttpClient.newHttpClient());
 
-        bind(DecisionSteps.class).in(Scopes.SINGLETON);
-        bind(CriteriaSteps.class).in(Scopes.SINGLETON);
-    }
+    bind(DecisionSteps.class).in(Scopes.SINGLETON);
+    bind(CriteriaSteps.class).in(Scopes.SINGLETON);
+  }
 }

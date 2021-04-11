@@ -12,5 +12,5 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
 public class UpdateCriteriaInput {
-    int weight;
+  int weight;
 }

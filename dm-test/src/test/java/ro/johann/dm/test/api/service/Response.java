@@ -12,18 +12,18 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PRIVATE)
 @FieldDefaults(level = PRIVATE)
 public class Response {
-    int statusCode;
-    byte[] body;
+  int statusCode;
+  byte[] body;
 
-    public static Response empty(int statusCode) {
-        return new Response(statusCode, null);
-    }
+  public static Response empty(int statusCode) {
+    return new Response(statusCode, null);
+  }
 
-    public static Response withBody(int statusCode, byte[] body) {
-        return new Response(statusCode, body);
-    }
+  public static Response withBody(int statusCode, byte[] body) {
+    return new Response(statusCode, body);
+  }
 
-    public Optional<byte[]> getBody() {
-        return Optional.ofNullable(body);
-    }
+  public Optional<byte[]> getBody() {
+    return Optional.ofNullable(body);
+  }
 }

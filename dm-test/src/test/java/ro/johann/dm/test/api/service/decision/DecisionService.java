@@ -16,7 +16,7 @@ import java.util.Optional;
 public class DecisionService extends BaseService {
 
     // TODO extract to configs
-    private static final String DECISION_MAKER_HOST = "http://localhost:7032";
+    private static final String DECISION_MAKER_HOST = "http://localhost:7049";
     private static final String CREATE_DECISION_URI = DECISION_MAKER_HOST + "/decision/v1/decisions";
     private static final String GET_DECISION_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}";
     private static final String LIST_DECISION_URI = DECISION_MAKER_HOST + "/decision/v1/decisions";

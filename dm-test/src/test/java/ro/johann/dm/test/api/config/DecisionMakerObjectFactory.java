@@ -11,35 +11,35 @@ import ro.johann.dm.test.api.service.decision.DecisionService;
 
 public class DecisionMakerObjectFactory implements ObjectFactory {
 
-    private final Injector injector;
+  private final Injector injector;
 
-    public DecisionMakerObjectFactory() {
-        this.injector = Guice.createInjector(
-                Stage.DEVELOPMENT,
-                CucumberModules.createScenarioModule(),
-                new DecisionMakerModule());
-    }
+  public DecisionMakerObjectFactory() {
+    this.injector = Guice.createInjector(
+      Stage.DEVELOPMENT,
+      CucumberModules.createScenarioModule(),
+      new DecisionMakerModule());
+  }
 
-    @Override
-    public void start() {
-        this.injector.getInstance(ScenarioScope.class).enterScope();
-    }
+  @Override
+  public void start() {
+    this.injector.getInstance(ScenarioScope.class).enterScope();
+  }
 
-    @Override
-    public void stop() {
-        // TODO find another solution for cleanup
-        this.injector.getInstance(ScenarioScope.class).exitScope();
-        this.injector.getInstance(DecisionService.class).cleanUp();
-        this.injector.getInstance(Storage.class).cleanUp();
-    }
+  @Override
+  public void stop() {
+    // TODO find another solution for cleanup
+    this.injector.getInstance(ScenarioScope.class).exitScope();
+    this.injector.getInstance(DecisionService.class).cleanUp();
+    this.injector.getInstance(Storage.class).cleanUp();
+  }
 
-    @Override
-    public boolean addClass(Class<?> glueClass) {
-        return true;
-    }
+  @Override
+  public boolean addClass(Class<?> glueClass) {
+    return true;
+  }
 
-    @Override
-    public <T> T getInstance(Class<T> glueClass) {
-        return this.injector.getInstance(glueClass);
-    }
+  @Override
+  public <T> T getInstance(Class<T> glueClass) {
+    return this.injector.getInstance(glueClass);
+  }
 }

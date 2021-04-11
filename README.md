@@ -26,6 +26,17 @@ cd dm-decision-service/
 ./gradlew bootRun
 ```
 
+### Gateway Service
+    Api Gateway for backend microservices platform.
+    technologies: Spring Cloud Gateway, Java
+    default port: 7049
+
+#### Run
+```bash
+cd dm-gateway-service
+./gradlew bootRun
+```
+
 ### Decision Maker UI
 
     Single page web app for Decision Maker application.

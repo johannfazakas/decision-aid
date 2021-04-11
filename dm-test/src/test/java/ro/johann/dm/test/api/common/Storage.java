@@ -2,26 +2,29 @@ package ro.johann.dm.test.api.common;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldDefaults;
 import ro.johann.dm.test.api.service.decision.transfer.CriteriaOutput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionOutput;
 
 import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Data
-@EqualsAndHashCode
+@FieldDefaults(level = PRIVATE)
 public class Storage {
 
-    private int responseStatusCode;
+  int responseStatusCode;
 
-    private DecisionOutput decision;
-    private List<DecisionOutput> decisions;
+  DecisionOutput decision;
+  List<DecisionOutput> decisions;
 
-    private CriteriaOutput criteria;
+  private CriteriaOutput criteria;
 
-    public void cleanUp() {
-        this.responseStatusCode = 0;
-        this.decision = null;
-        this.decisions = List.of();
-        this.criteria = null;
-    }
+  public void cleanUp() {
+    this.responseStatusCode = 0;
+    this.decision = null;
+    this.decisions = List.of();
+    this.criteria = null;
+  }
 }

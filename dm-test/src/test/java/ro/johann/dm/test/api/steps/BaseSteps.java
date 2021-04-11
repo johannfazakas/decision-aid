@@ -12,21 +12,21 @@ import static org.junit.Assert.assertTrue;
 
 public class BaseSteps {
 
-    private final Storage storage;
+  private final Storage storage;
 
-    @Inject
-    public BaseSteps(Storage storage) {
-        this.storage = Objects.requireNonNull(storage);
-    }
+  @Inject
+  public BaseSteps(Storage storage) {
+    this.storage = Objects.requireNonNull(storage);
+  }
 
-    @Then("the response is {int}")
-    public void theResponseIs(int response) {
-        assertEquals(response, storage.getResponseStatusCode());
-    }
+  @Then("the response is {int}")
+  public void theResponseIs(int response) {
+    assertEquals(response, storage.getResponseStatusCode());
+  }
 
-    @When("check storage is empty")
-    public void checkStorageIsEmpty() {
-        assertEquals(this.storage.getResponseStatusCode(), 0);
-        assertTrue(this.storage.getDecisions().isEmpty());
-    }
+  @When("check storage is empty")
+  public void checkStorageIsEmpty() {
+    assertEquals(this.storage.getResponseStatusCode(), 0);
+    assertTrue(this.storage.getDecisions().isEmpty());
+  }
 }

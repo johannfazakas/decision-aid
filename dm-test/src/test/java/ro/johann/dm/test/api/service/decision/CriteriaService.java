@@ -13,27 +13,27 @@ import java.util.Optional;
 
 public class CriteriaService extends BaseService {
 
-    private static final String DECISION_MAKER_HOST = "http://localhost:7032";
-    private static final String ADD_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria";
-    public static final String UPDATE_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria/{criteriaId}";
+  private static final String DECISION_MAKER_HOST = "http://localhost:7049";
+  private static final String ADD_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria";
+  public static final String UPDATE_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria/{criteriaId}";
 
-    @Inject
-    public CriteriaService(HttpService httpService, Storage storage, Mapper mapper) {
-        super(httpService, storage, mapper);
-    }
+  @Inject
+  public CriteriaService(HttpService httpService, Storage storage, Mapper mapper) {
+    super(httpService, storage, mapper);
+  }
 
-    public Optional<CriteriaOutput> addCriteria(String decisionId, AddCriteriaInput input) {
-        String uri = ADD_CRITERIA_URI
-                .replace("{decisionId}", decisionId);
-        return post(uri, mapper.serialize(input))
-                .map(response -> mapper.deserialize(response, CriteriaOutput.class));
-    }
+  public Optional<CriteriaOutput> addCriteria(String decisionId, AddCriteriaInput input) {
+    String uri = ADD_CRITERIA_URI
+      .replace("{decisionId}", decisionId);
+    return post(uri, mapper.serialize(input))
+      .map(response -> mapper.deserialize(response, CriteriaOutput.class));
+  }
 
-    public Optional<CriteriaOutput> updateCriteria(String decisionId, String criteriaId, UpdateCriteriaInput input) {
-        String uri = UPDATE_CRITERIA_URI
-                .replace("{decisionId}", decisionId)
-                .replace("{criteriaId}", criteriaId);
-        return patch(uri, mapper.serialize(input))
-                .map(response -> mapper.deserialize(response, CriteriaOutput.class));
-    }
+  public Optional<CriteriaOutput> updateCriteria(String decisionId, String criteriaId, UpdateCriteriaInput input) {
+    String uri = UPDATE_CRITERIA_URI
+      .replace("{decisionId}", decisionId)
+      .replace("{criteriaId}", criteriaId);
+    return patch(uri, mapper.serialize(input))
+      .map(response -> mapper.deserialize(response, CriteriaOutput.class));
+  }
 }

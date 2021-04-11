@@ -10,7 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CriteriaOutput {
-    String id;
-    String name;
-    int weight;
+  String id;
+  String name;
+  int weight;
 }

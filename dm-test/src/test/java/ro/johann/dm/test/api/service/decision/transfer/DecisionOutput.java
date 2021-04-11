@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DecisionOutput {
-    String id;
-    String name;
-    List<CriteriaOutput> criteria = List.of();
+  String id;
+  String name;
+  List<CriteriaOutput> criteria = List.of();
 }

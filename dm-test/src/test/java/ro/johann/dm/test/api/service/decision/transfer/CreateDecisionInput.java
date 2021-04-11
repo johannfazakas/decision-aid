@@ -12,5 +12,5 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @FieldDefaults(level = PRIVATE)
 public class CreateDecisionInput {
-    String name;
+  String name;
 }
