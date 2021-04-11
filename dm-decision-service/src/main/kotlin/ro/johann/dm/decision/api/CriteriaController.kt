@@ -39,7 +39,7 @@ class CriteriaController(
   fun updateCriteria(
     @PathVariable("decisionId") decisionId: UUID,
     @PathVariable("criteriaId") criteriaId: UUID,
-    @RequestBody input: UpdateCriteriaInput
+    @Valid @RequestBody input: UpdateCriteriaInput
   ): CriteriaOutput =
     updateCriteriaCommand.execute(decisionId, criteriaId, input)
       .let(::CriteriaOutput)

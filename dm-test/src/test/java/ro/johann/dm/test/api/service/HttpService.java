@@ -51,6 +51,16 @@ public class HttpService {
     }
 
     @SneakyThrows
+    public Response patch(String uri, byte[] body) {
+        var httpRequest = HttpRequest.newBuilder()
+                .uri(new URI(uri))
+                .header(CONTENT_TYPE, APPLICATION_JSON)
+                .method("PATCH", HttpRequest.BodyPublishers.ofByteArray(body))
+                .build();
+        return doRequest(httpRequest);
+    }
+
+    @SneakyThrows
     public Response delete(String uri) {
         var httpRequest = HttpRequest.newBuilder()
                 .uri(new URI(uri))

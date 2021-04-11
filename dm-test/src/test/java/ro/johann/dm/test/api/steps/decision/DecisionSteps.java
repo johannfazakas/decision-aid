@@ -1,6 +1,7 @@
 package ro.johann.dm.test.api.steps.decision;
 
 import com.google.inject.Inject;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,6 +19,8 @@ public class DecisionSteps {
     private final Storage storage;
     private final DecisionService decisionService;
 
+    private CreateDecisionInput createDecisionInput;
+
     @Inject
     public DecisionSteps(Storage storage, DecisionService decisionService) {
         this.storage = storage;
@@ -26,21 +29,31 @@ public class DecisionSteps {
 
 
     @Given("I peek at the decision with name {string}")
-    public void iPeekAtTheDecisionWithName(String name) {
+    public void peekDecisionWithName(String name) {
         storage.getDecisions().stream()
                 .filter(it -> name.equals(it.getName()))
                 .findFirst()
                 .ifPresent(storage::setDecision);
     }
 
+    @Given("I plan to create a decision")
+    public void prepareCreateDecisionInput() {
+        createDecisionInput = new CreateDecisionInput();
+    }
+
+    @Given("I set the name {string} on the create decision input")
+    public void setNameOnCreateDecisionInput(String name) {
+        createDecisionInput.setName(name);
+    }
+
+    @When("I create the decision")
+    public void createDecision() {
+        createDecision(createDecisionInput);
+    }
+
     @When("I create a decision with name {string}")
     public void createDecision(String name) {
         createDecision(new CreateDecisionInput(name));
-    }
-
-    @When("I create a decision without name")
-    public void createDecisionWithoutName() {
-        createDecision(new CreateDecisionInput(null));
     }
 
     private void createDecision(CreateDecisionInput request) {
@@ -75,7 +88,7 @@ public class DecisionSteps {
         deleteDecision(storage.getDecision().getId());
     }
 
-    @When("I delete a decision with random id")
+    @When("I delete a decision by random id")
     public void deleteDecisionByRandomId() {
         deleteDecision(UUID.randomUUID().toString());
     }
@@ -92,5 +105,10 @@ public class DecisionSteps {
     @Then("the decisions count is {int}")
     public void theDecisionsCountIs(int count) {
         assertEquals(count, storage.getDecisions().size());
+    }
+
+    @Then("the decision has {int} criteria")
+    public void theDecisionHasCriteria(int count) {
+        assertEquals(count, storage.getDecision().getCriteria().size());
     }
 }

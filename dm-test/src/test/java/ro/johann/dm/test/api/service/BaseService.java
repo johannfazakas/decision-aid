@@ -29,6 +29,10 @@ public class BaseService {
         return doRequest(() -> httpService.put(uri, body));
     }
 
+    protected Optional<byte[]> patch(String uri, byte[] body) {
+        return doRequest(() -> httpService.patch(uri, body));
+    }
+
     protected Optional<byte[]> delete(String uri) {
         return doRequest(() -> httpService.delete(uri));
     }

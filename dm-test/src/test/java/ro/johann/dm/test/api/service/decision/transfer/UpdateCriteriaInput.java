@@ -8,9 +8,9 @@ import lombok.experimental.FieldDefaults;
 import static lombok.AccessLevel.PRIVATE;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
-public class CreateDecisionInput {
-    String name;
+public class UpdateCriteriaInput {
+    int weight;
 }

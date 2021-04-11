@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.CriteriaService;
 import ro.johann.dm.test.api.service.decision.transfer.AddCriteriaInput;
+import ro.johann.dm.test.api.service.decision.transfer.UpdateCriteriaInput;
 
 import javax.inject.Inject;
 
@@ -19,6 +20,7 @@ public class CriteriaSteps {
     private final CriteriaService criteriaService;
 
     private AddCriteriaInput addCriteriaInput;
+    private UpdateCriteriaInput updateCriteriaInput;
 
     @Inject
     public CriteriaSteps(Storage storage, CriteriaService criteriaService) {
@@ -35,18 +37,28 @@ public class CriteriaSteps {
     }
 
     @Given("I plan to add a criteria")
-    public void prepareCriteriaInput() {
+    public void prepareAddCriteriaInput() {
         addCriteriaInput = new AddCriteriaInput();
     }
 
-    @Given("I set the name {string} on the criteria input")
-    public void setCriteriaInputName(String name) {
+    @Given("I plan to update the criteria")
+    public void prepareUpdateCriteriaInput() {
+        updateCriteriaInput = new UpdateCriteriaInput();
+    }
+
+    @Given("I set the name {string} on the add criteria input")
+    public void setAddCriteriaInputName(String name) {
         addCriteriaInput.setName(name);
     }
 
-    @Given("I set the weight {int} on the criteria input")
-    public void setCriteriaInputWeight(int weight) {
+    @Given("I set the weight {int} on the add criteria input")
+    public void setAddCriteriaInputWeight(int weight) {
         addCriteriaInput.setWeight(weight);
+    }
+
+    @Given("I set the weight {int} on the update criteria input")
+    public void setUpdateCriteriaInputWeight(int weight) {
+        updateCriteriaInput.setWeight(weight);
     }
 
     @When("I add the criteria")
@@ -66,6 +78,26 @@ public class CriteriaSteps {
 
     private void addCriteria(String decisionId, AddCriteriaInput input) {
         criteriaService.addCriteria(decisionId, input)
+                .ifPresent(storage::setCriteria);
+    }
+
+    @When("I update the criteria by random criteria")
+    public void updateCriteriaOnRandomCriteria() {
+        updateCriteria(storage.getDecision().getId(), UUID.randomUUID().toString(), updateCriteriaInput);
+    }
+
+    @When("I update the criteria by random decision")
+    public void updateCriteriaOnRandomDecision() {
+        updateCriteria(UUID.randomUUID().toString(), storage.getDecision().getId(), updateCriteriaInput);
+    }
+
+    @When("I update the criteria weight to {int}")
+    public void updateTheCriteriaWeightTo(int weight) {
+        updateCriteria(storage.getDecision().getId(), storage.getCriteria().getId(), new UpdateCriteriaInput(weight));
+    }
+
+    private void updateCriteria(String decisionId, String criteriaId, UpdateCriteriaInput input) {
+        criteriaService.updateCriteria(decisionId, criteriaId, input)
                 .ifPresent(storage::setCriteria);
     }
 
