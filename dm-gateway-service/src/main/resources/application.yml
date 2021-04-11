@@ -1,2 +1,11 @@
 server:
   port: 7049
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:7085"
+            allowedMethod:
+              - GET
