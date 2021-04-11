@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class CriteriaService extends BaseService {
 
-    private static final String DECISION_MAKER_HOST = "http://localhost:7023";
+    private static final String DECISION_MAKER_HOST = "http://localhost:7032";
     private static final String ADD_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria";
     public static final String UPDATE_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria/{criteriaId}";
 
