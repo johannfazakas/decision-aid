@@ -1,38 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getDecisions } from "../api/decisionsApi";
+import DecisionList from "./DecisionList";
 
-class DecisionsPage extends React.Component {
-  state = {
-    decisions: []
-  };
+function DecisionsPage() {
+  const [decisions, setDecisions] = useState([]);
 
-  componentDidMount() {
-    getDecisions().then(response => this.setState({decisions: response.items}))
-  }
+  useEffect(() => {
+    getDecisions().then(response => setDecisions(response.items));
+  }, []);
 
-  render() {
-    return (
-      <div className="jumbotron">
-        <h1>Decisions Page</h1>
-        <table className="table">
-          <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-          </tr>
-          </thead>
-          <tbody>
-          {this.state.decisions.map(decision => {
-            return <tr key={decision.id}>
-              <td>{decision.id}</td>
-              <td>{decision.name}</td>
-            </tr>
-          })}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+  return (
+    <div className="jumbotron">
+      <h1>Decisions</h1>
+      <DecisionList decisions={decisions}/>
+    </div>
+  );
 }
 
 export default DecisionsPage;
