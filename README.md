@@ -1,33 +1,52 @@
 # Decision Maker App
-    Need help in choosing between products based on own set criterias and weights? This app does that.
 
-    It has a React web app and an API based on some microservices using Spring with Kotlin.
+    Need help in choosing between products based on own set criterias and weights? This app does that.
+    It has a React web app and an API based on microservices using Spring with Kotlin and Java.
 
 ## Requirements
+
     java 11
     postgresql 13.2
     node 10.23.0
 
     Other versions could work, these are mine.
 
-## Run
+## Components
 
 ### Decision Service
-    
+
+    Decisions domain API.
+    technologies: Spring, Kotlin, Gradle.
+    default port: 7032.
+
+#### Run
+
 ```bash
-cd dm-decision-service
+cd dm-decision-service/
 ./gradlew bootRun
 ```
+
 ### Decision Maker UI
+
+    Single page web app for Decision Maker application.
+    technology: React, Node, Bootstrap.
+    default host: 7085.
+
+#### Run
+
 ```bash
-cd dm-ui
+cd dm-ui/
 npm run start
 ```
 
-## Test
+### Decision Maker Test
 
-### API Tests
+    Project dedicated for API tests.
+    technologies: Java, Cucumber, Gherkin, JUnit, Guice, Gradle.
+
+#### Run
+
 ```bash
-cd dm-test
+cd dm-test/
 ./gradlew cucumber
 ```
