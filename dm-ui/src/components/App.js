@@ -14,7 +14,7 @@ const App = () => {
       <Header/>
       <Switch>
         <Route path="/" exact component={HomePage} />
-        <Route path="/decisions/:id" component={DecisionPage} />
+        <Route path="/decisions/:decisionId" component={DecisionPage} />
         <Route path="/decisions" component={DecisionsPage} />
         <Route path="/about" component={AboutPage} />
         <Route component={NotFoundPage} />
