@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function DecisionList(props) {
+const DecisionList = (props) => {
   return (
     <table className="table">
       <thead>

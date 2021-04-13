@@ -1,6 +1,6 @@
 import React from "react";
 
-function HomePage() {
+const HomePage = () => {
   return (
     <div className="jumbotron">
       <h1>Decision Maker</h1>

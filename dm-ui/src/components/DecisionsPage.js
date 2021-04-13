@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDecisions } from "../api/decisionsApi";
 import DecisionList from "./DecisionList";
 
-function DecisionsPage() {
+const DecisionsPage = () => {
   const [decisions, setDecisions] = useState([]);
 
   useEffect(() => {

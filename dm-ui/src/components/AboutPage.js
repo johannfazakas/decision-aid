@@ -1,6 +1,6 @@
 import React from "react";
 
-function AboutPage() {
+const AboutPage = () => {
   return (
     <div className="jumbotron">
       <h1>Decision Maker</h1>
