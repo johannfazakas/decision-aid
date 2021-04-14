@@ -20,13 +20,13 @@ const CreateDecisionPage = ({history}) => {
   }
 
   return (
-    <>
+    <div className="jumbotron">
       <h2>Add a new decision</h2>
       <DecisionForm
         decision={decision}
         onChange={handleChange}
         onSubmit={handleSubmit} />
-    </>
+    </div>
   );
 }
 

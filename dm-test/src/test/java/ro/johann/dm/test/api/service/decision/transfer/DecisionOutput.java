@@ -14,5 +14,6 @@ import static lombok.AccessLevel.PRIVATE;
 public class DecisionOutput {
   String id;
   String name;
+  String description;
   List<CriteriaOutput> criteria = List.of();
 }

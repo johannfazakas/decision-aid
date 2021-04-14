@@ -1,7 +1,6 @@
 package ro.johann.dm.test.api.steps.decision;
 
 import com.google.inject.Inject;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,7 +18,7 @@ public class DecisionSteps {
   private final Storage storage;
   private final DecisionService decisionService;
 
-  private CreateDecisionInput createDecisionInput;
+  private CreateDecisionInput.Builder createDecisionInputBuilder;
 
   @Inject
   public DecisionSteps(Storage storage, DecisionService decisionService) {
@@ -38,22 +37,27 @@ public class DecisionSteps {
 
   @Given("I plan to create a decision")
   public void prepareCreateDecisionInput() {
-    createDecisionInput = new CreateDecisionInput();
+    createDecisionInputBuilder = CreateDecisionInput.builder();
   }
 
   @Given("I set the name {string} on the create decision input")
   public void setNameOnCreateDecisionInput(String name) {
-    createDecisionInput.setName(name);
+    createDecisionInputBuilder.name(name);
+  }
+
+  @Given("I set the description {string} on the create decision input")
+  public void setDescriptionOnCreateDecisionInput(String description) {
+    createDecisionInputBuilder.description(description);
   }
 
   @When("I create the decision")
   public void createDecision() {
-    createDecision(createDecisionInput);
+    createDecision(createDecisionInputBuilder.build());
   }
 
   @When("I create a decision with name {string}")
   public void createDecision(String name) {
-    createDecision(new CreateDecisionInput(name));
+    createDecision(CreateDecisionInput.builder().name(name).build());
   }
 
   private void createDecision(CreateDecisionInput request) {
@@ -100,6 +104,11 @@ public class DecisionSteps {
   @Then("the decision name is {string}")
   public void decisionNameIs(String name) {
     assertEquals(name, storage.getDecision().getName());
+  }
+
+  @Then("the decision description is {string}")
+  public void decisionDescriptionIs(String name) {
+    assertEquals(name, storage.getDecision().getDescription());
   }
 
   @Then("the decisions count is {int}")

@@ -12,10 +12,10 @@ const DecisionsPage = () => {
 
   return (
     <div className="jumbotron">
-      <h1>Decisions</h1>
+      <h1>My decisions</h1>
       <DecisionList decisions={decisions}/>
       <Link to="/decision" className="btn btn-primary">
-        New decision
+        Create new
       </Link>
     </div>
   );
