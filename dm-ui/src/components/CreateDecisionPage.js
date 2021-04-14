@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { createDecision } from "../api/decisionsApi";
 
-const CreateDecisionPage = () => {
+import DecisionForm from "./DecisionForm";
+
+const CreateDecisionPage = ({history}) => {
+  const [decision, setDecision] = useState({name: ""});
+
+  function handleChange({target}) {
+    setDecision({
+      ...decision,
+      [target.name]: target.value
+    })
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    createDecision(decision)
+      .then(() => history.push("/decisions"));
+  }
+
   return (
-    <div className="jumbotron">
-      <h1>Create Decision Page</h1>
-    </div>
+    <>
+      <h2>Add a new decision</h2>
+      <DecisionForm
+        decision={decision}
+        onChange={handleChange}
+        onSubmit={handleSubmit} />
+    </>
   );
 }
 
