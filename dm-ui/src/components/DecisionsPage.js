@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDecisions } from "../api/decisionsApi";
 import DecisionList from "./DecisionList";
+import { Link } from "react-router-dom";
 
 const DecisionsPage = () => {
   const [decisions, setDecisions] = useState([]);
@@ -13,6 +14,9 @@ const DecisionsPage = () => {
     <div className="jumbotron">
       <h1>Decisions</h1>
       <DecisionList decisions={decisions}/>
+      <Link to="/decision" className="btn btn-primary">
+        New decision
+      </Link>
     </div>
   );
 }

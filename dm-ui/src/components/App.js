@@ -2,11 +2,12 @@ import React from "react";
 import { Route, Switch } from 'react-router-dom';
 
 import Header from "./common/Header";
-import DecisionsPage from "./DecisionsPage";
 import HomePage from "./HomePage";
 import AboutPage from "./AboutPage";
-import DecisionPage from "./DecisionPage";
+import ManageDecisionPage from "./ManageDecisionPage";
 import NotFoundPage from "./NotFoundPage";
+import CreateDecisionPage from "./CreateDecisionPage";
+import DecisionsPage from "./DecisionsPage";
 
 const App = () => {
   return (
@@ -14,8 +15,9 @@ const App = () => {
       <Header/>
       <Switch>
         <Route path="/" exact component={HomePage} />
-        <Route path="/decisions/:decisionId" component={DecisionPage} />
+        <Route path="/decision/:decisionId" component={ManageDecisionPage} />
         <Route path="/decisions" component={DecisionsPage} />
+        <Route path="/decision" component={CreateDecisionPage} />
         <Route path="/about" component={AboutPage} />
         <Route component={NotFoundPage} />
       </Switch>

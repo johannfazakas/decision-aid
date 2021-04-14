@@ -1,6 +1,6 @@
 import React from "react";
 
-const DecisionPage = (props) => {
+const ManageDecisionPage = (props) => {
   return (
     <div className="jumbotron">
       <h1>Decision Page</h1>
@@ -9,4 +9,4 @@ const DecisionPage = (props) => {
   );
 }
 
-export default DecisionPage;
+export default ManageDecisionPage;
