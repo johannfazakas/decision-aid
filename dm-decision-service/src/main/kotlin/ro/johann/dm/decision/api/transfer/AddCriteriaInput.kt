@@ -1,4 +1,4 @@
-package ro.johann.dm.decision.transfer
+package ro.johann.dm.decision.api.transfer
 
 import ro.johann.dm.decision.domain.Criteria
 import ro.johann.dm.decision.domain.Decision

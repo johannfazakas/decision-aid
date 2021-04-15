@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDecisions } from "../api/decisionsApi";
+import { listDecisions } from "../api/decisionsApi";
 import DecisionList from "./DecisionList";
 import { Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ const DecisionsPage = () => {
   const [decisions, setDecisions] = useState([]);
 
   useEffect(() => {
-    getDecisions().then(response => setDecisions(response.items));
+    listDecisions().then(response => setDecisions(response.items));
   }, []);
 
   return (

@@ -33,7 +33,7 @@ DecisionForm.propTypes = {
   }).isRequired,
   errors: PropTypes.shape({
     name: PropTypes.string,
-    description:PropTypes.string
+    description: PropTypes.string
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired

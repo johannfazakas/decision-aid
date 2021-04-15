@@ -1,4 +1,4 @@
-package ro.johann.dm.decision.api
+package ro.johann.dm.decision.api.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import ro.johann.dm.decision.api.transfer.AddCriteriaInput
+import ro.johann.dm.decision.api.transfer.CriteriaOutput
+import ro.johann.dm.decision.api.transfer.UpdateCriteriaInput
 import ro.johann.dm.decision.service.AddCriteriaCommand
 import ro.johann.dm.decision.service.DeleteCriteriaCommand
 import ro.johann.dm.decision.service.UpdateCriteriaCommand
-import ro.johann.dm.decision.transfer.AddCriteriaInput
-import ro.johann.dm.decision.transfer.CriteriaOutput
-import ro.johann.dm.decision.transfer.UpdateCriteriaInput
 import java.util.UUID
 import javax.validation.Valid
 

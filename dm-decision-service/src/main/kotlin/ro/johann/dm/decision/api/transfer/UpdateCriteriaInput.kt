@@ -1,7 +1,8 @@
-package ro.johann.dm.decision.transfer
+package ro.johann.dm.decision.api.transfer
 
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
+
 
 data class UpdateCriteriaInput(
 

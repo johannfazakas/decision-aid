@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ro.johann.dm.decision.domain.Decision
-import ro.johann.dm.decision.error.Errors.decisionNotFound
 import ro.johann.dm.decision.persistence.DecisionRepository
+import ro.johann.dm.decision.service.error.Errors.decisionNotFound
 import java.util.UUID
 
 @Service

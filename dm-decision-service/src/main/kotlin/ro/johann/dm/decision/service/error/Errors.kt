@@ -1,4 +1,4 @@
-package ro.johann.dm.decision.error
+package ro.johann.dm.decision.service.error
 
 import java.lang.RuntimeException
 import java.util.UUID

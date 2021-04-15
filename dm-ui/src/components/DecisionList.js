@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const DecisionList = (props) => {
   return (
@@ -14,7 +14,7 @@ const DecisionList = (props) => {
       <tbody>
       {props.decisions.map(decision => {
         return <tr key={decision.id}>
-          <td><Link to={"/decisions/" + decision.id}>{decision.name}</Link></td>
+          <td><Link to={"/decision/" + decision.id + "/table"}>{decision.name}</Link></td>
           <td>{decision.description}</td>
         </tr>
       })}

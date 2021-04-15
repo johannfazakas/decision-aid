@@ -1,12 +1,20 @@
-import React, { useState } from "react";
-import { createDecision } from "../api/decisionsApi";
+import React, { useState, useEffect } from "react";
+import { getDecision, updateDecision } from "../api/decisionsApi";
 
 import DecisionForm from "./DecisionForm";
 
-const CreateDecisionPage = ({history}) => {
+const UpdateDecisionPage = props => {
   const [errors, setErrors] = useState({});
   const [decision, setDecision] = useState({
-    name: ""});
+    id: null,
+    name: "",
+    description: ""
+  });
+
+  useEffect(() => {
+    const decisionId = props.match.params.decisionId;
+    getDecision(decisionId).then(_decision => setDecision(_decision));
+  }, [props.match.params.decisionId])
 
   const handleChange = ({target}) => {
     setDecision({
@@ -18,8 +26,8 @@ const CreateDecisionPage = ({history}) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!formIsValid()) return;
-    createDecision(decision)
-      .then(_decision => history.push("/decision/" + _decision.id + "/details"));
+    updateDecision(decision)
+      .then(() => props.history.push("/decision/" + decision.id + "/details"));
   }
 
   const formIsValid = () => {
@@ -31,7 +39,7 @@ const CreateDecisionPage = ({history}) => {
 
   return (
     <div className="jumbotron">
-      <h2>New decision</h2>
+      <h2>Update decision</h2>
       <DecisionForm
         decision={decision}
         errors={errors}
@@ -41,4 +49,4 @@ const CreateDecisionPage = ({history}) => {
   );
 }
 
-export default CreateDecisionPage;
+export default UpdateDecisionPage;

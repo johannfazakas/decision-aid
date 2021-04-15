@@ -8,6 +8,7 @@ import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.DecisionService;
 import ro.johann.dm.test.api.service.decision.transfer.CreateDecisionInput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionsOutput;
+import ro.johann.dm.test.api.service.decision.transfer.UpdateDecisionInput;
 
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class DecisionSteps {
   private final DecisionService decisionService;
 
   private CreateDecisionInput.Builder createDecisionInputBuilder;
+  private UpdateDecisionInput.Builder updateDecisionInputBuilder;
 
   @Inject
   public DecisionSteps(Storage storage, DecisionService decisionService) {
@@ -40,14 +42,29 @@ public class DecisionSteps {
     createDecisionInputBuilder = CreateDecisionInput.builder();
   }
 
+  @Given("I plan to update the decision")
+  public void prepareUpdateDecisionInput() {
+    updateDecisionInputBuilder = UpdateDecisionInput.builder();
+  }
+
   @Given("I set the name {string} on the create decision input")
   public void setNameOnCreateDecisionInput(String name) {
     createDecisionInputBuilder.name(name);
   }
 
+  @Given("I set the name {string} on the update decision input")
+  public void setNameOnUpdateDecisionInput(String name) {
+    updateDecisionInputBuilder.name(name);
+  }
+
   @Given("I set the description {string} on the create decision input")
   public void setDescriptionOnCreateDecisionInput(String description) {
     createDecisionInputBuilder.description(description);
+  }
+
+  @Given("I set the description {string} on the update decision input")
+  public void setDescriptionOnUpdateDecisionInput(String description) {
+    updateDecisionInputBuilder.description(description);
   }
 
   @When("I create the decision")
@@ -62,6 +79,21 @@ public class DecisionSteps {
 
   private void createDecision(CreateDecisionInput request) {
     decisionService.createDecision(request)
+      .ifPresent(storage::setDecision);
+  }
+
+  @When("I update the decision")
+  public void updateDecision() {
+    updateDecision(storage.getDecision().getId(), updateDecisionInputBuilder.build());
+  }
+
+  @When("I update a decision by random id")
+  public void updateDecisionByRandomId() {
+    updateDecision(UUID.randomUUID().toString(), updateDecisionInputBuilder.build());
+  }
+
+  private void updateDecision(String decisionId, UpdateDecisionInput input) {
+    decisionService.updateDecision(decisionId, input)
       .ifPresent(storage::setDecision);
   }
 

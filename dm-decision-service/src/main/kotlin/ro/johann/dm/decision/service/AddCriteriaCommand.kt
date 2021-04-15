@@ -4,11 +4,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import ro.johann.dm.decision.api.transfer.AddCriteriaInput
 import ro.johann.dm.decision.domain.Criteria
-import ro.johann.dm.decision.error.Errors
 import ro.johann.dm.decision.persistence.CriteriaRepository
 import ro.johann.dm.decision.persistence.DecisionRepository
-import ro.johann.dm.decision.transfer.AddCriteriaInput
+import ro.johann.dm.decision.service.error.Errors
 import java.util.UUID
 
 @Service

@@ -3,9 +3,9 @@ package ro.johann.dm.decision.service
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import ro.johann.dm.decision.api.transfer.CreateDecisionInput
 import ro.johann.dm.decision.domain.Decision
 import ro.johann.dm.decision.persistence.DecisionRepository
-import ro.johann.dm.decision.transfer.CreateDecisionInput
 
 @Service
 class CreateDecisionCommand(

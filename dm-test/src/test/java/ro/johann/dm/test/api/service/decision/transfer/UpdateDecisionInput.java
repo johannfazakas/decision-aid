@@ -1,22 +1,18 @@
 package ro.johann.dm.test.api.service.decision.transfer;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Value;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static lombok.AccessLevel.PRIVATE;
 
-@Data
+@Value
+@Builder(builderClassName = "Builder")
 @FieldDefaults(level = PRIVATE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class DecisionOutput {
-  String id;
+public class UpdateDecisionInput {
   String name;
   String description;
-  List<CriteriaOutput> criteria = List.of();
 }
