@@ -5,6 +5,7 @@ import DecisionTable from "./DecisionTable";
 
 import { deleteDecision, getDecision } from "../../api/decisionsApi";
 import { deleteAlternative } from "../../api/alternativesApi";
+import { deleteCriteria } from "../../api/criteriaApi";
 
 const DecisionDetailsPage = props => {
   const [decision, setDecision] = useState({
@@ -34,12 +35,21 @@ const DecisionDetailsPage = props => {
   }
 
   const handleDeleteAlternative = alternativeId => {
-    console.log("delete alternative " + alternativeId);
     deleteAlternative(decision.id, alternativeId)
       .then(() => {
         setDecision({
           ...decision,
           alternatives: decision.alternatives.filter(a => a.id !== alternativeId)
+        })
+      })
+  }
+
+  const handleDeleteCriteria = criteriaId => {
+    deleteCriteria(decision.id, criteriaId)
+      .then(() => {
+        setDecision({
+          ...decision,
+          criteria: decision.criteria.filter(c => c.id !== criteriaId)
         })
       })
   }
@@ -67,6 +77,7 @@ const DecisionDetailsPage = props => {
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
         onDeleteAlternative={handleDeleteAlternative}
+        onDeleteCriteria={handleDeleteCriteria}
       />
     </div>
   );

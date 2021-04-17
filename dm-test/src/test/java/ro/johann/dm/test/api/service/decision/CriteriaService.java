@@ -15,8 +15,8 @@ public class CriteriaService extends BaseService {
 
   // TODO extract configs
   private static final String DECISION_MAKER_HOST = "http://localhost:7049";
-  private static final String ADD_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria";
-  public static final String UPDATE_CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria/{criteriaId}";
+  private static final String CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria";
+  public static final String CRITERIA_BY_ID_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria/{criteriaId}";
 
   @Inject
   public CriteriaService(HttpService httpService, Storage storage, Mapper mapper) {
@@ -24,17 +24,27 @@ public class CriteriaService extends BaseService {
   }
 
   public Optional<CriteriaOutput> addCriteria(String decisionId, AddCriteriaInput input) {
-    String uri = ADD_CRITERIA_URI
-      .replace("{decisionId}", decisionId);
-    return post(uri, mapper.serialize(input))
+    return post(getCriteriaUri(decisionId), mapper.serialize(input))
       .map(response -> mapper.deserialize(response, CriteriaOutput.class));
   }
 
   public Optional<CriteriaOutput> updateCriteria(String decisionId, String criteriaId, UpdateCriteriaInput input) {
-    String uri = UPDATE_CRITERIA_URI
+    return patch(getCriteriaByIdUri(decisionId, criteriaId), mapper.serialize(input))
+      .map(response -> mapper.deserialize(response, CriteriaOutput.class));
+  }
+
+  public void deleteCriteria(String decisionId, String criteriaId) {
+    delete(getCriteriaByIdUri(decisionId, criteriaId));
+  }
+
+  private String getCriteriaUri(String decisionId) {
+    return CRITERIA_URI
+      .replace("{decisionId}", decisionId);
+  }
+
+  private String getCriteriaByIdUri(String decisionId, String criteriaId) {
+    return CRITERIA_BY_ID_URI
       .replace("{decisionId}", decisionId)
       .replace("{criteriaId}", criteriaId);
-    return patch(uri, mapper.serialize(input))
-      .map(response -> mapper.deserialize(response, CriteriaOutput.class));
   }
 }

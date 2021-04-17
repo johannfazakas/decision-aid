@@ -16,6 +16,7 @@ class DeleteCriteriaCommand(
 
   fun execute(decisionId: UUID, criteriaId: UUID) {
     logger.info("delete criteria >> decisionId = $decisionId, criteriaId = $criteriaId")
-    criteriaRepository.deleteByIdAndDecisionId(criteriaId, decisionId)
+    criteriaRepository.findByIdAndDecisionId(criteriaId, decisionId)
+      .also { criteriaRepository.deleteById(criteriaId) }
   }
 }

@@ -28,13 +28,12 @@ public class DecisionSteps {
     this.decisionService = decisionService;
   }
 
-
   @Given("I peek at the decision with name {string}")
   public void peekDecisionWithName(String name) {
     storage.getDecisions().stream()
       .filter(it -> name.equals(it.getName()))
       .findFirst()
-      .ifPresent(storage::setDecision);
+      .ifPresentOrElse(storage::setDecision, () -> decisionNotFound(name));
   }
 
   @Given("I plan to create a decision")
@@ -156,5 +155,9 @@ public class DecisionSteps {
   @Then("the decision has {int} alternative(s)")
   public void theDecisionHasAlternatives(int count) {
     assertEquals(count, storage.getDecision().getAlternatives().size());
+  }
+
+  private static void decisionNotFound(String name) {
+    throw new RuntimeException(String.format("Decision not found by name %s.", name));
   }
 }

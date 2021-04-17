@@ -6,5 +6,4 @@ import java.util.UUID
 
 interface CriteriaRepository: CrudRepository<Criteria, UUID> {
   fun findByIdAndDecisionId(criteriaId: UUID, decisionId: UUID): Criteria?
-  fun deleteByIdAndDecisionId(criteriaId: UUID, decisionId: UUID)
 }

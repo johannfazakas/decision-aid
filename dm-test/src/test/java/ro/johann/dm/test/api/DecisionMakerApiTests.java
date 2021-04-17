@@ -19,8 +19,10 @@ import org.junit.runner.RunWith;
     // criteria
     "src/test/resources/features/decision/add_criteria.feature",
     "src/test/resources/features/decision/update_criteria.feature",
+    "src/test/resources/features/decision/delete_criteria.feature",
     // alternatives
-    "src/test/resources/features/decision/add_alternative.feature"
+    "src/test/resources/features/decision/add_alternative.feature",
+    "src/test/resources/features/decision/add_criteria.feature"
   }
 )
 public class DecisionMakerApiTests {

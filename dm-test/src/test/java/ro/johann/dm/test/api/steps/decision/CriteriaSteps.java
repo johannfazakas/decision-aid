@@ -9,7 +9,6 @@ import ro.johann.dm.test.api.service.decision.transfer.AddCriteriaInput;
 import ro.johann.dm.test.api.service.decision.transfer.UpdateCriteriaInput;
 
 import javax.inject.Inject;
-
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -33,7 +32,9 @@ public class CriteriaSteps {
     storage.getDecision().getCriteria().stream()
       .filter(it -> name.equals(it.getName()))
       .findFirst()
-      .ifPresent(storage::setCriteria);
+      .ifPresentOrElse(
+        storage::setCriteria,
+        () -> criteriaNotFound(name));
   }
 
   @Given("I plan to add a criteria")
@@ -101,9 +102,22 @@ public class CriteriaSteps {
       .ifPresent(storage::setCriteria);
   }
 
+  @When("I delete the criteria with name {string}")
+  public void deleteCriteriaWithName(String name) {
+    storage.getDecision().getCriteria().stream()
+      .filter(c -> name.equals(c.getName()))
+      .findFirst()
+      .ifPresentOrElse(
+        c -> criteriaService.deleteCriteria(storage.getDecision().getId(), c.getId()),
+        () -> criteriaNotFound(name));
+  }
+
   @Then("the criteria weight is {int}")
   public void theCriteriaWeightIs(int weight) {
     assertEquals(weight, storage.getCriteria().getWeight());
   }
 
+  private void criteriaNotFound(String name) {
+    throw new RuntimeException(String.format("Criteria not found by name %s.", name));
+  }
 }

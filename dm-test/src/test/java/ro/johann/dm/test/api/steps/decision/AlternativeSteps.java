@@ -37,7 +37,9 @@ public class AlternativeSteps {
     storage.getDecision().getAlternatives().stream()
       .filter(it -> name.equals(it.getName()))
       .findFirst()
-      .ifPresent(storage::setAlternative);
+      .ifPresentOrElse(
+        storage::setAlternative,
+        () -> alternativeNotFound(name));
   }
 
   @When("I add the alternative")
@@ -53,5 +55,19 @@ public class AlternativeSteps {
   private void addAlternative(String decisionId, AddAlternativeInput input) {
     alternativeService.addAlternative(decisionId, input)
       .ifPresent(storage::setAlternative);
+  }
+
+  @When("I delete the alternative with name {string}")
+  public void deleteAlternativeWithName(String name) {
+    storage.getDecision().getAlternatives().stream()
+      .filter(a -> name.equals(a.getName()))
+      .findFirst()
+      .ifPresentOrElse(
+        alternative -> alternativeService.deleteAlternative(storage.getDecision().getId(), alternative.getId()),
+        () -> alternativeNotFound(name));
+  }
+
+  private void alternativeNotFound(String name) {
+    throw new RuntimeException(String.format("Alternative not found by name %s.", name));
   }
 }
