@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { deleteDecision, getDecision } from "../../api/decisionsApi";
 import DecisionTable from "./DecisionTable";
+
+import { deleteDecision, getDecision } from "../../api/decisionsApi";
+import { deleteAlternative } from "../../api/alternativesApi";
 
 const DecisionDetailsPage = props => {
   const [decision, setDecision] = useState({
@@ -31,10 +33,21 @@ const DecisionDetailsPage = props => {
     props.history.push("/decision/" + props.match.params.decisionId + "/alternative");
   }
 
+  const handleDeleteAlternative = alternativeId => {
+    console.log("delete alternative " + alternativeId);
+    deleteAlternative(decision.id, alternativeId)
+      .then(() => {
+        setDecision({
+          ...decision,
+          alternatives: decision.alternatives.filter(a => a.id !== alternativeId)
+        })
+      })
+  }
+
   return (
     <div className="jumbotron">
       <h1>{decision.name}</h1>
-      <h3>{decision.description}</h3>
+      <h5>{decision.description}</h5>
       <br />
 
       <Link
@@ -53,6 +66,7 @@ const DecisionDetailsPage = props => {
         decision={decision}
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
+        onDeleteAlternative={handleDeleteAlternative}
       />
     </div>
   );

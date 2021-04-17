@@ -26,11 +26,17 @@ const DecisionTable = props => {
       {props.decision.alternatives.map(alternative => {
         return <tr key={alternative.id}>
           <td>{alternative.name}</td>
-
           {[...props.decision.criteria.keys()].map(key => {
             return <td key={key}>?</td>
           })}
-
+          <td>
+            <div
+              className="btn btn-outline-danger"
+              onClick={() => props.onDeleteAlternative(alternative.id)}
+              >
+              Delete alternative
+            </div>
+          </td>
         </tr>
       })}
       <tr>
@@ -60,7 +66,8 @@ DecisionTable.propTypes = {
     })).isRequired
   }).isRequired,
   onAddCriteria: PropTypes.func.isRequired,
-  onAddAlternative: PropTypes.func.isRequired
+  onAddAlternative: PropTypes.func.isRequired,
+  onDeleteAlternative: PropTypes.func.isRequired
 }
 
 export default DecisionTable;
