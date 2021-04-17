@@ -14,7 +14,7 @@ const DecisionList = (props) => {
       <tbody>
       {props.decisions.map(decision => {
         return <tr key={decision.id}>
-          <td><Link to={"/decision/" + decision.id + "/table"}>{decision.name}</Link></td>
+          <td><Link to={"/decision/" + decision.id + "/details"}>{decision.name}</Link></td>
           <td>{decision.description}</td>
           <td>
             <div className="btn btn-danger" onClick={() => props.onDelete(decision.id)}>Delete</div>
@@ -24,7 +24,7 @@ const DecisionList = (props) => {
       </tbody>
     </table>
   );
-}
+};
 
 DecisionList.propTypes = {
   decisions: PropTypes.arrayOf(PropTypes.shape({
@@ -33,6 +33,6 @@ DecisionList.propTypes = {
     description: PropTypes.string.description,
   })).isRequired,
   onDelete: PropTypes.func.isRequired
-}
+};
 
 export default DecisionList;

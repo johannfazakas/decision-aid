@@ -7,6 +7,6 @@ const HomePage = () => {
       <p>You have a hard decision in choosing a product? This will help you.</p>
     </div>
   );
-}
+};
 
 export default HomePage;

@@ -9,6 +9,7 @@ import NotFoundPage from "./NotFoundPage";
 import CreateDecisionPage from "./CreateDecisionPage";
 import DecisionsPage from "./DecisionsPage";
 import UpdateDecisionPage from "./UpdateDecisionPage";
+import AddCriteriaPage from "./AddCriteriaPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Header />
       <Switch>
         <Route path="/" exact component={HomePage} />
+        <Route path="/decision/:decisionId/criteria" component={AddCriteriaPage} />
         <Route path="/decision/:decisionId/details" component={ManageDecisionPage} />
         <Route path="/decision/:decisionId" component={UpdateDecisionPage} />
         <Route path="/decisions" component={DecisionsPage} />
@@ -25,6 +27,6 @@ const App = () => {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;

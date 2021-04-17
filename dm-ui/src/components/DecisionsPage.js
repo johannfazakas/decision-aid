@@ -22,11 +22,11 @@ const DecisionsPage = () => {
     <div className="jumbotron">
       <h1>My decisions</h1>
       <DecisionList decisions={decisions} onDelete={handleDelete}/>
-      <Link to="/decision" className="btn btn-primary">
-        Create new
+      <Link to="/decision" className="btn btn-warning">
+        Create
       </Link>
     </div>
   );
-}
+};
 
 export default DecisionsPage;

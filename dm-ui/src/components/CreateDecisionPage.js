@@ -15,7 +15,7 @@ const CreateDecisionPage = ({history}) => {
       ...decision,
       [target.name]: target.value
     })
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,7 +24,11 @@ const CreateDecisionPage = ({history}) => {
       .then(_decision => {
         history.push("/decision/" + _decision.id + "/details")
       });
-  }
+  };
+
+  const handleCancel = () => {
+    history.push("/decisions");
+  };
 
   const formIsValid = () => {
     const _errors = {};
@@ -40,7 +44,9 @@ const CreateDecisionPage = ({history}) => {
         decision={decision}
         errors={errors}
         onChange={handleChange}
-        onSubmit={handleSubmit} />
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+      />
     </div>
   );
 }

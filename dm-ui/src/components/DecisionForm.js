@@ -22,8 +22,9 @@ const DecisionForm = props => {
         error={props.errors.description}
       />
       <input type="submit" value="Save" className="btn btn-primary" />
+      <div className="btn btn-light" onClick={props.onCancel}>Cancel</div>
     </form>
-  )
+  );
 };
 
 DecisionForm.propTypes = {
@@ -36,7 +37,8 @@ DecisionForm.propTypes = {
     description: PropTypes.string
   }).isRequired,
   onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
-}
+  onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired
+};
 
 export default DecisionForm;
