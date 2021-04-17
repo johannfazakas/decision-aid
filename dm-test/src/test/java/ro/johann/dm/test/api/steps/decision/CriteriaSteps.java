@@ -7,6 +7,7 @@ import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.CriteriaService;
 import ro.johann.dm.test.api.service.decision.transfer.AddCriteriaInput;
 import ro.johann.dm.test.api.service.decision.transfer.UpdateCriteriaInput;
+import ro.johann.dm.test.api.steps.Errors;
 
 import javax.inject.Inject;
 import java.util.UUID;
@@ -32,9 +33,9 @@ public class CriteriaSteps {
     storage.getDecision().getCriteria().stream()
       .filter(it -> name.equals(it.getName()))
       .findFirst()
-      .ifPresentOrElse(
-        storage::setCriteria,
-        () -> criteriaNotFound(name));
+      .ifPresentOrElse(storage::setCriteria, () -> {
+        throw Errors.criteriaNotFoundByName(name);
+      });
   }
 
   @Given("I plan to add a criteria")
@@ -124,9 +125,9 @@ public class CriteriaSteps {
     storage.getDecision().getCriteria().stream()
       .filter(c -> name.equals(c.getName()))
       .findFirst()
-      .ifPresentOrElse(
-        c -> criteriaService.deleteCriteria(storage.getDecision().getId(), c.getId()),
-        () -> criteriaNotFound(name));
+      .ifPresentOrElse(c -> criteriaService.deleteCriteria(storage.getDecision().getId(), c.getId()), () -> {
+        throw Errors.criteriaNotFoundByName(name);
+      });
   }
 
   @Then("the criteria weight is {int}")
@@ -138,9 +139,4 @@ public class CriteriaSteps {
   public void theCriteriaNameIs(String name) {
     assertEquals(name, storage.getCriteria().getName());
   }
-
-  private void criteriaNotFound(String name) {
-    throw new RuntimeException(String.format("Criteria not found by name %s.", name));
-  }
-
 }

@@ -1,6 +1,7 @@
 package ro.johann.dm.decision.domain
 
 import java.util.UUID
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
@@ -23,8 +25,14 @@ data class Criteria(
   var weight: Int,
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "decision_id")
-  val decision: Decision
-)
+  val decision: Decision,
+  @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+  @JoinColumn(name = "criteria_id")
+  private val propertyList: MutableList<Property> = mutableListOf()
+) {
+  val properties: List<Property>
+    get() = propertyList
+}
 
 //sealed class Criteria() {
 //  abstract val id: UUID

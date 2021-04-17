@@ -101,6 +101,11 @@ public class AlternativeSteps {
     assertEquals(name, storage.getAlternative().getName());
   }
 
+  @Then("the alternative has {int} property/properties")
+  public void theAlternativeHasProperties(int count) {
+    assertEquals(count, storage.getAlternative().getProperties().size());
+  }
+
   private void alternativeNotFound(String name) {
     throw new RuntimeException(String.format("Alternative not found by name %s.", name));
   }

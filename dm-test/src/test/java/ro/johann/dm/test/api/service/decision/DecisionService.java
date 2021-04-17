@@ -1,6 +1,5 @@
 package ro.johann.dm.test.api.service.decision;
 
-import lombok.SneakyThrows;
 import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.BaseService;
 import ro.johann.dm.test.api.service.HttpService;
@@ -26,31 +25,26 @@ public class DecisionService extends BaseService {
     super(httpService, storage, mapper);
   }
 
-  @SneakyThrows
   public Optional<DecisionOutput> createDecision(CreateDecisionInput input) {
     return post(getDecisionsUri(), mapper.serialize(input))
       .map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
-  @SneakyThrows
   public Optional<DecisionOutput> getDecision(String decisionId) {
     return get(getDecisionByIdUri(decisionId))
       .map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
-  @SneakyThrows
   public Optional<DecisionsOutput> listDecisions() {
     return get(getDecisionsUri())
       .map(output -> mapper.deserialize(output, DecisionsOutput.class));
   }
 
-  @SneakyThrows
   public Optional<DecisionOutput> updateDecision(String decisionId, UpdateDecisionInput input) {
     return patch(getDecisionByIdUri(decisionId), mapper.serialize(input))
       .map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
-  @SneakyThrows
   public void deleteDecision(String decisionId) {
     delete(getDecisionByIdUri(decisionId).replace("{decisionId}", decisionId));
   }

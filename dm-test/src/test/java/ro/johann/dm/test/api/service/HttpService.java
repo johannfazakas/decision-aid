@@ -45,7 +45,7 @@ public class HttpService {
     var httpRequest = HttpRequest.newBuilder()
       .uri(new URI(uri))
       .headers(CONTENT_TYPE, APPLICATION_JSON)
-      .POST(HttpRequest.BodyPublishers.ofByteArray(body))
+      .PUT(HttpRequest.BodyPublishers.ofByteArray(body))
       .build();
     return doRequest(httpRequest);
   }

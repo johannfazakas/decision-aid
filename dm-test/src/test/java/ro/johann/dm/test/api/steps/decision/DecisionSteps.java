@@ -9,6 +9,7 @@ import ro.johann.dm.test.api.service.decision.DecisionService;
 import ro.johann.dm.test.api.service.decision.transfer.CreateDecisionInput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionsOutput;
 import ro.johann.dm.test.api.service.decision.transfer.UpdateDecisionInput;
+import ro.johann.dm.test.api.steps.Errors;
 
 import java.util.UUID;
 
@@ -33,7 +34,9 @@ public class DecisionSteps {
     storage.getDecisions().stream()
       .filter(it -> name.equals(it.getName()))
       .findFirst()
-      .ifPresentOrElse(storage::setDecision, () -> decisionNotFound(name));
+      .ifPresentOrElse(storage::setDecision, () -> {
+        throw Errors.decisionNotFoundByName(name);
+      });
   }
 
   @Given("I plan to create a decision")
@@ -155,9 +158,5 @@ public class DecisionSteps {
   @Then("the decision has {int} alternative(s)")
   public void theDecisionHasAlternatives(int count) {
     assertEquals(count, storage.getDecision().getAlternatives().size());
-  }
-
-  private static void decisionNotFound(String name) {
-    throw new RuntimeException(String.format("Decision not found by name %s.", name));
   }
 }

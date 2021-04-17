@@ -5,10 +5,12 @@ import java.util.UUID
 
 data class AlternativeOutput(
   val id: UUID,
-  val name: String
+  val name: String,
+  val properties: List<PropertyOutput>
 ) {
   constructor(alternative: Alternative) : this(
     id = alternative.id,
-    name = alternative.name
+    name = alternative.name,
+    properties = alternative.properties.map(::PropertyOutput)
   )
 }
