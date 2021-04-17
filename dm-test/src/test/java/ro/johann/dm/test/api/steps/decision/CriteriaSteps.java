@@ -18,8 +18,8 @@ public class CriteriaSteps {
   private final Storage storage;
   private final CriteriaService criteriaService;
 
-  private AddCriteriaInput addCriteriaInput;
-  private UpdateCriteriaInput updateCriteriaInput;
+  private AddCriteriaInput.Builder addCriteriaInputBuilder;
+  private UpdateCriteriaInput.Builder updateCriteriaInputBuilder;
 
   @Inject
   public CriteriaSteps(Storage storage, CriteriaService criteriaService) {
@@ -39,42 +39,51 @@ public class CriteriaSteps {
 
   @Given("I plan to add a criteria")
   public void prepareAddCriteriaInput() {
-    addCriteriaInput = new AddCriteriaInput();
-  }
-
-  @Given("I plan to update the criteria")
-  public void prepareUpdateCriteriaInput() {
-    updateCriteriaInput = new UpdateCriteriaInput();
+    addCriteriaInputBuilder = AddCriteriaInput.builder();
   }
 
   @Given("I set the name {string} on the add criteria input")
   public void setAddCriteriaInputName(String name) {
-    addCriteriaInput.setName(name);
+    addCriteriaInputBuilder.name(name);
   }
 
   @Given("I set the weight {int} on the add criteria input")
   public void setAddCriteriaInputWeight(int weight) {
-    addCriteriaInput.setWeight(weight);
+    addCriteriaInputBuilder.weight(weight);
+  }
+
+  @Given("I plan to update the criteria")
+  public void prepareUpdateCriteriaInput() {
+    updateCriteriaInputBuilder = UpdateCriteriaInput.builder();
   }
 
   @Given("I set the weight {int} on the update criteria input")
   public void setUpdateCriteriaInputWeight(int weight) {
-    updateCriteriaInput.setWeight(weight);
+    updateCriteriaInputBuilder.weight(weight);
+  }
+
+  @Given("I set the name {string} on the update criteria input")
+  public void setUpdateCriteriaInputName(String name) {
+    updateCriteriaInputBuilder.name(name);
   }
 
   @When("I add the criteria")
   public void addCriteria() {
-    addCriteria(storage.getDecision().getId(), addCriteriaInput);
+    addCriteria(storage.getDecision().getId(), addCriteriaInputBuilder.build());
   }
 
   @When("I add the criteria on a random decision")
   public void addCriteriaOnRandomDecision() {
-    addCriteria(UUID.randomUUID().toString(), addCriteriaInput);
+    addCriteria(UUID.randomUUID().toString(), addCriteriaInputBuilder.build());
   }
 
   @When("I add a criteria with name {string} and weight {int}")
   public void addCriteria(String name, int weight) {
-    addCriteria(storage.getDecision().getId(), new AddCriteriaInput(name, weight));
+    AddCriteriaInput input = AddCriteriaInput.builder()
+      .name(name)
+      .weight(weight)
+      .build();
+    addCriteria(storage.getDecision().getId(), input);
   }
 
   private void addCriteria(String decisionId, AddCriteriaInput input) {
@@ -84,17 +93,25 @@ public class CriteriaSteps {
 
   @When("I update the criteria by random criteria")
   public void updateCriteriaOnRandomCriteria() {
-    updateCriteria(storage.getDecision().getId(), UUID.randomUUID().toString(), updateCriteriaInput);
+    updateCriteria(storage.getDecision().getId(), UUID.randomUUID().toString(), updateCriteriaInputBuilder.build());
   }
 
   @When("I update the criteria by random decision")
   public void updateCriteriaOnRandomDecision() {
-    updateCriteria(UUID.randomUUID().toString(), storage.getDecision().getId(), updateCriteriaInput);
+    updateCriteria(UUID.randomUUID().toString(), storage.getDecision().getId(), updateCriteriaInputBuilder.build());
   }
 
   @When("I update the criteria weight to {int}")
   public void updateTheCriteriaWeightTo(int weight) {
-    updateCriteria(storage.getDecision().getId(), storage.getCriteria().getId(), new UpdateCriteriaInput(weight));
+    UpdateCriteriaInput input = UpdateCriteriaInput.builder()
+      .weight(weight)
+      .build();
+    updateCriteria(storage.getDecision().getId(), storage.getCriteria().getId(), input);
+  }
+
+  @When("I update the criteria")
+  public void iUpdateTheCriteria() {
+    updateCriteria(storage.getDecision().getId(), storage.getCriteria().getId(), updateCriteriaInputBuilder.build());
   }
 
   private void updateCriteria(String decisionId, String criteriaId, UpdateCriteriaInput input) {
@@ -117,7 +134,13 @@ public class CriteriaSteps {
     assertEquals(weight, storage.getCriteria().getWeight());
   }
 
+  @Then("the criteria name is {string}")
+  public void theCriteriaNameIs(String name) {
+    assertEquals(name, storage.getCriteria().getName());
+  }
+
   private void criteriaNotFound(String name) {
     throw new RuntimeException(String.format("Criteria not found by name %s.", name));
   }
+
 }

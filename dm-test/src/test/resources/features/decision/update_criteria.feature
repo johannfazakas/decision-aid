@@ -1,16 +1,25 @@
 Feature: Update criteria
 
   Scenario: Update criteria
-    Given I create a decision with name "hood"
+    Given I create a decision with name "Hood"
     And I add a criteria with name "price" and weight 60
     And I add a criteria with name "capacity" and weight 40
 
     When I update the criteria weight to 30
+    When I plan to update the criteria
+    And I set the weight 30 on the update criteria input
+    Then I update the criteria
     Then the response is 200
     And the criteria weight is 30
 
+    Given I plan to update the criteria
+    And I set the name "power" on the update criteria input
+    When I update the criteria
+    Then the response is 200
+    And the criteria name is "power"
+
     When I get the decision
-    And I peek at the criteria with name "capacity"
+    And I peek at the criteria with name "power"
     Then the criteria weight is 30
 
   Scenario: Update criteria with invalid weight

@@ -11,7 +11,11 @@ const DecisionTable = props => {
           ↓ Alternatives | Criteria →
         </th>
         {props.decision.criteria.map(criteria => {
-          return <th key={criteria.id}>{criteria.name}</th>
+          return <th key={criteria.id}>
+            <Link to={"/decision/" + props.decision.id + "/criteria/" + criteria.id}>
+              {criteria.name}
+            </Link>
+          </th>
         })}
         <th>
           <div
@@ -39,7 +43,7 @@ const DecisionTable = props => {
               className="btn btn-outline-danger"
               onClick={() => props.onDeleteAlternative(alternative.id)}
             >
-              Delete alternative
+              ← Delete alternative
             </div>
           </td>
         </tr>
@@ -59,10 +63,17 @@ const DecisionTable = props => {
               className="btn btn-outline-danger"
               onClick={() => props.onDeleteCriteria(criteria.id)}
             >
-              Delete criteria
+              ↑ Delete criteria
             </div>
           </td>
         })}
+        <th>
+          <div
+            className="btn btn-warning"
+          >
+            Resolve!
+          </div>
+        </th>
       </tr>
       </tbody>
     </table>

@@ -21,7 +21,10 @@ class UpdateCriteriaCommand(
     logger.info("update criteria >> decisionId = $decisionId, criteriaId = $criteriaId, input = $input")
 
     return criteriaRepository.findByIdAndDecisionId(criteriaId, decisionId)
-      ?.also { criteria -> input.weight?.also { criteria.weight = it } }
+      ?.also { criteria ->
+        input.weight?.also { criteria.weight = it }
+        input.name?.also { criteria.name = it }
+      }
       ?.also(criteriaRepository::save)
       ?: throw Errors.criteriaNotFound(decisionId, criteriaId)
   }

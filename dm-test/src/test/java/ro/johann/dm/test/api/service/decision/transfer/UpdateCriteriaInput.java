@@ -1,16 +1,18 @@
 package ro.johann.dm.test.api.service.decision.transfer;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Builder;
+import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static lombok.AccessLevel.PRIVATE;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Value
+@Builder(builderClassName = "Builder")
 @FieldDefaults(level = PRIVATE)
+@JsonInclude(NON_NULL)
 public class UpdateCriteriaInput {
-  int weight;
+  String name;
+  Integer weight;
 }
