@@ -24,10 +24,10 @@ class UpdateDecisionCommand(
     return decisionRepository.findByIdOrNull(decisionId)
       ?.also { decision ->
         input.name
-          ?.takeIf { it.isNotEmpty() }
+          ?.takeIf { it.isNotBlank() }
           ?.let { decision.name = it }
         input.description
-          ?.takeIf { it.isNotEmpty() }
+          ?.takeIf { it.isNotBlank() }
           ?.let { decision.description = it }
       }
       ?.also(decisionRepository::save)

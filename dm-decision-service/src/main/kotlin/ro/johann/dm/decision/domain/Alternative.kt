@@ -18,7 +18,7 @@ data class Alternative(
   @GeneratedValue(strategy = GenerationType.AUTO)
   val id: UUID = UUID.randomUUID(),
   @Column(nullable = false)
-  val name: String,
+  var name: String,
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "decision_id")
   val decision: Decision

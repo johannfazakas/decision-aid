@@ -14,7 +14,7 @@ const CriteriaForm = props => {
         error={props.errors.name}
         onChange={props.onChange}
       />
-      <input type="submit" value="Add" className="btn btn-warning" />
+      <input type="submit" value="Save" className="btn btn-warning" />
       <div className="btn btn-light" onClick={props.onCancel}>Cancel</div>
     </form>
   );

@@ -9,7 +9,7 @@ import { deleteCriteria } from "../../api/criteriaApi";
 
 const DecisionDetailsPage = props => {
   const [decision, setDecision] = useState({
-    id: null,
+    id: "",
     name: "",
     description: "",
     criteria: [],

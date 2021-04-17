@@ -14,7 +14,11 @@ const DecisionList = (props) => {
       <tbody>
       {props.decisions.map(decision => {
         return <tr key={decision.id}>
-          <td><Link to={"/decision/" + decision.id + "/details"}>{decision.name}</Link></td>
+          <th>
+            <Link to={"/decision/" + decision.id + "/details"}>
+              {decision.name}
+            </Link>
+          </th>
           <td>{decision.description}</td>
           <td>
             <div className="btn btn-danger" onClick={() => props.onDelete(decision.id)}>Delete</div>

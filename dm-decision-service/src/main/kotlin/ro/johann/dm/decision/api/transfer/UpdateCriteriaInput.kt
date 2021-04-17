@@ -3,7 +3,6 @@ package ro.johann.dm.decision.api.transfer
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 
-
 data class UpdateCriteriaInput(
 
   @field:Min(value = 0)

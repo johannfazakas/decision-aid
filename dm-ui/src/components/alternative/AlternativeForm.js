@@ -13,7 +13,7 @@ const AlternativeForm = props => {
         onChange={props.onChange}
         error={props.errors.name}
       />
-      <input type="submit" value="Add" className="btn btn-warning" />
+      <input type="submit" value="Save" className="btn btn-warning" />
       <div className="btn btn-light" onClick={props.onCancel}>Cancel</div>
     </form>
   );

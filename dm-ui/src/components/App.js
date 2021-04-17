@@ -11,6 +11,7 @@ import DecisionsPage from "./decision/DecisionsPage";
 import UpdateDecisionPage from "./decision/UpdateDecisionPage";
 import AddCriteriaPage from "./criteria/AddCriteriaPage";
 import AddAlternativePage from "./alternative/AddAlternativePage";
+import UpdateAlternativePage from "./alternative/UpdateAlternativePage";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/decision/:decisionId/criteria" component={AddCriteriaPage} />
+        <Route path="/decision/:decisionId/alternative/:alternativeId" component={UpdateAlternativePage} />
         <Route path="/decision/:decisionId/alternative" component={AddAlternativePage} />
         <Route path="/decision/:decisionId/details" component={DecisionDetailsPage} />
         <Route path="/decision/:decisionId" component={UpdateDecisionPage} />

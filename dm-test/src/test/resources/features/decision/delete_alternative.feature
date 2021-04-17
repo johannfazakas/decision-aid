@@ -9,6 +9,7 @@ Feature: Delete alternative
     And I plan to add an alternative
     And I set the name "iPhone 12" on the add alternative input
     And I add the alternative
+    And I get the decision
 
     When I delete the alternative with name "Samsung Note"
     Then the response is 204

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const DecisionTable = props => {
   return (
@@ -25,7 +26,11 @@ const DecisionTable = props => {
       <tbody>
       {props.decision.alternatives.map(alternative => {
         return <tr key={alternative.id}>
-          <td>{alternative.name}</td>
+          <th>
+            <Link to={"/decision/" + props.decision.id + "/alternative/" + alternative.id}>
+              {alternative.name}
+            </Link>
+          </th>
           {[...props.decision.criteria.keys()].map(key => {
             return <td key={key}>?</td>
           })}
@@ -66,6 +71,7 @@ const DecisionTable = props => {
 
 DecisionTable.propTypes = {
   decision: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     criteria: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired

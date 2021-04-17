@@ -13,12 +13,14 @@ import kotlin.reflect.KClass
 @Target(allowedTargets = [FIELD, FUNCTION])
 @Constraint(validatedBy = [NotEmptyIfPresentValidator::class])
 @Retention(RUNTIME)
-annotation class NotEmptyIfPresent(
+annotation class NotBlankIfPresent(
   val message: String = "Value should not be empty if mentioned",
   val groups: Array<KClass<*>> = [],
   val payload: Array<KClass<out Payload>> = []
 )
 
-class NotEmptyIfPresentValidator : ConstraintValidator<NotEmptyIfPresent, String> {
-  override fun isValid(value: String?, context: ConstraintValidatorContext?) = value?.isNotEmpty() ?: true
+class NotEmptyIfPresentValidator : ConstraintValidator<NotBlankIfPresent, String> {
+  override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
+    return  value?.isNotBlank() ?: true
+  }
 }

@@ -6,6 +6,7 @@ import ro.johann.dm.test.api.service.HttpService;
 import ro.johann.dm.test.api.service.Mapper;
 import ro.johann.dm.test.api.service.decision.transfer.AddAlternativeInput;
 import ro.johann.dm.test.api.service.decision.transfer.AlternativeOutput;
+import ro.johann.dm.test.api.service.decision.transfer.UpdateAlternativeInput;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -24,11 +25,16 @@ public class AlternativeService extends BaseService {
 
   public Optional<AlternativeOutput> addAlternative(String decisionId, AddAlternativeInput input) {
     return post(getAlternativesUri(decisionId), mapper.serialize(input))
-      .map(response -> mapper.deserialize(response, AlternativeOutput.class));
+      .map(output -> mapper.deserialize(output, AlternativeOutput.class));
   }
 
   public void deleteAlternative(String decisionId, String alternativeId) {
     delete(getAlternativeByIdUri(decisionId, alternativeId));
+  }
+
+  public Optional<AlternativeOutput> updateAlternative(String decisionId, String alternativeId, UpdateAlternativeInput input) {
+    return patch(getAlternativeByIdUri(decisionId, alternativeId), mapper.serialize(input))
+      .map(output -> mapper.deserialize(output, AlternativeOutput.class));
   }
 
   private String getAlternativesUri(String decisionId) {
