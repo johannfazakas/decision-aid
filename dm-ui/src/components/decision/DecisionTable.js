@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import PropertyCell from "./PropertyCell";
 
 const DecisionTable = props => {
   return (
@@ -35,8 +36,13 @@ const DecisionTable = props => {
               {alternative.name}
             </Link>
           </th>
-          {[...props.decision.criteria.keys()].map(key => {
-            return <td key={key}>?</td>
+          {props.decision.criteria.map(criteria => {
+            return <td key={criteria.id}>
+              <PropertyCell
+                value={42.5}
+                onChange={value => props.onPropertyUpdated(alternative.id, criteria.id, value)}
+              />
+            </td>
           })}
           <td>
             <div
@@ -89,13 +95,18 @@ DecisionTable.propTypes = {
     })).isRequired,
     alternatives: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
+      properties: PropTypes.arrayOf(PropTypes.shape({
+        criteriaId: PropTypes.string.isRequired,
+        value: PropTypes.number.isRequired
+      }))
     })).isRequired
   }).isRequired,
   onAddCriteria: PropTypes.func.isRequired,
   onAddAlternative: PropTypes.func.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired,
-  onDeleteCriteria: PropTypes.func.isRequired
+  onDeleteCriteria: PropTypes.func.isRequired,
+  onPropertyUpdated: PropTypes.func.isRequired
 }
 
 export default DecisionTable;

@@ -54,6 +54,10 @@ const DecisionDetailsPage = props => {
       })
   }
 
+  const handlePropertyUpdated = (alternativeId, criteriaId, value) => {
+    console.log("property updated. alternativeId = " + alternativeId + ", criteriaId = " + criteriaId + ", value = " + value);
+  }
+
   return (
     <div className="jumbotron">
       <h1>{decision.name}</h1>
@@ -78,6 +82,7 @@ const DecisionDetailsPage = props => {
         onAddAlternative={handleAddAlternative}
         onDeleteAlternative={handleDeleteAlternative}
         onDeleteCriteria={handleDeleteCriteria}
+        onPropertyUpdated={handlePropertyUpdated}
       />
     </div>
   );
