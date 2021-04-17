@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { deleteDecision, getDecision } from "../api/decisionsApi";
+import { deleteDecision, getDecision } from "../../api/decisionsApi";
 import DecisionTable from "./DecisionTable";
 
 const DecisionDetailsPage = props => {

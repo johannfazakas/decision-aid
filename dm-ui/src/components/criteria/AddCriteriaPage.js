@@ -1,33 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 
-import AlternativeForm from "./AlternativeForm";
+import CriteriaForm from "./CriteriaForm";
+import { addCriteria } from "../../api/criteriaApi";
 
-import { addAlternative } from "../api/alternativesApi";
-
-const AddAlternativePage = props => {
-  const [errors, setErrors] = useState({});
-  const [alternative, setAlternative] = useState({
+const AddCriteriaPage = props => {
+  const [criteria, setCriteria] = useState({
     name: ""
   });
-  const decisionId = props.match.params.decisionId;
+  const [errors, setErrors] = useState({});
 
   const handleChange = ({target}) => {
-    setAlternative({
-      ...alternative,
+    setCriteria({
+      ...criteria,
       [target.name]: target.value
-    });
+    })
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!formIsValid()) return;
-    addAlternative(decisionId, alternative)
+    addCriteria(props.match.params.decisionId, criteria)
       .then(() => navigateToDecisionDetails());
   };
 
   const formIsValid = () => {
     const _errors = {};
-    if (!alternative.name) _errors.name = "Name is required";
+    if (!criteria.name) _errors.name = "Name is required";
     setErrors(_errors);
     return Object.keys(_errors).length === 0;
   };
@@ -42,9 +41,9 @@ const AddAlternativePage = props => {
 
   return (
     <div className="jumbotron">
-      <h1>Add alternative</h1>
-      <AlternativeForm
-        alternative={alternative}
+      <h1>Add Criteria</h1>
+      <CriteriaForm
+        criteria={criteria}
         errors={errors}
         onChange={handleChange}
         onSubmit={handleSubmit}
@@ -54,4 +53,4 @@ const AddAlternativePage = props => {
   );
 };
 
-export default AddAlternativePage;
+export default AddCriteriaPage;

@@ -6,9 +6,11 @@ const DecisionTable = props => {
     <table className="table">
       <thead>
       <tr>
-        <th>Alternatives</th>
-        {["criteria 1", "criteria 2", "criteria 3"].map(criteria => {
-          return <th key={criteria}>{criteria}</th>
+        <th>
+          ↓ Alternatives | Criteria →
+        </th>
+        {props.decision.criteria.map(criteria => {
+          return <th key={criteria.id}>{criteria.name}</th>
         })}
         <th>
           <div
@@ -24,8 +26,9 @@ const DecisionTable = props => {
       {props.decision.alternatives.map(alternative => {
         return <tr key={alternative.id}>
           <td>{alternative.name}</td>
-          {[1, 2, 3].map(property => {
-            return <td key={property}>{property}</td>
+
+          {[...props.decision.criteria.keys()].map(key => {
+            return <td key={key}>?</td>
           })}
 
         </tr>

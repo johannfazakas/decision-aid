@@ -4,13 +4,13 @@ import { Route, Switch } from 'react-router-dom';
 import Header from "./common/Header";
 import HomePage from "./HomePage";
 import AboutPage from "./AboutPage";
-import DecisionDetailsPage from "./DecisionDetailsPage";
+import DecisionDetailsPage from "./decision/DecisionDetailsPage";
 import NotFoundPage from "./NotFoundPage";
-import AddDecisionPage from "./AddDecisionPage";
-import DecisionsPage from "./DecisionsPage";
-import UpdateDecisionPage from "./UpdateDecisionPage";
-import AddCriteriaPage from "./AddCriteriaPage";
-import AddAlternativePage from "./AddAlternativePage";
+import AddDecisionPage from "./decision/AddDecisionPage";
+import DecisionsPage from "./decision/DecisionsPage";
+import UpdateDecisionPage from "./decision/UpdateDecisionPage";
+import AddCriteriaPage from "./criteria/AddCriteriaPage";
+import AddAlternativePage from "./alternative/AddAlternativePage";
 
 const App = () => {
   return (

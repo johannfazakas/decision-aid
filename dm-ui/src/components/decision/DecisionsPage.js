@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import DecisionList from "./DecisionList";
 
-import { deleteDecision, listDecisions } from "../api/decisionsApi";
+import { deleteDecision, listDecisions } from "../../api/decisionsApi";
 
 const DecisionsPage = () => {
   const [decisions, setDecisions] = useState([]);

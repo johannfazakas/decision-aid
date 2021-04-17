@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDecision, updateDecision } from "../api/decisionsApi";
+import { getDecision, updateDecision } from "../../api/decisionsApi";
 
 import DecisionForm from "./DecisionForm";
 
