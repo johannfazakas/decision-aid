@@ -152,4 +152,9 @@ public class DecisionSteps {
   public void theDecisionHasCriteria(int count) {
     assertEquals(count, storage.getDecision().getCriteria().size());
   }
+
+  @Then("the decision has {int} alternative(s)")
+  public void theDecisionHasAlternatives(int count) {
+    assertEquals(count, storage.getDecision().getAlternatives().size());
+  }
 }

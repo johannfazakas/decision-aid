@@ -3,18 +3,18 @@ import { createDecision } from "../api/decisionsApi";
 
 import DecisionForm from "./DecisionForm";
 
-const CreateDecisionPage = ({history}) => {
+const AddDecisionPage = ({history}) => {
   const [errors, setErrors] = useState({});
   const [decision, setDecision] = useState({
     name: "",
-    decision: ""
+    description: ""
   });
 
   const handleChange = ({target}) => {
     setDecision({
       ...decision,
       [target.name]: target.value
-    })
+    });
   };
 
   const handleSubmit = (event) => {
@@ -26,16 +26,16 @@ const CreateDecisionPage = ({history}) => {
       });
   };
 
-  const handleCancel = () => {
-    history.push("/decisions");
-  };
-
   const formIsValid = () => {
     const _errors = {};
     if (!decision.name) _errors.name = "Name is required";
     setErrors(_errors);
     return Object.keys(_errors).length === 0;
   }
+
+  const handleCancel = () => {
+    history.push("/decisions");
+  };
 
   return (
     <div className="jumbotron">
@@ -51,4 +51,4 @@ const CreateDecisionPage = ({history}) => {
   );
 }
 
-export default CreateDecisionPage;
+export default AddDecisionPage;

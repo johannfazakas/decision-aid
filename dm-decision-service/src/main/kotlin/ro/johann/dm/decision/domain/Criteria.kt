@@ -16,9 +16,9 @@ import javax.persistence.Table
 data class Criteria(
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  val id: UUID = UUID.randomUUID(),
+  var id: UUID = UUID.randomUUID(),
   @Column(nullable = false)
-  val name: String,
+  var name: String,
   @Column(nullable = false)
   var weight: Int,
   @ManyToOne(fetch = FetchType.LAZY)

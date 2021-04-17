@@ -1,8 +1,8 @@
 package ro.johann.dm.test.api.common;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;
+import ro.johann.dm.test.api.service.decision.transfer.AlternativeOutput;
 import ro.johann.dm.test.api.service.decision.transfer.CriteriaOutput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionOutput;
 
@@ -21,10 +21,13 @@ public class Storage {
 
   private CriteriaOutput criteria;
 
+  private AlternativeOutput alternative;
+
   public void cleanUp() {
     this.responseStatusCode = 0;
     this.decision = null;
     this.decisions = List.of();
     this.criteria = null;
+    this.alternative = null;
   }
 }

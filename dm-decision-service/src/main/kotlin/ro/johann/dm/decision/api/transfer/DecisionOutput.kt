@@ -16,6 +16,7 @@ data class DecisionOutput(
     id = decision.id,
     name = decision.name,
     description = decision.description,
-    criteria = decision.criteria.map(::CriteriaOutput)
+    criteria = decision.criteria.map(::CriteriaOutput),
+    alternatives = decision.alternatives.map(::AlternativeOutput)
   )
 }

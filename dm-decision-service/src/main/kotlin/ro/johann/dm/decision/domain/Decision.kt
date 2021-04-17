@@ -24,8 +24,13 @@ data class Decision(
   @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
   @JoinColumn(name = "decision_id")
   private val criteriaList: MutableList<Criteria> = mutableListOf(),
-//  val alternatives: List<Alternative> = emptyList()
+  @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+  @JoinColumn(name = "decision_id")
+  private val alternativeList: MutableList<Alternative> = mutableListOf(),
 ) {
   val criteria: List<Criteria>
     get() = criteriaList
+
+  val alternatives: List<Alternative>
+    get() = alternativeList
 }

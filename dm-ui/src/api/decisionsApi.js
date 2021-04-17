@@ -8,14 +8,14 @@ const patchDecisionUrl = baseUrl + "/decisions/{decisionId}";
 const deleteDecisionUrl = baseUrl + "/decisions/{decisionId}";
 
 export const getDecision = decisionId => {
-  const url = getDecisionsUrl.replace("{decisionId}", decisionId);
+  const url = getDecisionsUrl
+    .replace("{decisionId}", decisionId);
   return fetch(url, {
     method: "GET"
   })
     .then(handleResponse)
     .catch(handleError);
-
-}
+};
 
 export const listDecisions = () => {
   return fetch(listDecisionsUrl, {
@@ -39,7 +39,8 @@ export const createDecision = decision => {
 
 export const updateDecision = decision => {
   const {id, ...body} = decision;
-  const url = patchDecisionUrl.replace("{decisionId}", id);
+  const url = patchDecisionUrl
+    .replace("{decisionId}", id);
   return fetch(url, {
     method: "PATCH",
     headers: {
@@ -52,7 +53,8 @@ export const updateDecision = decision => {
 }
 
 export const deleteDecision = decisionId => {
-  const url = deleteDecisionUrl.replace("{decisionId}", decisionId);
+  const url = deleteDecisionUrl
+    .replace("{decisionId}", decisionId);
   return fetch(url, {
     method: "DELETE"
   })

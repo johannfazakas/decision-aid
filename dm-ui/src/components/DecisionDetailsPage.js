@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { deleteDecision, getDecision } from "../api/decisionsApi";
+import DecisionTable from "./DecisionTable";
 
-const ManageDecisionPage = props => {
+const DecisionDetailsPage = props => {
   const [decision, setDecision] = useState({
     id: null,
     name: "",
-    description: ""
+    description: "",
+    criteria: [],
+    alternatives: []
   });
 
   useEffect(() => {
@@ -20,22 +23,25 @@ const ManageDecisionPage = props => {
       .then(() => props.history.push("/decisions"));
   };
 
+  const handleAddCriteria = () => {
+    props.history.push("/decision/" + props.match.params.decisionId + "/criteria");
+  }
+
+  const handleAddAlternative = () => {
+    props.history.push("/decision/" + props.match.params.decisionId + "/alternative");
+  }
+
   return (
     <div className="jumbotron">
       <h1>{decision.name}</h1>
       <h3>{decision.description}</h3>
       <br />
+
       <Link
         to={"/decision/" + props.match.params.decisionId}
-        className="btn btn-secondary m-1"
+        className="btn btn-dark m-1"
       >
         Update
-      </Link>
-      <Link
-        to={"/decision/" + props.match.params.decisionId + "/criteria"}
-        className="btn btn-secondary m-1"
-      >
-        New criteria
       </Link>
       <div
         className="btn btn-danger m-1"
@@ -43,8 +49,13 @@ const ManageDecisionPage = props => {
       >
         Delete
       </div>
+      <DecisionTable
+        decision={decision}
+        onAddCriteria={handleAddCriteria}
+        onAddAlternative={handleAddAlternative}
+      />
     </div>
   );
 };
 
-export default ManageDecisionPage;
+export default DecisionDetailsPage;

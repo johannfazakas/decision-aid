@@ -21,9 +21,9 @@ const DecisionsPage = () => {
   return (
     <div className="jumbotron">
       <h1>My decisions</h1>
-      <DecisionList decisions={decisions} onDelete={handleDelete}/>
-      <Link to="/decision" className="btn btn-warning">
-        Create
+      <DecisionList decisions={decisions} onDelete={handleDelete} />
+      <Link to="/decision" className="btn btn-dark">
+        New
       </Link>
     </div>
   );
