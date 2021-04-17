@@ -17,7 +17,7 @@ const TextInput = props => {
           onChange={props.onChange}
           name={props.name}
           className="form-control"
-          value={props.value}
+          value={props.value || ""}
         />
       </div>
       {props.error && <div className="alert alert-danger">{props.error}</div>}

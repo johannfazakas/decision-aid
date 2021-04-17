@@ -28,7 +28,7 @@ cd dm-decision-service/
 
 ### Gateway Service
     Api Gateway for backend microservices platform.
-    technologies: Spring Cloud Gateway, Java
+    technologies: Spring Cloud Gateway, Java, Gradle
     default port: 7049
 
 #### Run

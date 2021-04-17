@@ -16,6 +16,9 @@ const DecisionList = (props) => {
         return <tr key={decision.id}>
           <td><Link to={"/decision/" + decision.id + "/table"}>{decision.name}</Link></td>
           <td>{decision.description}</td>
+          <td>
+            <div className="btn btn-danger" onClick={() => props.onDelete(decision.id)}>Delete</div>
+          </td>
         </tr>
       })}
       </tbody>
@@ -28,7 +31,8 @@ DecisionList.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.description,
-  })).isRequired
+  })).isRequired,
+  onDelete: PropTypes.func.isRequired
 }
 
 export default DecisionList;

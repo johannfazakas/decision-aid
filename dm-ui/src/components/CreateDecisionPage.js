@@ -6,7 +6,9 @@ import DecisionForm from "./DecisionForm";
 const CreateDecisionPage = ({history}) => {
   const [errors, setErrors] = useState({});
   const [decision, setDecision] = useState({
-    name: ""});
+    name: "",
+    decision: ""
+  });
 
   const handleChange = ({target}) => {
     setDecision({
@@ -19,7 +21,9 @@ const CreateDecisionPage = ({history}) => {
     event.preventDefault();
     if (!formIsValid()) return;
     createDecision(decision)
-      .then(_decision => history.push("/decision/" + _decision.id + "/details"));
+      .then(_decision => {
+        history.push("/decision/" + _decision.id + "/details")
+      });
   }
 
   const formIsValid = () => {

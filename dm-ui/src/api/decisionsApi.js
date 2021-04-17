@@ -5,6 +5,7 @@ const getDecisionsUrl = baseUrl + "/decisions/{decisionId}";
 const listDecisionsUrl = baseUrl + "/decisions";
 const createDecisionUrl = baseUrl + "/decisions";
 const patchDecisionUrl = baseUrl + "/decisions/{decisionId}";
+const deleteDecisionUrl = baseUrl + "/decisions/{decisionId}";
 
 export const getDecision = decisionId => {
   const url = getDecisionsUrl.replace("{decisionId}", decisionId);
@@ -47,5 +48,14 @@ export const updateDecision = decision => {
     body: JSON.stringify(body)
   })
     .then(handleResponse)
-    .catch(handleError)
+    .catch(handleError);
+}
+
+export const deleteDecision = decisionId => {
+  const url = deleteDecisionUrl.replace("{decisionId}", decisionId);
+  return fetch(url, {
+    method: "DELETE"
+  })
+    .then(handleResponse)
+    .catch(handleError);
 }
