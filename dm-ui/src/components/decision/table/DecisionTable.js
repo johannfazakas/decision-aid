@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
 import PropertyCell from "./PropertyCell";
+import CriteriaCell from "./CriteriaCell";
 
 const DecisionTable = props => {
   return (
@@ -13,9 +15,10 @@ const DecisionTable = props => {
         </th>
         {props.decision.criteria.map(criteria => {
           return <th key={criteria.id}>
-            <Link to={"/decision/" + props.decision.id + "/criteria/" + criteria.id}>
-              {criteria.name}
-            </Link>
+            <CriteriaCell
+              decisionId={props.decision.id}
+              criteria={criteria}
+            />
           </th>
         })}
         <th>

@@ -28,7 +28,7 @@ const AlternativeForm = props => {
           key={criteria.id}
           id={criteria.name}
           name={criteria.name}
-          label={criteria.name}
+          label={criteria.name + " - " + criteria.weight + "%"}
           number={property}
           onChange={({target}) => props.onPropertyChange({
             criteriaId: criteria.id,
@@ -50,7 +50,8 @@ AlternativeForm.propTypes = {
   criteria: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
+      weight: PropTypes.number.isRequired
     }).isRequired
   ).isRequired,
   properties: PropTypes.arrayOf(

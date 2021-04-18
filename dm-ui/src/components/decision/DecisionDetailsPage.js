@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import DecisionTable from "./DecisionTable";
+import DecisionTable from "./table/DecisionTable";
 
 import { deleteDecision, getDecision } from "../../api/decisionsApi";
 import { deleteAlternative } from "../../api/alternativesApi";

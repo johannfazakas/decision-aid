@@ -65,7 +65,6 @@ const AddCriteriaPage = props => {
     if (!criteria.weight || criteria.weight < 1 || criteria.weight > 100) {
       _errors.weight = "Weight value should be between 1 and 100"
     }
-    debugger;
     setErrors(_errors);
     return Object.keys(_errors).length === 0;
   };
