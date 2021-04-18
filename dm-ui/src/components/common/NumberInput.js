@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const OptionalNumberInput = props => {
+const NumberInput = props => {
   return (
     <div className="form-group">
       <label htmlFor={props.name}>{props.label}</label>
@@ -15,18 +15,24 @@ const OptionalNumberInput = props => {
           defaultValue={props.number && props.number.value}
         />
       </div>
+      {props.error && <div className="alert alert-danger">{props.error}</div>}
     </div>
   );
 };
 
-OptionalNumberInput.propTypes = {
+NumberInput.propTypes = {
   number: PropTypes.shape({
     value: PropTypes.number,
   }),
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  error: PropTypes.string,
   onChange: PropTypes.func.isRequired
 };
 
-export default OptionalNumberInput;
+NumberInput.defaultProps = {
+  error: ""
+};
+
+export default NumberInput;

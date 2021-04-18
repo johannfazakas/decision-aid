@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
-import OptionalNumberInput from "../common/OptionalNumberInput";
+import NumberInput from "../common/NumberInput";
 
 const AlternativeForm = props => {
 
@@ -14,20 +14,22 @@ const AlternativeForm = props => {
       onChange={props.onChange}
       error={props.errors.name}
     />
+    <hr />
+    <h4>Properties:</h4>
     {props.criteria
       .map(criteria => {
         const property = props.properties
-          .filter(p => p.criteriaId === p.criteriaId)
+          .filter(p => p.criteriaId === criteria.id)
           [0] || {};
         return [criteria, property];
       })
       .map(([criteria, property]) => {
-        return <OptionalNumberInput
+        return <NumberInput
           key={criteria.id}
           id={criteria.name}
           name={criteria.name}
           label={criteria.name}
-          number={props.properties.filter(p => p.criteriaId === criteria.id)[0]}
+          number={property}
           onChange={({target}) => props.onPropertyChange({
             criteriaId: criteria.id,
             value: parseFloat(target.value)

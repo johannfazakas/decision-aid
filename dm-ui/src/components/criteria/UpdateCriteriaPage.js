@@ -23,10 +23,17 @@ const UpdateCriteriaPage = props => {
     });
   }, [props.match.params.decisionId, props.match.params.criteriaId]);
 
-  const handleChange = ({target}) => {
+  const handleNameChange = ({target}) => {
     setCriteria({
       ...criteria,
-      [target.name]: target.value
+      name: target.value
+    })
+  };
+
+  const handleWeightChange = ({target}) => {
+    setCriteria({
+      ...criteria,
+      weight: parseFloat(target.value)
     })
   };
 
@@ -59,6 +66,7 @@ const UpdateCriteriaPage = props => {
   const formIsValid = () => {
     const _errors = {};
     if (!criteria.name) _errors.name = "Name is required";
+    if (!criteria.weight || criteria.weight < 1 || criteria.weight > 100) _errors.weight = "Weight value should be between 1 and 100"
     setErrors(_errors);
     return Object.keys(_errors).length === 0;
   };
@@ -75,7 +83,8 @@ const UpdateCriteriaPage = props => {
         alternatives={alternatives}
         properties={properties}
         errors={errors}
-        onChange={handleChange}
+        onNameChange={handleNameChange}
+        onWeightChange={handleWeightChange}
         onPropertyChange={handlePropertyChange}
         onSubmit={handleSubmit}
         onCancel={handleCancel}

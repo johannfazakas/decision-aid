@@ -8,7 +8,7 @@ import { setProperty } from "../../api/propertyApi";
 
 const AddCriteriaPage = props => {
   const [criteria, setCriteria] = useState({
-    name: ""
+    name: "",
   });
   const [alternatives, setAlternatives] = useState([]);
   const [properties, setProperties] = useState([]);
@@ -21,10 +21,17 @@ const AddCriteriaPage = props => {
       });
   }, [props.match.params.decisionId])
 
-  const handleChange = ({target}) => {
+  const handleNameChange = ({target}) => {
     setCriteria({
       ...criteria,
-      [target.name]: target.value
+      name: target.value
+    })
+  };
+
+  const handleWeightChange = ({target}) => {
+    setCriteria({
+      ...criteria,
+      weight: parseFloat(target.value)
     })
   };
 
@@ -55,6 +62,10 @@ const AddCriteriaPage = props => {
   const formIsValid = () => {
     const _errors = {};
     if (!criteria.name) _errors.name = "Name is required";
+    if (!criteria.weight || criteria.weight < 1 || criteria.weight > 100) {
+      _errors.weight = "Weight value should be between 1 and 100"
+    }
+    debugger;
     setErrors(_errors);
     return Object.keys(_errors).length === 0;
   };
@@ -75,7 +86,8 @@ const AddCriteriaPage = props => {
         alternatives={alternatives}
         properties={properties}
         errors={errors}
-        onChange={handleChange}
+        onNameChange={handleNameChange}
+        onWeightChange={handleWeightChange}
         onPropertyChange={handlePropertyChange}
         onSubmit={handleSubmit}
         onCancel={handleCancel}

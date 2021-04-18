@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
-import OptionalNumberInput from "../common/OptionalNumberInput";
+import NumberInput from "../common/NumberInput";
 
 const CriteriaForm = props => {
 
@@ -13,8 +13,18 @@ const CriteriaForm = props => {
         label="Name"
         value={props.criteria.name}
         error={props.errors.name}
-        onChange={props.onChange}
+        onChange={props.onNameChange}
       />
+      <NumberInput
+        id="weight"
+        name="weight"
+        label="Weight"
+        number={{value: props.criteria.weight}}
+        error={props.errors.weight}
+        onChange={props.onWeightChange}
+      />
+      <hr/>
+      <h4>Properties:</h4>
       {props.alternatives
         .map(alternative => {
           const property = props.properties
@@ -23,7 +33,7 @@ const CriteriaForm = props => {
           return [alternative, property]
         })
         .map(([alternative, property]) => {
-          return <OptionalNumberInput
+          return <NumberInput
             key={alternative.id}
             id={alternative.name}
             name={alternative.name}
@@ -44,7 +54,8 @@ const CriteriaForm = props => {
 
 CriteriaForm.propTypes = {
   criteria: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    weight: PropTypes.number,
   }).isRequired,
   alternatives: PropTypes.arrayOf(
     PropTypes.shape({
@@ -61,7 +72,8 @@ CriteriaForm.propTypes = {
   errors: PropTypes.shape({
     name: PropTypes.string
   }).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onNameChange: PropTypes.func.isRequired,
+  onWeightChange: PropTypes.func.isRequired,
   onPropertyChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
