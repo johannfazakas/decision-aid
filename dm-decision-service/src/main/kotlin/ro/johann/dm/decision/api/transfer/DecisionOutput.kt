@@ -8,7 +8,8 @@ data class DecisionOutput(
   val name: String?,
   val description: String?,
   val criteria: List<CriteriaOutput> = emptyList(),
-  val alternatives: List<AlternativeOutput> = emptyList()
+  val alternatives: List<AlternativeOutput> = emptyList(),
+  val properties: List<PropertyOutput> = emptyList()
 ) {
   constructor(
     decision: Decision
@@ -17,6 +18,11 @@ data class DecisionOutput(
     name = decision.name,
     description = decision.description,
     criteria = decision.criteria.map(::CriteriaOutput),
-    alternatives = decision.alternatives.map(::AlternativeOutput)
+    alternatives = decision.alternatives.map(::AlternativeOutput),
+    properties = decision.alternatives
+      .asSequence()
+      .flatMap { it.properties.asSequence() }
+      .map(::PropertyOutput)
+      .toList()
   )
 }

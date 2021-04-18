@@ -36,14 +36,19 @@ const DecisionTable = props => {
               {alternative.name}
             </Link>
           </th>
-          {props.decision.criteria.map(criteria => {
-            return <td key={criteria.id}>
-              <PropertyCell
-                value={42.5}
-                onChange={value => props.onPropertyUpdated(alternative.id, criteria.id, value)}
-              />
-            </td>
-          })}
+          {props.decision.criteria
+            .map(criteria => [
+              criteria,
+              alternative.properties.filter(p => p.criteriaId === criteria.id)[0] || {}
+            ])
+            .map(([criteria, property]) => {
+              return <td key={criteria.id}>
+                <PropertyCell
+                  property={property}
+                  onChange={value => props.onPropertyUpdated(alternative.id, criteria.id, value)}
+                />
+              </td>
+            })}
           <td>
             <div
               className="btn btn-outline-danger"
@@ -99,7 +104,7 @@ DecisionTable.propTypes = {
       properties: PropTypes.arrayOf(PropTypes.shape({
         criteriaId: PropTypes.string.isRequired,
         value: PropTypes.number.isRequired
-      }))
+      })).isRequired
     })).isRequired
   }).isRequired,
   onAddCriteria: PropTypes.func.isRequired,
