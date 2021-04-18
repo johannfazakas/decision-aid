@@ -20,4 +20,5 @@ public class DecisionOutput {
   String description;
   List<CriteriaOutput> criteria = List.of();
   List<AlternativeOutput> alternatives = List.of();
+  List<PropertyOutput> properties = List.of();
 }

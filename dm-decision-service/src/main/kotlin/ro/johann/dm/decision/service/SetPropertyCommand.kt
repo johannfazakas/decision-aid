@@ -21,23 +21,23 @@ class SetPropertyCommand(
     val logger: Logger = LoggerFactory.getLogger(SetPropertyCommand::class.java)
   }
 
-  fun execute(decisionId: UUID, alternativeId: UUID, criteriaId: UUID, input: SetPropertyInput) {
-    logger.info("set property >> decisionId = $decisionId, alternativeId = $alternativeId, criteriaId = $criteriaId, input = $input")
+  fun execute(decisionId: UUID, input: SetPropertyInput): Property {
+    logger.info("set property >> decisionId = $decisionId, input = $input")
 
-    val alternative = alternativeRepository.findByIdAndDecisionId(alternativeId, decisionId)
-      ?: throw Errors.alternativeNotFound(decisionId, alternativeId)
+    val alternative = alternativeRepository.findByIdAndDecisionId(input.alternativeId, decisionId)
+      ?: throw Errors.alternativeNotFound(decisionId, input.alternativeId)
     val property = alternative.properties
-      .find { property -> criteriaId == property.criteria.id }
+      .find { property -> input.criteriaId == property.criteria.id }
       ?.also { it.value = input.value }
       ?: let {
-        val criteria = criteriaRepository.findByIdAndDecisionId(criteriaId, decisionId)
-          ?: throw Errors.criteriaNotFound(decisionId, criteriaId)
+        val criteria = criteriaRepository.findByIdAndDecisionId(input.criteriaId, decisionId)
+          ?: throw Errors.criteriaNotFound(decisionId, input.criteriaId)
         Property(
           value = input.value,
           alternative = alternative,
           criteria = criteria
         )
       }
-    propertyRepository.save(property)
+    return propertyRepository.save(property)
   }
 }

@@ -29,13 +29,17 @@ public class PropertySteps {
 
   @When("I set the property on the alternative {string} for the criteria {string} to the value {float}")
   public void setPropertyValue(String alternativeName, String criteriaName, Float value) {
-    String alternativeId = getAlternativeByName(alternativeName).getId();
-    String criteriaId = getCriteriaByName(criteriaName).getId();
-    propertyService.addProperty(storage.getDecision().getId(), alternativeId, criteriaId, new SetPropertyInput(value));
+    SetPropertyInput input = SetPropertyInput.builder()
+      .alternativeId(getAlternativeByName(alternativeName).getId())
+      .criteriaId(getCriteriaByName(criteriaName).getId())
+      .value(value)
+      .build();
+    propertyService.addProperty(storage.getDecision().getId(), input)
+      .ifPresent(storage::setProperty);
   }
 
   @Then("the property value for the alternative {string} for the criteria {string} is {float}")
-  public void propertyValueIs(String alternativeName, String criteriaName, Float value) {
+  public void propertyValueForAlternativeAndCriteriaIs(String alternativeName, String criteriaName, Float value) {
     var property = getPropertyByNames(alternativeName, criteriaName)
       .orElseThrow(() -> Errors.propertyNotFoundByNames(alternativeName, criteriaName));
     assertEquals(value, property.getValue());
@@ -47,10 +51,16 @@ public class PropertySteps {
     assertTrue(property.isEmpty());
   }
 
+  @Then("the property value is {float}")
+  public void propertyValueIs(Float value) {
+    assertEquals(value, storage.getProperty().getValue());
+  }
+
   private Optional<PropertyOutput> getPropertyByNames(String alternativeName, String criteriaName) {
     var alternative = getAlternativeByName(alternativeName);
     var criteria = getCriteriaByName(criteriaName);
-    return alternative.getProperties().stream()
+    return storage.getDecision().getProperties().stream()
+      .filter(p -> p.getAlternativeId().equals(alternative.getId()))
       .filter(p -> p.getCriteriaId().equals(criteria.getId()))
       .findFirst();
   }

@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import ro.johann.dm.test.api.service.decision.transfer.AlternativeOutput;
 import ro.johann.dm.test.api.service.decision.transfer.CriteriaOutput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionOutput;
+import ro.johann.dm.test.api.service.decision.transfer.PropertyOutput;
 
 import java.util.List;
 
@@ -23,11 +24,14 @@ public class Storage {
 
   private AlternativeOutput alternative;
 
+  private PropertyOutput property;
+
   public void cleanUp() {
     this.responseStatusCode = 0;
     this.decision = null;
     this.decisions = List.of();
     this.criteria = null;
     this.alternative = null;
+    this.property = null;
   }
 }

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-
 import static lombok.AccessLevel.PRIVATE;
 
 @Data
@@ -14,5 +12,4 @@ import static lombok.AccessLevel.PRIVATE;
 public class AlternativeOutput {
   String id;
   String name;
-  List<PropertyOutput> properties = List.of();
 }

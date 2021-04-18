@@ -26,10 +26,10 @@ Feature: Get decision
     Then the criteria weight is 60
 
     Then the decision has 2 alternatives
-    Given I peek at the alternative with name "Samsung Note 10"
-    Then the alternative has 1 property
+    And the decision has 2 properties
 
     Then the property value for the alternative "Samsung Note 10" for the criteria "screen size" is 7.0
+    Then the property value for the alternative "iPhone 12" for the criteria "price" is 1500
     Then the property value for the alternative "Samsung Note 10" for the criteria "price" is not set
 
   Scenario: Get decision when not found

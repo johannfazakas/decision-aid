@@ -159,4 +159,9 @@ public class DecisionSteps {
   public void theDecisionHasAlternatives(int count) {
     assertEquals(count, storage.getDecision().getAlternatives().size());
   }
+
+  @Then("the decision has {int} properties")
+  public void theDecisionHasProperties(int count) {
+    assertEquals(count, storage.getDecision().getProperties().size());
+  }
 }

@@ -9,14 +9,15 @@ Feature: Set property
     And I get the decision
 
     When I set the property on the alternative "Philips LatteGo" for the criteria "price" to the value 2600
-    Then the response is 204
+    Then the response is 200
+    And the property value is 2600
     When I set the property on the alternative "Philips LatteGo" for the criteria "price" to the value 2800
-    Then the response is 204
+    Then the response is 200
     When I set the property on the alternative "Philips LatteGo" for the criteria "beverages" to the value 12
 
     When I get the decision
-    And I peek at the alternative with name "Philips LatteGo"
-    Then the alternative has 2 properties
+    Then the decision has 2 properties
     Then the property value for the alternative "Philips LatteGo" for the criteria "price" is 2800
     Then the property value for the alternative "Philips LatteGo" for the criteria "beverages" is 12
     Then the property value for the alternative "Philips LatteGo" for the criteria "water capacity" is not set
+

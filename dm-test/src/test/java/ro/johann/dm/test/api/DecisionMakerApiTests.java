@@ -23,7 +23,9 @@ import org.junit.runner.RunWith;
     // alternatives
     "src/test/resources/features/decision/add_alternative.feature",
     "src/test/resources/features/decision/update_alternative.feature",
-    "src/test/resources/features/decision/delete_alternative.feature"
+    "src/test/resources/features/decision/delete_alternative.feature",
+    // properties
+    "src/test/resources/features/decision/set_property.feature"
   }
 )
 public class DecisionMakerApiTests {

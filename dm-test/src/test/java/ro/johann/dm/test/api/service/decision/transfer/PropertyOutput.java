@@ -10,6 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PropertyOutput {
+  String alternativeId;
   String criteriaId;
   Float value;
 }

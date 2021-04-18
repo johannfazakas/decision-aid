@@ -39,7 +39,10 @@ const DecisionTable = props => {
           {props.decision.criteria
             .map(criteria => [
               criteria,
-              alternative.properties.filter(p => p.criteriaId === criteria.id)[0] || {}
+              props.decision.properties
+                .filter(p => p.criteriaId === criteria.id)
+                .filter(p => p.alternativeId === alternative.id)
+                [0] || {}
             ])
             .map(([criteria, property]) => {
               return <td key={criteria.id}>
@@ -100,11 +103,12 @@ DecisionTable.propTypes = {
     })).isRequired,
     alternatives: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      properties: PropTypes.arrayOf(PropTypes.shape({
-        criteriaId: PropTypes.string.isRequired,
-        value: PropTypes.number.isRequired
-      })).isRequired
+      name: PropTypes.string.isRequired
+    })).isRequired,
+    properties: PropTypes.arrayOf(PropTypes.shape({
+      alternativeId: PropTypes.string.isRequired,
+      criteriaId: PropTypes.string.isRequired,
+      value: PropTypes.number.isRequired
     })).isRequired
   }).isRequired,
   onAddCriteria: PropTypes.func.isRequired,

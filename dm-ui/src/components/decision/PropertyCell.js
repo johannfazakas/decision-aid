@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const PropertyCell = props => {
   return (
     <>
-      {props.property.value || ""}
+      {props.property.value || "-"}
     </>
   );
 };

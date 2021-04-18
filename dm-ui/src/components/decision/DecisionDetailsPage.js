@@ -13,7 +13,8 @@ const DecisionDetailsPage = props => {
     name: "",
     description: "",
     criteria: [],
-    alternatives: []
+    alternatives: [],
+    properties: []
   });
 
   useEffect(() => {
