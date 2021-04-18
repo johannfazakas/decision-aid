@@ -44,7 +44,7 @@ const AddAlternativePage = props => {
     event.preventDefault();
     if (!formIsValid()) return;
     addAlternative(props.match.params.decisionId, {name: alternative.name})
-      .then(_alternative =>
+        .then(_alternative =>
         Promise.all(properties.map(property =>
           setProperty(props.match.params.decisionId, {...property, ...{alternativeId: _alternative.id}}))))
       .then(() => navigateToDecisionDetails());

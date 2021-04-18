@@ -23,8 +23,7 @@ const UpdateAlternativePage = props => {
       const _alternative = decision.alternatives.filter(a => a.id === alternativeId)[0]
       setAlternative(_alternative)
       setCriteria(decision.criteria);
-      const properties = decision.properties.filter(p => p.alternativeId === _alternative.id);
-      setProperties(properties);
+      setProperties(decision.properties.filter(p => p.alternativeId === _alternative.id));
     });
   }, [props.match.params.decisionId, props.match.params.alternativeId]);
 

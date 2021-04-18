@@ -4,19 +4,22 @@ import CriteriaForm from "./CriteriaForm";
 
 import { getDecision } from "../../api/decisionsApi";
 import { updateCriteria } from "../../api/criteriaApi";
+import { setProperty } from "../../api/propertyApi";
 
 const UpdateCriteriaPage = props => {
   const [criteria, setCriteria] = useState({
     id: "",
     name: ""
   });
+  const [alternatives, setAlternatives] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    const decisionId = props.match.params.decisionId;
-    const criteriaId = props.match.params.criteriaId;
-    getDecision(decisionId).then(decision => {
-      setCriteria(decision.criteria.filter(c => c.id === criteriaId)[0])
+    getDecision(props.match.params.decisionId).then(decision => {
+      setCriteria(decision.criteria.filter(c => c.id === props.match.params.criteriaId)[0])
+      setAlternatives(decision.alternatives)
+      setProperties(decision.properties.filter(p => props.match.params.criteriaId === p.criteriaId))
     });
   }, [props.match.params.decisionId, props.match.params.criteriaId]);
 
@@ -27,10 +30,27 @@ const UpdateCriteriaPage = props => {
     })
   };
 
+  const handlePropertyChange = property => property.value ?
+    upsertProperty(property) :
+    removeProperty(property)
+
+  const upsertProperty = property => {
+    setProperties(
+      [...(properties.filter(p => p.alternativeId !== property.alternativeId)),
+        property]);
+  }
+
+  const removeProperty = property => {
+    setProperties(properties.filter(p => p.alternativeId !== property.alternativeId));
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!formIsValid()) return;
     updateCriteria(props.match.params.decisionId, criteria)
+      .then(() =>
+        Promise.all(properties.map(property =>
+          setProperty(props.match.params.decisionId, {...property, ...{criteriaId: criteria.id}}))))
       .then(navigateToDecisionDetails);
   };
 
@@ -52,8 +72,11 @@ const UpdateCriteriaPage = props => {
       <h1>Update Criteria</h1>
       <CriteriaForm
         criteria={criteria}
+        alternatives={alternatives}
+        properties={properties}
         errors={errors}
         onChange={handleChange}
+        onPropertyChange={handlePropertyChange}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       />

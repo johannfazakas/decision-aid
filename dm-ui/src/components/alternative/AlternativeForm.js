@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
-import PropertyInput from "../common/PropertyInput";
+import OptionalNumberInput from "../common/OptionalNumberInput";
 
 const AlternativeForm = props => {
 
@@ -16,17 +16,25 @@ const AlternativeForm = props => {
     />
     {props.criteria
       .map(criteria => {
-        const property = props.properties.filter(p => p.criteriaId === p.criteriaId)[0] || {}
+        const property = props.properties
+          .filter(p => p.criteriaId === p.criteriaId)
+          [0] || {};
         return [criteria, property];
       })
       .map(([criteria, property]) => {
-        return <PropertyInput
+        return <OptionalNumberInput
           key={criteria.id}
-          criteria={criteria}
-          property={props.properties.filter(p => p.criteriaId === criteria.id)[0]}
-          onChange={({target}) => props.onPropertyChange({criteriaId: criteria.id, value: parseFloat(target.value)})}
+          id={criteria.name}
+          name={criteria.name}
+          label={criteria.name}
+          number={props.properties.filter(p => p.criteriaId === criteria.id)[0]}
+          onChange={({target}) => props.onPropertyChange({
+            criteriaId: criteria.id,
+            value: parseFloat(target.value)
+          })}
         />
       })}
+
     <input type="submit" value="Save" className="btn btn-warning" />
     <div className="btn btn-light" onClick={props.onCancel}>Cancel</div>
   </form>;
