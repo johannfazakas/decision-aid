@@ -21,7 +21,9 @@ const DecisionList = (props) => {
           </th>
           <td>{decision.description}</td>
           <td>
-            <div className="btn btn-danger" onClick={() => props.onDelete(decision.id)}>Delete</div>
+            <div className="btn btn-danger" onClick={() => props.deleteCourse(decision.id)}>
+              Delete
+            </div>
           </td>
         </tr>
       })}
@@ -36,7 +38,7 @@ DecisionList.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.description,
   })).isRequired,
-  onDelete: PropTypes.func.isRequired
+  deleteCourse: PropTypes.func.isRequired
 };
 
 export default DecisionList;

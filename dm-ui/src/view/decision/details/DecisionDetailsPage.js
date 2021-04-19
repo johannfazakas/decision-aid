@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import DecisionTable from "./table/DecisionTable";
+import DecisionTable from "./DecisionTable";
 
-import { deleteDecision, getDecision } from "../../api/decisionsApi";
-import { deleteAlternative } from "../../api/alternativesApi";
-import { deleteCriteria } from "../../api/criteriaApi";
+import { deleteDecision, getDecision } from "../../../api/decisionApi";
+import { deleteAlternative } from "../../../api/alternativesApi";
+import { deleteCriteria } from "../../../api/criteriaApi";
 
 const DecisionDetailsPage = props => {
   const [decision, setDecision] = useState({

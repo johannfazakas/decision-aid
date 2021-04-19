@@ -17,7 +17,7 @@ export const getDecision = decisionId => {
     .catch(handleError);
 };
 
-export const listDecisions = () => {
+export const fetchDecisions = () => {
   return fetch(listDecisionsUrl, {
     method: "GET"
   })

@@ -2,17 +2,17 @@ import React from "react";
 import { Route, Switch } from 'react-router-dom';
 
 import Header from "./common/Header";
-import HomePage from "./HomePage";
-import AboutPage from "./AboutPage";
-import DecisionDetailsPage from "./decision/DecisionDetailsPage";
-import NotFoundPage from "./NotFoundPage";
-import AddDecisionPage from "./decision/AddDecisionPage";
-import DecisionsPage from "./decision/DecisionsPage";
-import UpdateDecisionPage from "./decision/UpdateDecisionPage";
-import AddCriteriaPage from "./criteria/AddCriteriaPage";
-import AddAlternativePage from "./alternative/AddAlternativePage";
-import UpdateAlternativePage from "./alternative/UpdateAlternativePage";
-import UpdateCriteriaPage from "./criteria/UpdateCriteriaPage";
+import HomePage from "./home/HomePage";
+import AboutPage from "./about/AboutPage";
+import DecisionDetailsPage from "./decision/details/DecisionDetailsPage";
+import NotFoundPage from "./error/NotFoundPage";
+import AddDecisionPage from "./decision/manage/AddDecisionPage";
+import DecisionListPage from "./decision/list/DecisionListPage";
+import UpdateDecisionPage from "./decision/manage/UpdateDecisionPage";
+import AddCriteriaPage from "./decision/criteria/AddCriteriaPage";
+import AddAlternativePage from "./decision/alternative/AddAlternativePage";
+import UpdateAlternativePage from "./decision/alternative/UpdateAlternativePage";
+import UpdateCriteriaPage from "./decision/criteria/UpdateCriteriaPage";
 
 const App = () => {
   return (
@@ -26,7 +26,7 @@ const App = () => {
         <Route path="/decision/:decisionId/alternative" component={AddAlternativePage} />
         <Route path="/decision/:decisionId/details" component={DecisionDetailsPage} />
         <Route path="/decision/:decisionId" component={UpdateDecisionPage} />
-        <Route path="/decisions" component={DecisionsPage} />
+        <Route path="/decisions" component={DecisionListPage} />
         <Route path="/decision" component={AddDecisionPage} />
         <Route path="/about" component={AboutPage} />
         <Route component={NotFoundPage} />
