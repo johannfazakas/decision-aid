@@ -19,8 +19,7 @@ const AlternativeForm = props => {
     {props.criteria
       .map(criteria => {
         const property = props.properties
-          .filter(p => p.criteriaId === criteria.id)
-          [0] || {};
+          .filter(p => p.criteriaId === criteria.id)[0] || {};
         return [criteria, property];
       })
       .map(([criteria, property]) => {

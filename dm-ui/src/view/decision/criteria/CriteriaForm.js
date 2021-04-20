@@ -28,8 +28,7 @@ const CriteriaForm = props => {
       {props.alternatives
         .map(alternative => {
           const property = props.properties
-            .filter(p => p.alternativeId === alternative.id)
-            [0] || {};
+            .filter(p => p.alternativeId === alternative.id)[0] || {};
           return [alternative, property]
         })
         .map(([alternative, property]) => {

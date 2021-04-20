@@ -44,8 +44,7 @@ const DecisionTable = props => {
               criteria,
               props.decision.properties
                 .filter(p => p.criteriaId === criteria.id)
-                .filter(p => p.alternativeId === alternative.id)
-                [0] || {}
+                .filter(p => p.alternativeId === alternative.id)[0] || {}
             ])
             .map(([criteria, property]) => {
               return <td key={criteria.id}>
