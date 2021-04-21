@@ -7,11 +7,13 @@ Feature: Add criteria
     And I set the name to "price" on the add criteria input
     And I set the weight to 100 on the add criteria input
     And I set the unit of measure to "euro" on the add criteria input
+    And I set the type to "minimum" on the add criteria input
     When I add the criteria
     Then the response is 201
     And the criteria weight is 100
     And the criteria name is "price"
     And the criteria unit of measure is "euro"
+    And the criteria type is "minimum"
 
     When I get the decision
     Then the response is 200
@@ -24,11 +26,13 @@ Feature: Add criteria
 
     Given I plan to add a criteria
     And I set the weight to 80 on the add criteria input
+    And I set the type to "minimum" on the add criteria input
     When I add the criteria
     Then the response is 400
 
     Given I plan to add a criteria
     And I set the name to "" on the add criteria input
+    And I set the type to "maximum" on the add criteria input
     And I set the weight to 50 on the add criteria input
     When I add the criteria
     Then the response is 400
@@ -38,13 +42,35 @@ Feature: Add criteria
 
     Given I plan to add a criteria
     And I set the name to "price" on the add criteria input
-    And I set the weight to -1 on the add criteria input
+    And I set the weight to 0 on the add criteria input
+    And I set the type to "minimum" on the add criteria input
     When I add the criteria
     Then the response is 400
 
     Given I plan to add a criteria
     And I set the name to "price" on the add criteria input
     And I set the weight to 101 on the add criteria input
+    And I set the type to "minimum" on the add criteria input
+    When I add the criteria
+    Then the response is 400
+
+  Scenario: Add criteria without type
+    Given I create a decision with name "headphones"
+
+    Given I plan to add a criteria
+    And I set the name to "price" on the add criteria input
+    And I set the weight to 50 on the add criteria input
+    And I set the unit of measure to "RON" on the add criteria input
+    When I add the criteria
+    Then the response is 400
+
+  Scenario: Add criteria with invalid type
+    Given I create a decision with name "mouse pad"
+
+    Given I plan to add a criteria
+    And I set the name to "price" on the add criteria input
+    And I set the weight to 50 on the add criteria input
+    And I set the type to "awesome" on the add criteria input
     When I add the criteria
     Then the response is 400
 
@@ -52,5 +78,6 @@ Feature: Add criteria
     Given I plan to add a criteria
     And I set the name to "price" on the add criteria input
     And I set the weight to 50 on the add criteria input
+    And I set the type to "minimum" on the add criteria input
     When I add the criteria on a random decision
     Then the response is 404

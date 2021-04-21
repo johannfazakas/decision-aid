@@ -10,7 +10,8 @@ export const addCriteria = (decisionId, criteria) => {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({...criteria})
+    // TODO remove hardcoded type
+    body: JSON.stringify({...criteria, type: "minimum"})
   })
     .then(handleResponse)
     .catch(handleError);
@@ -23,7 +24,8 @@ export const updateCriteria = (decisionId, criteria) => {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({...body})
+    // TODO remove hardcoded type
+    body: JSON.stringify({...body, type: "minimum"})
   })
     .then(handleResponse)
     .catch(handleError);

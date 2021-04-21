@@ -8,11 +8,13 @@ data class CriteriaOutput(
   val name: String,
   val weight: Int,
   val unitOfMeasure: String?,
+  val type: String
 ) {
   constructor(criteria: Criteria) : this(
     id = criteria.id,
     name = criteria.name,
     weight = criteria.weight,
-    unitOfMeasure = criteria.unitOfMeasure
+    unitOfMeasure = criteria.unitOfMeasure,
+    type = criteria.type.value
   )
 }

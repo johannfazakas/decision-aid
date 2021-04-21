@@ -24,8 +24,16 @@ Feature: Delete alternative
     And I add an alternative with name "Philips LatteGo 5400"
     And I add an alternative with name "DeLonghi Eletta"
 
-    And I add a criteria with name "price" and weight 50
-    And I add a criteria with name "beverages" and weight 30
+    Given I plan to add a criteria
+    And I set the name to "price" on the add criteria input
+    And I set the weight to 50 on the add criteria input
+    And I set the type to "minimum" on the add criteria input
+    And I add the criteria
+
+    Given I plan to add a criteria
+    And I set the name to "beverages" on the add criteria input
+    And I set the weight to 30 on the add criteria input
+    And I set the type to "maximum" on the add criteria input
 
     Given I get the decision
     And I set the property on the alternative "Philips LatteGo 5400" for the criteria "price" to the value 2600

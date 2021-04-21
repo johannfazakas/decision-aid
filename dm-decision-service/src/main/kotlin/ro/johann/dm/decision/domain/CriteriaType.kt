@@ -1,6 +1,8 @@
 package ro.johann.dm.decision.domain
 
-enum class CriteriaType(val value: String) {
-  QUANTITATIVE("quantitative"),
-  QUALITATIVE("qualitative")
+import com.fasterxml.jackson.annotation.JsonValue
+
+enum class CriteriaType(@JsonValue val value: String) {
+  MINIMUM("minimum"),
+  MAXIMUM("maximum")
 }

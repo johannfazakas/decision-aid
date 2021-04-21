@@ -16,4 +16,5 @@ public class UpdateCriteriaInput {
   String name;
   Integer weight;
   String unitOfMeasure;
+  String type;
 }

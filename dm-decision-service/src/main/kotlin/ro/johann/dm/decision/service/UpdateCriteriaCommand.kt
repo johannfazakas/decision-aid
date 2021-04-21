@@ -25,6 +25,7 @@ class UpdateCriteriaCommand(
         input.weight?.also { criteria.weight = it }
         input.name?.also { criteria.name = it }
         input.unitOfMeasure?.also { criteria.unitOfMeasure = it }
+        input.type?.also { criteria.type = it }
       }
       ?.also(criteriaRepository::save)
       ?: throw Errors.criteriaNotFound(decisionId, criteriaId)

@@ -14,4 +14,5 @@ public class CriteriaOutput {
   String name;
   int weight;
   String unitOfMeasure;
+  String type;
 }

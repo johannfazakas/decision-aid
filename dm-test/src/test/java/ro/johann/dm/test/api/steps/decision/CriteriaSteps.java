@@ -1,6 +1,5 @@
 package ro.johann.dm.test.api.steps.decision;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -59,6 +58,11 @@ public class CriteriaSteps {
     addCriteriaInputBuilder.unitOfMeasure(unitOfMeasure);
   }
 
+  @Given("I set the type to {string} on the add criteria input")
+  public void setAddCriteriaInputType(String type) {
+    addCriteriaInputBuilder.type(type);
+  }
+
   @Given("I plan to update the criteria")
   public void prepareUpdateCriteriaInput() {
     updateCriteriaInputBuilder = UpdateCriteriaInput.builder();
@@ -74,9 +78,15 @@ public class CriteriaSteps {
     updateCriteriaInputBuilder.name(name);
   }
 
+
   @Given("I set the unit of measure to {string} on the update criteria input")
   public void setUpdateCriteriaInputUnitOfMeasure(String unitOfMeasure) {
     updateCriteriaInputBuilder.unitOfMeasure(unitOfMeasure);
+  }
+
+  @Given("I set the type to {string} on the update criteria input")
+  public void setUpdateCriteriaInputType(String type) {
+    updateCriteriaInputBuilder.type(type);
   }
 
   @When("I add the criteria")
@@ -87,15 +97,6 @@ public class CriteriaSteps {
   @When("I add the criteria on a random decision")
   public void addCriteriaOnRandomDecision() {
     addCriteria(UUID.randomUUID().toString(), addCriteriaInputBuilder.build());
-  }
-
-  @When("I add a criteria with name {string} and weight {int}")
-  public void addCriteria(String name, int weight) {
-    AddCriteriaInput input = AddCriteriaInput.builder()
-      .name(name)
-      .weight(weight)
-      .build();
-    addCriteria(storage.getDecision().getId(), input);
   }
 
   private void addCriteria(String decisionId, AddCriteriaInput input) {
@@ -111,14 +112,6 @@ public class CriteriaSteps {
   @When("I update the criteria by random decision")
   public void updateCriteriaOnRandomDecision() {
     updateCriteria(UUID.randomUUID().toString(), storage.getDecision().getId(), updateCriteriaInputBuilder.build());
-  }
-
-  @When("I update the criteria weight to {int}")
-  public void updateTheCriteriaWeightTo(int weight) {
-    UpdateCriteriaInput input = UpdateCriteriaInput.builder()
-      .weight(weight)
-      .build();
-    updateCriteria(storage.getDecision().getId(), storage.getCriteria().getId(), input);
   }
 
   @When("I update the criteria")
@@ -151,8 +144,13 @@ public class CriteriaSteps {
     assertEquals(name, storage.getCriteria().getName());
   }
 
-  @And("the criteria unit of measure is {string}")
+  @Then("the criteria unit of measure is {string}")
   public void theCriteriaUnitOfMeasureIs(String unitOfMeasure) {
     assertEquals(unitOfMeasure, storage.getCriteria().getUnitOfMeasure());
+  }
+
+  @Then("the criteria type is {string}")
+  public void theCriteriaTypeIs(String type) {
+    assertEquals(type, storage.getCriteria().getType());
   }
 }

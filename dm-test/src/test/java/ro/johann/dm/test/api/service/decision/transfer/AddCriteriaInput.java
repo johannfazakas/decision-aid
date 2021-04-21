@@ -13,4 +13,5 @@ public class AddCriteriaInput {
   String name;
   int weight;
   String unitOfMeasure;
+  String type;
 }

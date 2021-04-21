@@ -10,8 +10,15 @@ Feature: Get decision
     And I set the name to "price" on the add criteria input
     And I set the weight to 60 on the add criteria input
     And I set the unit of measure to "$" on the add criteria input
+    And I set the type to "minimum" on the add criteria input
     And I add the criteria
-    And I add a criteria with name "screen size" and weight 30
+
+    Given I plan to add a criteria
+    And I set the name to "screen size" on the add criteria input
+    And I set the weight to 30 on the add criteria input
+    And I set the unit of measure to "inch" on the add criteria input
+    And I set the type to "maximum" on the add criteria input
+    And I add the criteria
 
     Given I add an alternative with name "Samsung Note 10"
     And I add an alternative with name "iPhone 12"
@@ -26,9 +33,11 @@ Feature: Get decision
     And the decision description is "I would like it to take good pictures"
 
     Then the decision has 2 criteria
+
     Given I peek at the criteria with name "price"
     Then the criteria weight is 60
     And the criteria unit of measure is "$"
+    And the criteria type is "minimum"
 
     Then the decision has 2 alternatives
     And the decision has 2 properties
