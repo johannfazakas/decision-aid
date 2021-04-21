@@ -12,4 +12,5 @@ import static lombok.AccessLevel.PRIVATE;
 public class AddCriteriaInput {
   String name;
   int weight;
+  String unitOfMeasure;
 }

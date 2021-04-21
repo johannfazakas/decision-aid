@@ -6,11 +6,13 @@ import java.util.UUID
 data class CriteriaOutput(
   val id: UUID,
   val name: String,
-  val weight: Int
+  val weight: Int,
+  val unitOfMeasure: String?,
 ) {
-  constructor(criteria: Criteria): this(
+  constructor(criteria: Criteria) : this(
     id = criteria.id,
     name = criteria.name,
-    weight = criteria.weight
+    weight = criteria.weight,
+    unitOfMeasure = criteria.unitOfMeasure
   )
 }

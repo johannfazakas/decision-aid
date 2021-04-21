@@ -1,5 +1,6 @@
 package ro.johann.dm.test.api.steps.decision;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -43,14 +44,19 @@ public class CriteriaSteps {
     addCriteriaInputBuilder = AddCriteriaInput.builder();
   }
 
-  @Given("I set the name {string} on the add criteria input")
+  @Given("I set the name to {string} on the add criteria input")
   public void setAddCriteriaInputName(String name) {
     addCriteriaInputBuilder.name(name);
   }
 
-  @Given("I set the weight {int} on the add criteria input")
+  @Given("I set the weight to {int} on the add criteria input")
   public void setAddCriteriaInputWeight(int weight) {
     addCriteriaInputBuilder.weight(weight);
+  }
+
+  @Given("I set the unit of measure to {string} on the add criteria input")
+  public void setAddCriteriaInputUnitOfMeasure(String unitOfMeasure) {
+    addCriteriaInputBuilder.unitOfMeasure(unitOfMeasure);
   }
 
   @Given("I plan to update the criteria")
@@ -58,14 +64,19 @@ public class CriteriaSteps {
     updateCriteriaInputBuilder = UpdateCriteriaInput.builder();
   }
 
-  @Given("I set the weight {int} on the update criteria input")
+  @Given("I set the weight to {int} on the update criteria input")
   public void setUpdateCriteriaInputWeight(int weight) {
     updateCriteriaInputBuilder.weight(weight);
   }
 
-  @Given("I set the name {string} on the update criteria input")
+  @Given("I set the name to {string} on the update criteria input")
   public void setUpdateCriteriaInputName(String name) {
     updateCriteriaInputBuilder.name(name);
+  }
+
+  @Given("I set the unit of measure to {string} on the update criteria input")
+  public void setUpdateCriteriaInputUnitOfMeasure(String unitOfMeasure) {
+    updateCriteriaInputBuilder.unitOfMeasure(unitOfMeasure);
   }
 
   @When("I add the criteria")
@@ -138,5 +149,10 @@ public class CriteriaSteps {
   @Then("the criteria name is {string}")
   public void theCriteriaNameIs(String name) {
     assertEquals(name, storage.getCriteria().getName());
+  }
+
+  @And("the criteria unit of measure is {string}")
+  public void theCriteriaUnitOfMeasureIs(String unitOfMeasure) {
+    assertEquals(unitOfMeasure, storage.getCriteria().getUnitOfMeasure());
   }
 }

@@ -6,7 +6,7 @@ Feature: Update alternative
     And I add an alternative with name "Philips LatteGo 4300"
 
     Given I plan to update the alternative
-    And I set the name "Philips LatteGo 5400" on the update alternative input
+    And I set the name to "Philips LatteGo 5400" on the update alternative input
     When I update the alternative
     Then the response is 200
     And the alternative name is "Philips LatteGo 5400"
@@ -20,6 +20,6 @@ Feature: Update alternative
     And I add an alternative with name "Bosch RE34"
 
     Given I plan to update the alternative
-    And I set the name "" on the update alternative input
+    And I set the name to "" on the update alternative input
     When I update the alternative
     Then the response is 400

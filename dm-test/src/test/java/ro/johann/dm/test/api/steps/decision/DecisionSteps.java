@@ -49,22 +49,22 @@ public class DecisionSteps {
     updateDecisionInputBuilder = UpdateDecisionInput.builder();
   }
 
-  @Given("I set the name {string} on the create decision input")
+  @Given("I set the name to {string} on the create decision input")
   public void setNameOnCreateDecisionInput(String name) {
     createDecisionInputBuilder.name(name);
   }
 
-  @Given("I set the name {string} on the update decision input")
+  @Given("I set the name to {string} on the update decision input")
   public void setNameOnUpdateDecisionInput(String name) {
     updateDecisionInputBuilder.name(name);
   }
 
-  @Given("I set the description {string} on the create decision input")
+  @Given("I set the description to {string} on the create decision input")
   public void setDescriptionOnCreateDecisionInput(String description) {
     createDecisionInputBuilder.description(description);
   }
 
-  @Given("I set the description {string} on the update decision input")
+  @Given("I set the description to {string} on the update decision input")
   public void setDescriptionOnUpdateDecisionInput(String description) {
     updateDecisionInputBuilder.description(description);
   }

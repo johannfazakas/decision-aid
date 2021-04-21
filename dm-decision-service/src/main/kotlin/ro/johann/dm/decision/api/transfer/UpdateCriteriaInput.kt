@@ -11,5 +11,7 @@ data class UpdateCriteriaInput(
   val weight: Int?,
 
   @field:NotBlankIfPresent
-  val name: String?
+  val name: String?,
+
+  val unitOfMeasure: String?,
 )

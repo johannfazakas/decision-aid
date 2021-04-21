@@ -23,6 +23,8 @@ data class Criteria(
   var name: String,
   @Column(nullable = false)
   var weight: Int,
+  @Column
+  var unitOfMeasure: String?,
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "decision_id")
   val decision: Decision,

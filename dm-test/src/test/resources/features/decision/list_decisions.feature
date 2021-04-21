@@ -7,12 +7,12 @@ Feature: List decisions
     Given I add a criteria with name "capacity" and weight 60
 
     Given I plan to add an alternative
-    And I set the name "Bosch IREW85" on the add alternative input
+    And I set the name to "Bosch IREW85" on the add alternative input
     And I add the alternative
 
     Given I plan to create a decision
-    And I set the name "Dryer" on the create decision input
-    And I set the description "for clothes" on the create decision input
+    And I set the name to "Dryer" on the create decision input
+    And I set the description to "for clothes" on the create decision input
     And I create the decision
 
     When I list the decisions

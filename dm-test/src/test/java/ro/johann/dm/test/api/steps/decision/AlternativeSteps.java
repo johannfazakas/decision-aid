@@ -32,7 +32,7 @@ public class AlternativeSteps {
     addAlternativeInputBuilder = AddAlternativeInput.builder();
   }
 
-  @Given("I set the name {string} on the add alternative input")
+  @Given("I set the name to {string} on the add alternative input")
   public void setNameOnAddAlternativeInput(String name) {
     addAlternativeInputBuilder.name(name);
   }
@@ -42,7 +42,7 @@ public class AlternativeSteps {
     updateAlternativeInputBuilder = UpdateAlternativeInput.builder();
   }
 
-  @Given("I set the name {string} on the update alternative input")
+  @Given("I set the name to {string} on the update alternative input")
   public void setNameOnUpdateAlternativeInput(String name) {
     updateAlternativeInputBuilder.name(name);
   }

@@ -13,11 +13,14 @@ data class AddCriteriaInput(
 
   @field:Min(value = 0)
   @field:Max(value = 100)
-  val weight: Int
+  val weight: Int,
+
+  val unitOfMeasure: String?,
 ) {
   fun toModel(decision: Decision): Criteria = Criteria(
     name = name,
     weight = weight,
-    decision = decision
+    unitOfMeasure = unitOfMeasure,
+    decision = decision,
   )
 }

@@ -2,11 +2,15 @@ Feature: Get decision
 
   Scenario: Get decision
     Given I plan to create a decision
-    And I set the name "Phone" on the create decision input
-    And I set the description "I would like it to take good pictures" on the create decision input
+    And I set the name to "Phone" on the create decision input
+    And I set the description to "I would like it to take good pictures" on the create decision input
     And I create the decision
 
-    Given I add a criteria with name "price" and weight 60
+    Given I plan to add a criteria
+    And I set the name to "price" on the add criteria input
+    And I set the weight to 60 on the add criteria input
+    And I set the unit of measure to "$" on the add criteria input
+    And I add the criteria
     And I add a criteria with name "screen size" and weight 30
 
     Given I add an alternative with name "Samsung Note 10"
@@ -24,6 +28,7 @@ Feature: Get decision
     Then the decision has 2 criteria
     Given I peek at the criteria with name "price"
     Then the criteria weight is 60
+    And the criteria unit of measure is "$"
 
     Then the decision has 2 alternatives
     And the decision has 2 properties
