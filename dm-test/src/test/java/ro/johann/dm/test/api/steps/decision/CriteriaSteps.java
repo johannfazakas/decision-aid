@@ -12,6 +12,7 @@ import ro.johann.dm.test.api.steps.Errors;
 import javax.inject.Inject;
 import java.util.UUID;
 
+import static java.util.Optional.ofNullable;
 import static org.junit.Assert.assertEquals;
 
 public class CriteriaSteps {
@@ -103,7 +104,8 @@ public class CriteriaSteps {
     criteriaService.addCriteria(decisionId, input)
       .ifPresent(criteria -> {
         storage.setCriteria(criteria);
-        storage.getDecision().addCriteria(criteria);
+        ofNullable(storage.getDecision())
+          .ifPresent(d -> d.addCriteria(criteria));
       });
   }
 

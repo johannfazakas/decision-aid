@@ -11,6 +11,7 @@ import ro.johann.dm.test.api.service.decision.transfer.UpdateAlternativeInput;
 import javax.inject.Inject;
 import java.util.UUID;
 
+import static java.util.Optional.ofNullable;
 import static org.junit.Assert.assertEquals;
 
 public class AlternativeSteps {
@@ -76,7 +77,8 @@ public class AlternativeSteps {
     alternativeService.addAlternative(decisionId, input)
       .ifPresent(alternative -> {
         storage.setAlternative(alternative);
-        storage.getDecision().addAlternative(alternative);
+        ofNullable(storage.getDecision())
+          .ifPresent(d -> d.addAlternative(alternative));
       });
   }
 
