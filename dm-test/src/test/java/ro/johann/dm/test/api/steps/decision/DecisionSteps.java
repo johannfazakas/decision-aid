@@ -164,4 +164,9 @@ public class DecisionSteps {
   public void theDecisionHasProperties(int count) {
     assertEquals(count, storage.getDecision().getProperties().size());
   }
+
+  @Then("the decision status is {string}")
+  public void theDecisionStatusIs(String status) {
+    assertEquals(status, storage.getDecision().getStatus());
+  }
 }

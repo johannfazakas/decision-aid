@@ -21,6 +21,8 @@ data class Decision(
   var name: String,
   @Column
   var description: String? = null,
+  @Column
+  var status: DecisionStatus,
   @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
   @JoinColumn(name = "decision_id")
   private val criteriaList: MutableList<Criteria> = mutableListOf(),

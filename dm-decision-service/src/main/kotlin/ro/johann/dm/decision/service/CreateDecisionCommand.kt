@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ro.johann.dm.decision.api.transfer.CreateDecisionInput
 import ro.johann.dm.decision.domain.Decision
+import ro.johann.dm.decision.domain.DecisionStatus
 import ro.johann.dm.decision.persistence.DecisionRepository
 
 @Service
@@ -20,7 +21,8 @@ class CreateDecisionCommand(
     return decisionRepository.save(
       Decision(
         name = input.name,
-        description = input.description
+        description = input.description,
+        status = DecisionStatus.DEFINE,
       )
     )
   }

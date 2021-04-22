@@ -18,6 +18,7 @@ public class DecisionOutput {
   String id;
   String name;
   String description;
+  String status;
   List<CriteriaOutput> criteria = List.of();
   List<AlternativeOutput> alternatives = List.of();
   List<PropertyOutput> properties = List.of();

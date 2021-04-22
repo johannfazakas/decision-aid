@@ -1,6 +1,7 @@
 Feature: Get decision
 
   Scenario: Get decision
+    # create decision.
     Given I plan to create a decision
     And I set the name to "Phone" on the create decision input
     And I set the description to "I would like it to take good pictures" on the create decision input
@@ -23,6 +24,7 @@ Feature: Get decision
     Given I add an alternative with name "Samsung Note 10"
     And I add an alternative with name "iPhone 12"
 
+    # get decision
     Given I get the decision
     And I set the property on the alternative "Samsung Note 10" for the criteria "screen size" to the value 7.0
     And I set the property on the alternative "iPhone 12" for the criteria "price" to the value 1500
@@ -30,6 +32,7 @@ Feature: Get decision
     When I get the decision
     Then the response is 200
     And the decision name is "Phone"
+    And the decision status is "define"
     And the decision description is "I would like it to take good pictures"
 
     Then the decision has 2 criteria

@@ -11,6 +11,7 @@ Feature: Create decision
     Then the response is 200
     And the decision name is "Fridge"
     And the decision description is "I want my meat to be cold"
+    And the decision status is "define"
 
   Scenario: Create decision with invalid name
     Given I plan to create a decision
