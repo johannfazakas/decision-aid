@@ -74,7 +74,10 @@ public class AlternativeSteps {
 
   private void addAlternative(String decisionId, AddAlternativeInput input) {
     alternativeService.addAlternative(decisionId, input)
-      .ifPresent(storage::setAlternative);
+      .ifPresent(alternative -> {
+        storage.setAlternative(alternative);
+        storage.getDecision().addAlternative(alternative);
+      });
   }
 
   @When("I update the alternative")

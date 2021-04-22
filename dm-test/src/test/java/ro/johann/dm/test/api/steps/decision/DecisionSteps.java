@@ -135,6 +135,12 @@ public class DecisionSteps {
     decisionService.deleteDecision(id);
   }
 
+  @When("I request aid for the decision")
+  public void aidDecision() {
+    decisionService.aidDecision(storage.getDecision().getId())
+      .ifPresent(storage::setDecision);
+  }
+
   @Then("the decision name is {string}")
   public void decisionNameIs(String name) {
     assertEquals(name, storage.getDecision().getName());

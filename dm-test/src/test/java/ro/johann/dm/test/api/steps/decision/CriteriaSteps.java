@@ -101,7 +101,10 @@ public class CriteriaSteps {
 
   private void addCriteria(String decisionId, AddCriteriaInput input) {
     criteriaService.addCriteria(decisionId, input)
-      .ifPresent(storage::setCriteria);
+      .ifPresent(criteria -> {
+        storage.setCriteria(criteria);
+        storage.getDecision().addCriteria(criteria);
+      });
   }
 
   @When("I update the criteria by random criteria")

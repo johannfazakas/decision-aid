@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -16,6 +17,7 @@ import ro.johann.dm.decision.api.transfer.CreateDecisionInput
 import ro.johann.dm.decision.api.transfer.DecisionOutput
 import ro.johann.dm.decision.api.transfer.ListOutput
 import ro.johann.dm.decision.api.transfer.UpdateDecisionInput
+import ro.johann.dm.decision.service.AidDecisionCommand
 import ro.johann.dm.decision.service.CreateDecisionCommand
 import ro.johann.dm.decision.service.DeleteDecisionCommand
 import ro.johann.dm.decision.service.GetDecisionCommand
@@ -31,7 +33,8 @@ class DecisionController(
   private val getDecisionCommand: GetDecisionCommand,
   private val createDecisionCommand: CreateDecisionCommand,
   private val updateDecisionCommand: UpdateDecisionCommand,
-  private val deleteDecisionCommand: DeleteDecisionCommand
+  private val deleteDecisionCommand: DeleteDecisionCommand,
+  private val aidDecisionCommand: AidDecisionCommand
 ) {
   @GetMapping
   @ResponseStatus(OK)
@@ -71,4 +74,12 @@ class DecisionController(
     @PathVariable("decisionId") id: UUID
   ): Unit =
     deleteDecisionCommand.execute(id)
+
+  @PutMapping("/{decisionId}/aid")
+  @ResponseStatus(OK)
+  fun aidDecision(
+    @PathVariable("decisionId") id: UUID
+  ): DecisionOutput =
+    aidDecisionCommand.execute(id)
+      .let(::DecisionOutput)
 }

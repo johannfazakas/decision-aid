@@ -22,4 +22,12 @@ public class DecisionOutput {
   List<CriteriaOutput> criteria = List.of();
   List<AlternativeOutput> alternatives = List.of();
   List<PropertyOutput> properties = List.of();
+
+  public void addAlternative(AlternativeOutput alternative) {
+    alternatives.add(alternative);
+  }
+
+  public void addCriteria(CriteriaOutput criterion) {
+    criteria.add(criterion);
+  }
 }

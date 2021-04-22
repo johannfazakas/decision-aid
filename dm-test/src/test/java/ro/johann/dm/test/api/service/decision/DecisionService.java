@@ -19,6 +19,7 @@ public class DecisionService extends BaseService {
   private static final String DECISION_MAKER_HOST = "http://localhost:7049";
   private static final String DECISIONS_URI = DECISION_MAKER_HOST + "/decision/v1/decisions";
   private static final String DECISION_BY_ID_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}";
+  private static final String AID_DECISION_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/aid";
 
   @Inject
   public DecisionService(HttpService httpService, Mapper mapper, Storage storage) {
@@ -49,6 +50,11 @@ public class DecisionService extends BaseService {
     delete(getDecisionByIdUri(decisionId).replace("{decisionId}", decisionId));
   }
 
+  public Optional<DecisionOutput> aidDecision(String decisionId) {
+    return put(getAidDecisionUri(decisionId), new byte[0])
+      .map(output -> mapper.deserialize(output, DecisionOutput.class));
+  }
+
   // TODO extract cleanup logic
   public void cleanUp() {
     listDecisions()
@@ -66,5 +72,10 @@ public class DecisionService extends BaseService {
 
   private String getDecisionsUri() {
     return DECISIONS_URI;
+  }
+
+  private String getAidDecisionUri(String decisionId) {
+    return AID_DECISION_URI
+      .replace("{decisionId}", decisionId);
   }
 }
