@@ -9,42 +9,31 @@ import ro.johann.dm.test.api.service.decision.transfer.AlternativeOutput;
 import ro.johann.dm.test.api.service.decision.transfer.UpdateAlternativeInput;
 
 import javax.inject.Inject;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 
 public class AlternativeService extends BaseService {
 
-  // TODO extract configs
-  private static final String DECISION_MAKER_HOST = "http://localhost:7049";
-  private static final String ALTERNATIVE_BY_ID_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/alternatives/{alternativeId}";
-  private static final String ALTERNATIVES_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/alternatives";
-
   @Inject
-  public AlternativeService(HttpService httpService, Storage storage, Mapper mapper) {
-    super(httpService, storage, mapper);
+  public AlternativeService(HttpService httpService, Storage storage, Mapper mapper, Properties properties) {
+    super(httpService, storage, mapper, properties);
   }
 
   public Optional<AlternativeOutput> addAlternative(String decisionId, AddAlternativeInput input) {
-    return post(getAlternativesUri(decisionId), mapper.serialize(input))
-      .map(output -> mapper.deserialize(output, AlternativeOutput.class));
+    var url = getUrl("decisionApi.alternativesUrl", Map.of("decisionId", decisionId));
+    return post(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, AlternativeOutput.class));
   }
 
   public void deleteAlternative(String decisionId, String alternativeId) {
-    delete(getAlternativeByIdUri(decisionId, alternativeId));
+    var url = getUrl("decisionApi.alternativeByIdUrl",
+      Map.of("decisionId", decisionId, "alternativeId", alternativeId));
+    delete(url);
   }
 
   public Optional<AlternativeOutput> updateAlternative(String decisionId, String alternativeId, UpdateAlternativeInput input) {
-    return patch(getAlternativeByIdUri(decisionId, alternativeId), mapper.serialize(input))
-      .map(output -> mapper.deserialize(output, AlternativeOutput.class));
-  }
-
-  private String getAlternativesUri(String decisionId) {
-    return ALTERNATIVES_URI
-      .replace("{decisionId}", decisionId);
-  }
-
-  private String getAlternativeByIdUri(String decisionId, String alternativeId) {
-    return ALTERNATIVE_BY_ID_URI
-      .replace("{decisionId}", decisionId)
-      .replace("{alternativeId}", alternativeId);
+    var url = getUrl("decisionApi.alternativeByIdUrl",
+      Map.of("decisionId", decisionId, "alternativeId", alternativeId));
+    return patch(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, AlternativeOutput.class));
   }
 }

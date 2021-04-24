@@ -9,42 +9,31 @@ import ro.johann.dm.test.api.service.decision.transfer.CriteriaOutput;
 import ro.johann.dm.test.api.service.decision.transfer.UpdateCriteriaInput;
 
 import javax.inject.Inject;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 
 public class CriteriaService extends BaseService {
 
-  // TODO extract configs
-  private static final String DECISION_MAKER_HOST = "http://localhost:7049";
-  private static final String CRITERIA_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria";
-  public static final String CRITERIA_BY_ID_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/criteria/{criteriaId}";
-
   @Inject
-  public CriteriaService(HttpService httpService, Storage storage, Mapper mapper) {
-    super(httpService, storage, mapper);
+  public CriteriaService(HttpService httpService, Storage storage, Mapper mapper, Properties properties) {
+    super(httpService, storage, mapper, properties);
   }
 
   public Optional<CriteriaOutput> addCriteria(String decisionId, AddCriteriaInput input) {
-    return post(getCriteriaUri(decisionId), mapper.serialize(input))
-      .map(response -> mapper.deserialize(response, CriteriaOutput.class));
+    var url = getUrl("decisionApi.criteriaUrl", Map.of("decisionId", decisionId));
+    return post(url, mapper.serialize(input)).map(response -> mapper.deserialize(response, CriteriaOutput.class));
   }
 
   public Optional<CriteriaOutput> updateCriteria(String decisionId, String criteriaId, UpdateCriteriaInput input) {
-    return patch(getCriteriaByIdUri(decisionId, criteriaId), mapper.serialize(input))
-      .map(response -> mapper.deserialize(response, CriteriaOutput.class));
+    var url = getUrl("decisionApi.criteriaByIdUrl",
+      Map.of("decisionId", decisionId, "criteriaId", criteriaId));
+    return patch(url, mapper.serialize(input)).map(response -> mapper.deserialize(response, CriteriaOutput.class));
   }
 
   public void deleteCriteria(String decisionId, String criteriaId) {
-    delete(getCriteriaByIdUri(decisionId, criteriaId));
-  }
-
-  private String getCriteriaUri(String decisionId) {
-    return CRITERIA_URI
-      .replace("{decisionId}", decisionId);
-  }
-
-  private String getCriteriaByIdUri(String decisionId, String criteriaId) {
-    return CRITERIA_BY_ID_URI
-      .replace("{decisionId}", decisionId)
-      .replace("{criteriaId}", criteriaId);
+    var url = getUrl("decisionApi.criteriaByIdUrl",
+      Map.of("decisionId", decisionId, "criteriaId", criteriaId));
+    delete(url);
   }
 }

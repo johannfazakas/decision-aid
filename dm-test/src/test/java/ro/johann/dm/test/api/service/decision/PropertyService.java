@@ -8,25 +8,19 @@ import ro.johann.dm.test.api.service.Mapper;
 import ro.johann.dm.test.api.service.decision.transfer.PropertyOutput;
 import ro.johann.dm.test.api.service.decision.transfer.SetPropertyInput;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 
 public class PropertyService extends BaseService {
 
-  private static final String DECISION_MAKER_HOST = "http://localhost:7049";
-  private static final String PROPERTY_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/properties";
-
   @Inject
-  public PropertyService(HttpService httpService, Storage storage, Mapper mapper) {
-    super(httpService, storage, mapper);
+  public PropertyService(HttpService httpService, Storage storage, Mapper mapper, Properties properties) {
+    super(httpService, storage, mapper, properties);
   }
 
   public Optional<PropertyOutput> addProperty(String decisionId, SetPropertyInput input) {
-    return put(getPropertyUri(decisionId), mapper.serialize(input))
-      .map(output -> mapper.deserialize(output, PropertyOutput.class));
-  }
-
-  private String getPropertyUri(String decisionId) {
-    return PROPERTY_URI
-      .replace("{decisionId}", decisionId);
+    var url = getUrl("decisionApi.propertiesUrl", Map.of("decisionId", decisionId));
+    return put(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, PropertyOutput.class));
   }
 }

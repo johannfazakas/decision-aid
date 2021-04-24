@@ -11,48 +11,47 @@ import ro.johann.dm.test.api.service.decision.transfer.UpdateDecisionInput;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
+
+import static java.util.Collections.emptyMap;
 
 public class DecisionService extends BaseService {
 
-  // TODO extract to configs
-  private static final String DECISION_MAKER_HOST = "http://localhost:7049";
-  private static final String DECISIONS_URI = DECISION_MAKER_HOST + "/decision/v1/decisions";
-  private static final String DECISION_BY_ID_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}";
-  private static final String AID_DECISION_URI = DECISION_MAKER_HOST + "/decision/v1/decisions/{decisionId}/aid";
-
   @Inject
-  public DecisionService(HttpService httpService, Mapper mapper, Storage storage) {
-    super(httpService, storage, mapper);
+  public DecisionService(HttpService httpService, Mapper mapper, Storage storage, Properties properties) {
+    super(httpService, storage, mapper, properties);
   }
 
   public Optional<DecisionOutput> createDecision(CreateDecisionInput input) {
-    return post(getDecisionsUri(), mapper.serialize(input))
-      .map(output -> mapper.deserialize(output, DecisionOutput.class));
+    var url = getUrl("decisionApi.decisionsUrl", emptyMap());
+    return post(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
   public Optional<DecisionOutput> getDecision(String decisionId) {
-    return get(getDecisionByIdUri(decisionId))
-      .map(output -> mapper.deserialize(output, DecisionOutput.class));
+    var url = getUrl("decisionApi.decisionByIdUrl", Map.of("decisionId", decisionId));
+    return get(url).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
   public Optional<DecisionsOutput> listDecisions() {
-    return get(getDecisionsUri())
-      .map(output -> mapper.deserialize(output, DecisionsOutput.class));
+    var url = getUrl("decisionApi.decisionsUrl", emptyMap());
+    return get(url).map(output -> mapper.deserialize(output, DecisionsOutput.class));
   }
 
   public Optional<DecisionOutput> updateDecision(String decisionId, UpdateDecisionInput input) {
-    return patch(getDecisionByIdUri(decisionId), mapper.serialize(input))
-      .map(output -> mapper.deserialize(output, DecisionOutput.class));
+    var url = getUrl("decisionApi.decisionByIdUrl", Map.of("decisionId", decisionId));
+    return patch(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
   public void deleteDecision(String decisionId) {
-    delete(getDecisionByIdUri(decisionId).replace("{decisionId}", decisionId));
+    var url = getUrl("decisionApi.decisionByIdUrl", Map.of("decisionId", decisionId));
+    delete(url);
   }
 
   public Optional<DecisionOutput> aidDecision(String decisionId) {
-    return put(getAidDecisionUri(decisionId), new byte[0])
-      .map(output -> mapper.deserialize(output, DecisionOutput.class));
+    var url = getUrl("decisionApi.aidDecisionUrl", Map.of("decisionId", decisionId));
+    return put(url, new byte[0]).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
   // TODO extract cleanup logic
@@ -63,19 +62,5 @@ public class DecisionService extends BaseService {
       .stream()
       .map(DecisionOutput::getId)
       .forEach(this::deleteDecision);
-  }
-
-  private String getDecisionByIdUri(String decisionId) {
-    return DECISION_BY_ID_URI
-      .replace("{decisionId}", decisionId);
-  }
-
-  private String getDecisionsUri() {
-    return DECISIONS_URI;
-  }
-
-  private String getAidDecisionUri(String decisionId) {
-    return AID_DECISION_URI
-      .replace("{decisionId}", decisionId);
   }
 }
