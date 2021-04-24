@@ -16,8 +16,28 @@ const decisionReducer = (state = initialState.decisions, action) => {
 
     case actionType.DELETE_DECISION:
       return Object.keys(state)
-        .filter(decisionId => decisionId !== String(action.decisionId))
+        .filter(decisionId => decisionId !== action.decisionId)
         .reduce((newState, decisionId) => ({...newState, [decisionId]: state[decisionId]}), {})
+
+    case actionType.DELETE_CRITERIA:
+      return {
+        ...state,
+        [action.decisionId]: {
+          ...state[action.decisionId],
+          criteria: state[action.decisionId].criteria
+            .filter(criteria => criteria.id !== action.criteriaId)
+        }
+      }
+
+    case actionType.DELETE_ALTERNATIVE:
+      return {
+        ...state,
+        [action.decisionId]: {
+          ...state[action.decisionId],
+          alternatives: state[action.decisionId].alternatives
+            .filter(alternative => alternative.id !== action.criteriaId)
+        }
+      }
 
     default:
       return state;

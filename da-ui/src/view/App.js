@@ -4,12 +4,12 @@ import { Route, Switch } from 'react-router-dom';
 import Header from "./common/Header";
 import HomePage from "./home/HomePage";
 import AboutPage from "./about/AboutPage";
-import DecisionDetailsPage from "./decision/details/DecisionDetailsPage";
 import NotFoundPage from "./error/NotFoundPage";
 import AddCriteriaPage from "./decision/criteria/AddCriteriaPage";
 import AddAlternativePage from "./decision/alternative/AddAlternativePage";
 import UpdateAlternativePage from "./decision/alternative/UpdateAlternativePage";
 import UpdateCriteriaPage from "./decision/criteria/UpdateCriteriaPage";
+import DecisionDetailsPage from "./decision/details/DecisionDetailsPage";
 import DecisionListPage from "./decision/list/DecisionListPage";
 import DecisionPage from "./decision/manage/DecisionPage";
 

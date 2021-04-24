@@ -15,7 +15,7 @@ const DecisionPage = props => {
   useEffect(() => {
     if (props.decisions.length === 0) {
       props.loadDecisions()
-        .catch(error => alert("Loading courses failed." + error))
+        .catch(error => alert("Loading decisions failed. " + error))
     } else {
       setDecision({...props.decision})
     }

@@ -31,6 +31,7 @@ const DecisionListPage = ({decisions, loadDecisions, deleteDecision}) => {
 DecisionListPage.propTypes = {
   decisions: PropTypes.array.isRequired,
   loadDecisions: PropTypes.func.isRequired,
+  deleteDecision: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
