@@ -1,4 +1,4 @@
-# Decision Maker App
+# Decision Aid App
 
     Need help in choosing between products based on own set criterias and weights? This app does that.
     It has a React web app and an API based on microservices using Spring with Kotlin and Java.
@@ -22,35 +22,38 @@
 #### Run
 
 ```bash
-cd dm-decision-service/
+cd da-decision-service/
 ./gradlew bootRun
 ```
 
 ### Gateway Service
+
     Api Gateway for backend microservices platform.
     technologies: Spring Cloud Gateway, Java, Gradle
     default port: 7049
 
 #### Run
+
 ```bash
-cd dm-gateway-service
+cd da-gateway-service
 ./gradlew bootRun
 ```
 
-### Decision Maker UI
+### Decision Aid UI
 
-    Single page web app for Decision Maker application.
+    Single page web app for Decision Aid application.
     technology: React, Node, Bootstrap.
     default host: 7085.
 
 #### Run
 
 ```bash
-cd dm-ui/
-npm run start
+cd da-ui/
+npm install
+npm start
 ```
 
-### Decision Maker Test
+### Decision Aid Test
 
     Project dedicated for API tests.
     technologies: Java, Cucumber, Gherkin, JUnit, Guice, Gradle.
@@ -58,6 +61,6 @@ npm run start
 #### Run
 
 ```bash
-cd dm-test/
+cd da-test/
 ./gradlew cucumber
 ```

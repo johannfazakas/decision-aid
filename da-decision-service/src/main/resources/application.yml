@@ -1,0 +1,16 @@
+server:
+  port: 7032
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  sql:
+    init:
+      platform: postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/da_decision
+    username: postgres
+    password:
