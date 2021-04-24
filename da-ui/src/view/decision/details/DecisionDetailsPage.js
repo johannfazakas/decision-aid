@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as PropTypes from "prop-types";
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import * as PropTypes from "prop-types"
 
-import { defaultDecision } from "../../../store/default";
-import { deleteDecision, loadDecisions } from "../../../action/decisionActions";
-import { deleteCriteria } from "../../../action/criteriaActions";
-import { deleteAlternative } from "../../../action/alternativeActions";
+import { defaultDecision } from "../../../store/default"
+import { deleteDecision, loadDecisions } from "../../../action/decisionActions"
+import { deleteCriteria } from "../../../action/criteriaActions"
+import { deleteAlternative } from "../../../action/alternativeActions"
 
-import DecisionTable from "./DecisionTable";
+import DecisionTable from "./DecisionTable"
 
 const DecisionDetailsPage = props => {
 
@@ -20,7 +20,7 @@ const DecisionDetailsPage = props => {
       props.loadDecisions()
         .catch(error => alert("Loading decisions failed. " + error))
     } else {
-      setDecision(props.decision);
+      setDecision(props.decision)
     }
   }, [props.decision])
 
@@ -31,11 +31,11 @@ const DecisionDetailsPage = props => {
   }
 
   const handleAddCriteria = () => {
-    props.history.push("/decision/" + decision.id + "/criteria");
+    props.history.push("/decision/" + decision.id + "/criteria")
   }
 
   const handleAddAlternative = () => {
-    props.history.push("/decision/" + decision.id + "/alternative");
+    props.history.push("/decision/" + decision.id + "/alternative")
   }
 
   return (

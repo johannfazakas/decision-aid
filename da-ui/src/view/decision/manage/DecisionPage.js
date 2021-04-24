@@ -46,8 +46,6 @@ const DecisionPage = props => {
     saveDecision.then(() => navigateBack())
   }
 
-  const handleCancel = navigateBack;
-
   return (
     <div className="jumbotron">
       <h2>{decision.id ? "Update" : "Add"} decision</h2>
@@ -56,7 +54,7 @@ const DecisionPage = props => {
         errors={errors}
         onChange={handleChange}
         onSubmit={handleSubmit}
-        onCancel={handleCancel}
+        onCancel={navigateBack}
       />
     </div>
   );

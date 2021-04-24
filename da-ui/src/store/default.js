@@ -6,3 +6,9 @@ export const defaultDecision = () => ({
   alternatives: [],
   properties: []
 });
+
+export const defaultCriterion = () => ({
+  id: null,
+  name: "",
+  weight: null
+})
