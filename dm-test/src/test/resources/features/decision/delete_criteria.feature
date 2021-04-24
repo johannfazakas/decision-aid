@@ -1,18 +1,20 @@
 Feature: Delete criteria
 
   Scenario: Delete criteria
-    Given I create a decision with name "Washing machine"
+    Given I plan to create a decision
+    And I set the decision name to "Washing machine"
+    And I create the decision
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 60 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 60
+    And I set the criteria type to "minimum"
     And I add the criteria
 
     Given I plan to add a criteria
-    And I set the name to "capacity" on the add criteria input
-    And I set the weight to 40 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "capacity"
+    And I set the criteria weight to 40
+    And I set the criteria type to "minimum"
     And I add the criteria
 
     Given I get the decision

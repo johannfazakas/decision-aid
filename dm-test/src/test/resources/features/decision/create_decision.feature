@@ -2,8 +2,8 @@ Feature: Create decision
 
   Scenario: Create decision
     Given I plan to create a decision
-    And I set the name to "Fridge" on the create decision input
-    And I set the description to "I want my meat to be cold" on the create decision input
+    And I set the decision name to "Fridge"
+    And I set the decision description to "I want my meat to be cold"
     When I create the decision
     Then the response is 201
 
@@ -18,5 +18,7 @@ Feature: Create decision
     When I create the decision
     Then the response is 400
 
-    When I create a decision with name ""
+    Given I plan to create a decision
+    And I set the decision name to ""
+    And I create the decision
     Then the response is 400

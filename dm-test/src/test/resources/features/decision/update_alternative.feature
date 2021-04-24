@@ -2,7 +2,9 @@ Feature: Update alternative
 
   Scenario: Update alternative
     # create decision
-    Given I create a decision with name "Espressor"
+    Given I plan to create a decision
+    And I set the decision name to "Espressor"
+    And I create the decision
 
     # add 2 alternatives
     Given I plan to add an alternative
@@ -26,7 +28,9 @@ Feature: Update alternative
     And I peek at the alternative with name "Philips LatteGo 5400"
 
   Scenario: Update alternative with invalid name
-    Given I create a decision with name "Dryer"
+    Given I plan to create a decision
+    And I set the decision name to "Dryer"
+    And I create the decision
 
     Given I plan to add an alternative
     And I set the alternative name to "Bosch RE34"

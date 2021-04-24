@@ -1,7 +1,9 @@
 Feature: Delete alternative
 
   Scenario: Delete alternative
-    Given I create a decision with name "Phone"
+    Given I plan to create a decision
+    And I set the decision name to "Phone"
+    And I create the decision
     And I plan to add an alternative
     And I set the alternative name to "Samsung Note"
     And I add the alternative
@@ -20,7 +22,9 @@ Feature: Delete alternative
     And I peek at the alternative with name "iPhone 12"
 
   Scenario: Delete alternative should delete associated properties
-    Given I create a decision with name "Espressor"
+    Given I plan to create a decision
+    And I set the decision name to "Espressor"
+    And I create the decision
 
     Given I plan to add an alternative
     And I set the alternative name to "Philips LatteGo 5400"
@@ -31,15 +35,15 @@ Feature: Delete alternative
     And I add the alternative
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 50 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 50
+    And I set the criteria type to "minimum"
     And I add the criteria
 
     Given I plan to add a criteria
-    And I set the name to "beverages" on the add criteria input
-    And I set the weight to 30 on the add criteria input
-    And I set the type to "maximum" on the add criteria input
+    And I set the criteria name to "beverages"
+    And I set the criteria weight to 30
+    And I set the criteria type to "maximum"
 
     Given I get the decision
     And I set the property on the alternative "Philips LatteGo 5400" for the criteria "price" to the value 2600

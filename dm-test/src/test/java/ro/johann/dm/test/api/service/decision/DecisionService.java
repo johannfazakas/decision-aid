@@ -4,10 +4,9 @@ import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.BaseService;
 import ro.johann.dm.test.api.service.HttpService;
 import ro.johann.dm.test.api.service.Mapper;
-import ro.johann.dm.test.api.service.decision.transfer.CreateDecisionInput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionOutput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionsOutput;
-import ro.johann.dm.test.api.service.decision.transfer.UpdateDecisionInput;
+import ro.johann.dm.test.api.service.decision.transfer.DecisionInput;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -24,7 +23,7 @@ public class DecisionService extends BaseService {
     super(httpService, storage, mapper, properties);
   }
 
-  public Optional<DecisionOutput> createDecision(CreateDecisionInput input) {
+  public Optional<DecisionOutput> createDecision(DecisionInput input) {
     var url = getUrl("decisionApi.decisionsUrl", emptyMap());
     return post(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
@@ -39,7 +38,7 @@ public class DecisionService extends BaseService {
     return get(url).map(output -> mapper.deserialize(output, DecisionsOutput.class));
   }
 
-  public Optional<DecisionOutput> updateDecision(String decisionId, UpdateDecisionInput input) {
+  public Optional<DecisionOutput> updateDecision(String decisionId, DecisionInput input) {
     var url = getUrl("decisionApi.decisionByIdUrl", Map.of("decisionId", decisionId));
     return patch(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }

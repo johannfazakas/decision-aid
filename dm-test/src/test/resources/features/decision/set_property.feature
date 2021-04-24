@@ -2,27 +2,29 @@ Feature: Set property
 
   Scenario: Set property
     # create decision
-    Given I create a decision with name "Espressor"
+    Given I plan to create a decision
+    And I set the decision name to "Espressor"
+    And I create the decision
 
     # add 3 criteria
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the type to "minimum" on the add criteria input
-    And I set the weight to 40 on the add criteria input
-    And I set the unit of measure to "$" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria type to "minimum"
+    And I set the criteria weight to 40
+    And I set the criteria unit of measure to "$"
     And I add the criteria
 
     Given I plan to add a criteria
-    And I set the name to "beverages" on the add criteria input
-    And I set the type to "maximum" on the add criteria input
-    And I set the weight to 30 on the add criteria input
+    And I set the criteria name to "beverages"
+    And I set the criteria type to "maximum"
+    And I set the criteria weight to 30
     And I add the criteria
 
     Given I plan to add a criteria
-    And I set the name to "water capacity" on the add criteria input
-    And I set the type to "maximum" on the add criteria input
-    And I set the weight to 40 on the add criteria input
-    And I set the unit of measure to "l" on the add criteria input
+    And I set the criteria name to "water capacity"
+    And I set the criteria type to "maximum"
+    And I set the criteria weight to 40
+    And I set the criteria unit of measure to "l"
     And I add the criteria
 
     # add 1 alternative

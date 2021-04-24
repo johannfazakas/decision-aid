@@ -1,184 +1,80 @@
 package ro.johann.dm.test.api.steps.decision;
 
 import com.google.inject.Inject;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java8.En;
 import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.DecisionService;
-import ro.johann.dm.test.api.service.decision.transfer.CreateDecisionInput;
+import ro.johann.dm.test.api.service.decision.transfer.DecisionInput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionOutput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionsOutput;
-import ro.johann.dm.test.api.service.decision.transfer.UpdateDecisionInput;
-import ro.johann.dm.test.api.steps.Errors;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
-public class DecisionSteps {
-
-  private final Storage storage;
-  private final DecisionService decisionService;
-
-  private CreateDecisionInput.Builder createDecisionInputBuilder;
-  private UpdateDecisionInput.Builder updateDecisionInputBuilder;
+public class DecisionSteps implements En {
 
   @Inject
   public DecisionSteps(Storage storage, DecisionService decisionService) {
-    this.storage = storage;
-    this.decisionService = decisionService;
-  }
 
-  @Given("I peek at the decision with name {string}")
-  public void peekDecisionWithName(String name) {
-    storage.getDecisions().stream()
-      .filter(it -> name.equals(it.getName()))
-      .findFirst()
-      .ifPresentOrElse(storage::setDecision, () -> {
-        throw Errors.decisionNotFoundByName(name);
-      });
-  }
+    Given("I peek at the decision with name {string}", (String name) ->
+      storage.setDecision(storage.getDecisionByName(name)));
 
-  @Given("I plan to create a decision")
-  public void prepareCreateDecisionInput() {
-    createDecisionInputBuilder = CreateDecisionInput.builder();
-  }
+    Given("I plan to create/update a/the decision", () ->
+      storage.setDecisionInputBuilder(DecisionInput.builder()));
 
-  @Given("I plan to update the decision")
-  public void prepareUpdateDecisionInput() {
-    updateDecisionInputBuilder = UpdateDecisionInput.builder();
-  }
+    Given("I set the decision name to {string}", (String name) ->
+      storage.getDecisionInputBuilder().name(name));
 
-  @Given("I set the name to {string} on the create decision input")
-  public void setNameOnCreateDecisionInput(String name) {
-    createDecisionInputBuilder.name(name);
-  }
+    Given("I set the decision description to {string}", (String description) ->
+      storage.getDecisionInputBuilder().description(description));
 
-  @Given("I set the name to {string} on the update decision input")
-  public void setNameOnUpdateDecisionInput(String name) {
-    updateDecisionInputBuilder.name(name);
-  }
+    Given("I use a nonexistent decision", () ->
+      storage.setDecision(DecisionOutput.builder().id(UUID.randomUUID().toString()).build()));
 
-  @Given("I set the description to {string} on the create decision input")
-  public void setDescriptionOnCreateDecisionInput(String description) {
-    createDecisionInputBuilder.description(description);
-  }
+    When("I create the decision", () ->
+      decisionService.createDecision(storage.getDecisionInputBuilder().build())
+        .ifPresent(storage::setDecision));
 
-  @Given("I set the description to {string} on the update decision input")
-  public void setDescriptionOnUpdateDecisionInput(String description) {
-    updateDecisionInputBuilder.description(description);
-  }
+    When("I update the decision", () ->
+      decisionService.updateDecision(storage.getDecision().getId(), storage.getDecisionInputBuilder().build())
+        .ifPresent(storage::setDecision));
 
-  @Given("I use a nonexistent decision")
-  public void prepareNonexistentDecision() {
-    storage.setDecision(DecisionOutput.builder().id(UUID.randomUUID().toString()).build());
-  }
+    When("I get the decision", () ->
+      decisionService.getDecision(storage.getDecision().getId())
+        .ifPresent(storage::setDecision));
 
-  @When("I create the decision")
-  public void createDecision() {
-    createDecision(createDecisionInputBuilder.build());
-  }
+    When("I list the decisions", () ->
+      decisionService.listDecisions()
+        .map(DecisionsOutput::getItems)
+        .ifPresent(storage::setDecisions));
 
-  @When("I create a decision with name {string}")
-  public void createDecision(String name) {
-    createDecision(CreateDecisionInput.builder().name(name).build());
-  }
+    When("I delete the decision", () ->
+      decisionService.deleteDecision(storage.getDecision().getId()));
 
-  private void createDecision(CreateDecisionInput request) {
-    decisionService.createDecision(request)
-      .ifPresent(storage::setDecision);
-  }
+    When("I request aid for the decision", () ->
+      decisionService.aidDecision(storage.getDecision().getId())
+        .ifPresent(storage::setDecision));
 
-  @When("I update the decision")
-  public void updateDecision() {
-    updateDecision(storage.getDecision().getId(), updateDecisionInputBuilder.build());
-  }
+    Then("the decision name is {string}", (String name) ->
+      assertEquals(name, storage.getDecision().getName()));
 
-  @When("I update a decision by random id")
-  public void updateDecisionByRandomId() {
-    updateDecision(UUID.randomUUID().toString(), updateDecisionInputBuilder.build());
-  }
+    Then("the decision description is {string}", (String name) ->
+      assertEquals(name, storage.getDecision().getDescription()));
 
-  private void updateDecision(String decisionId, UpdateDecisionInput input) {
-    decisionService.updateDecision(decisionId, input)
-      .ifPresent(storage::setDecision);
-  }
+    Then("the decisions count is {int}", (Integer count) ->
+      assertEquals((int) count, storage.getDecisions().size()));
 
-  @When("I get the decision")
-  public void getDecision() {
-    getDecision(storage.getDecision().getId());
-  }
+    Then("the decision has {int} criteria", (Integer count) ->
+      assertEquals((int) count, storage.getDecision().getCriteria().size()));
 
-  @When("I get a decision by random id")
-  public void getDecisionByRandomId() {
-    getDecision(UUID.randomUUID().toString());
-  }
+    Then("the decision has {int} alternative(s)", (Integer count) ->
+      assertEquals((int) count, storage.getDecision().getAlternatives().size()));
 
-  private void getDecision(String id) {
-    decisionService.getDecision(id)
-      .ifPresent(storage::setDecision);
-  }
+    Then("the decision has {int} properties", (Integer count) ->
+      assertEquals((int) count, storage.getDecision().getProperties().size()));
 
-  @When("I list the decisions")
-  public void listDecisions() {
-    decisionService.listDecisions()
-      .map(DecisionsOutput::getItems)
-      .ifPresent(storage::setDecisions);
-  }
-
-  @When("I delete the decision")
-  public void deleteDecision() {
-    deleteDecision(storage.getDecision().getId());
-  }
-
-  @When("I delete a decision by random id")
-  public void deleteDecisionByRandomId() {
-    deleteDecision(UUID.randomUUID().toString());
-  }
-
-  private void deleteDecision(String id) {
-    decisionService.deleteDecision(id);
-  }
-
-  @When("I request aid for the decision")
-  public void aidDecision() {
-    decisionService.aidDecision(storage.getDecision().getId())
-      .ifPresent(storage::setDecision);
-  }
-
-  @Then("the decision name is {string}")
-  public void decisionNameIs(String name) {
-    assertEquals(name, storage.getDecision().getName());
-  }
-
-  @Then("the decision description is {string}")
-  public void decisionDescriptionIs(String name) {
-    assertEquals(name, storage.getDecision().getDescription());
-  }
-
-  @Then("the decisions count is {int}")
-  public void theDecisionsCountIs(int count) {
-    assertEquals(count, storage.getDecisions().size());
-  }
-
-  @Then("the decision has {int} criteria")
-  public void theDecisionHasCriteria(int count) {
-    assertEquals(count, storage.getDecision().getCriteria().size());
-  }
-
-  @Then("the decision has {int} alternative(s)")
-  public void theDecisionHasAlternatives(int count) {
-    assertEquals(count, storage.getDecision().getAlternatives().size());
-  }
-
-  @Then("the decision has {int} properties")
-  public void theDecisionHasProperties(int count) {
-    assertEquals(count, storage.getDecision().getProperties().size());
-  }
-
-  @Then("the decision status is {string}")
-  public void theDecisionStatusIs(String status) {
-    assertEquals(status, storage.getDecision().getStatus());
+    Then("the decision status is {string}", (String status) ->
+      assertEquals(status, storage.getDecision().getStatus()));
   }
 }

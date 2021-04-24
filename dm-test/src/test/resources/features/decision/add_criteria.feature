@@ -1,13 +1,15 @@
 Feature: Add criteria
 
   Scenario: Add criteria to decision
-    Given I create a decision with name "phone"
+    Given I plan to create a decision
+    And I set the decision name to "Phone"
+    And I create the decision
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 100 on the add criteria input
-    And I set the unit of measure to "euro" on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 100
+    And I set the criteria unit of measure to "euro"
+    And I set the criteria type to "minimum"
     When I add the criteria
     Then the response is 201
     And the criteria weight is 100
@@ -22,62 +24,72 @@ Feature: Add criteria
     Then the criteria weight is 100
 
   Scenario: Add criteria with invalid name
-    Given I create a decision with name "keyboard"
+    Given I plan to create a decision
+    And I set the decision name to "Keyboard"
+    And I create the decision
 
     Given I plan to add a criteria
-    And I set the weight to 80 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria weight to 80
+    And I set the criteria type to "minimum"
     When I add the criteria
     Then the response is 400
 
     Given I plan to add a criteria
-    And I set the name to "" on the add criteria input
-    And I set the type to "maximum" on the add criteria input
-    And I set the weight to 50 on the add criteria input
+    And I set the criteria name to ""
+    And I set the criteria type to "maximum"
+    And I set the criteria weight to 50
     When I add the criteria
     Then the response is 400
 
   Scenario: Add criteria with invalid price
-    Given I create a decision with name "mouse"
+    Given I plan to create a decision
+    And I set the decision name to "Mouse"
+    And I create the decision
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 0 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 0
+    And I set the criteria type to "minimum"
     When I add the criteria
     Then the response is 400
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 101 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 101
+    And I set the criteria type to "minimum"
     When I add the criteria
     Then the response is 400
 
   Scenario: Add criteria without type
-    Given I create a decision with name "headphones"
+    Given I plan to create a decision
+    And I set the decision name to "Headphones"
+    And I create the decision
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 50 on the add criteria input
-    And I set the unit of measure to "RON" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 50
+    And I set the criteria unit of measure to "RON"
     When I add the criteria
     Then the response is 400
 
   Scenario: Add criteria with invalid type
-    Given I create a decision with name "mouse pad"
+    Given I plan to create a decision
+    And I set the decision name to "Mouse pad"
+    And I create the decision
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 50 on the add criteria input
-    And I set the type to "awesome" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 50
+    And I set the criteria type to "awesome"
     When I add the criteria
     Then the response is 400
 
   Scenario: Add criteria on not found decision
+    Given I use a nonexistent decision
+
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 50 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
-    When I add the criteria on a random decision
+    And I set the criteria name to "price"
+    And I set the criteria weight to 50
+    And I set the criteria type to "minimum"
+    When I add the criteria
     Then the response is 404

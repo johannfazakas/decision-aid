@@ -1,13 +1,10 @@
 package ro.johann.dm.test.api.steps.decision;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java8.En;
 import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.CriteriaService;
-import ro.johann.dm.test.api.service.decision.transfer.AddCriteriaInput;
-import ro.johann.dm.test.api.service.decision.transfer.UpdateCriteriaInput;
-import ro.johann.dm.test.api.steps.Errors;
+import ro.johann.dm.test.api.service.decision.transfer.CriteriaInput;
+import ro.johann.dm.test.api.service.decision.transfer.CriteriaOutput;
 
 import javax.inject.Inject;
 import java.util.UUID;
@@ -15,147 +12,61 @@ import java.util.UUID;
 import static java.util.Optional.ofNullable;
 import static org.junit.Assert.assertEquals;
 
-public class CriteriaSteps {
-
-  private final Storage storage;
-  private final CriteriaService criteriaService;
-
-  private AddCriteriaInput.Builder addCriteriaInputBuilder;
-  private UpdateCriteriaInput.Builder updateCriteriaInputBuilder;
+public class CriteriaSteps implements En {
 
   @Inject
   public CriteriaSteps(Storage storage, CriteriaService criteriaService) {
-    this.storage = storage;
-    this.criteriaService = criteriaService;
-  }
 
-  @Given("I peek at the criteria with name {string}")
-  public void peekAtCriteria(String name) {
-    storage.getDecision().getCriteria().stream()
-      .filter(it -> name.equals(it.getName()))
-      .findFirst()
-      .ifPresentOrElse(storage::setCriteria, () -> {
-        throw Errors.criteriaNotFoundByName(name);
-      });
-  }
+    Given("I peek at the criteria with name {string}", (String name) ->
+      storage.setCriteria(storage.getCriteriaByName(name)));
 
-  @Given("I plan to add a criteria")
-  public void prepareAddCriteriaInput() {
-    addCriteriaInputBuilder = AddCriteriaInput.builder();
-  }
+    Given("I plan to add/update a/the criteria", () ->
+      storage.setCriteriaInputBuilder(CriteriaInput.builder()));
 
-  @Given("I set the name to {string} on the add criteria input")
-  public void setAddCriteriaInputName(String name) {
-    addCriteriaInputBuilder.name(name);
-  }
+    Given("I set the criteria name to {string}", (String name) ->
+      storage.getCriteriaInputBuilder().name(name));
 
-  @Given("I set the weight to {int} on the add criteria input")
-  public void setAddCriteriaInputWeight(int weight) {
-    addCriteriaInputBuilder.weight(weight);
-  }
+    Given("I set the criteria weight to {int}", (Integer weight) ->
+      storage.getCriteriaInputBuilder().weight(weight));
 
-  @Given("I set the unit of measure to {string} on the add criteria input")
-  public void setAddCriteriaInputUnitOfMeasure(String unitOfMeasure) {
-    addCriteriaInputBuilder.unitOfMeasure(unitOfMeasure);
-  }
+    Given("I set the criteria unit of measure to {string}", (String unitOfMeasure) ->
+      storage.getCriteriaInputBuilder().unitOfMeasure(unitOfMeasure));
 
-  @Given("I set the type to {string} on the add criteria input")
-  public void setAddCriteriaInputType(String type) {
-    addCriteriaInputBuilder.type(type);
-  }
+    Given("I set the criteria type to {string}", (String type) ->
+      storage.getCriteriaInputBuilder().type(type));
 
-  @Given("I plan to update the criteria")
-  public void prepareUpdateCriteriaInput() {
-    updateCriteriaInputBuilder = UpdateCriteriaInput.builder();
-  }
+    Given("I use a nonexistent criteria", () ->
+      storage.setCriteria(CriteriaOutput.builder().id(UUID.randomUUID().toString()).build()));
 
-  @Given("I set the weight to {int} on the update criteria input")
-  public void setUpdateCriteriaInputWeight(int weight) {
-    updateCriteriaInputBuilder.weight(weight);
-  }
+    When("I add the criteria", () ->
+      criteriaService.addCriteria(storage.getDecision().getId(), storage.getCriteriaInputBuilder().build())
+        .ifPresent(criteria -> {
+          // TODO refactor, encapsulate
+          storage.setCriteria(criteria);
+          ofNullable(storage.getDecision())
+            .ifPresent(d -> d.addCriteria(criteria));
+        }));
 
-  @Given("I set the name to {string} on the update criteria input")
-  public void setUpdateCriteriaInputName(String name) {
-    updateCriteriaInputBuilder.name(name);
-  }
+    When("I update the criteria", () ->
+      criteriaService.updateCriteria(
+        storage.getDecision().getId(),
+        storage.getCriteria().getId(),
+        storage.getCriteriaInputBuilder().build())
+        .ifPresent(storage::setCriteria));
 
+    When("I delete the criteria with name {string}", (String name) ->
+      criteriaService.deleteCriteria(storage.getDecision().getId(), storage.getCriteriaByName(name).getId()));
 
-  @Given("I set the unit of measure to {string} on the update criteria input")
-  public void setUpdateCriteriaInputUnitOfMeasure(String unitOfMeasure) {
-    updateCriteriaInputBuilder.unitOfMeasure(unitOfMeasure);
-  }
+    Then("the criteria weight is {int}", (Integer weight) ->
+      assertEquals((int) weight, storage.getCriteria().getWeight()));
 
-  @Given("I set the type to {string} on the update criteria input")
-  public void setUpdateCriteriaInputType(String type) {
-    updateCriteriaInputBuilder.type(type);
-  }
+    Then("the criteria name is {string}", (String name) ->
+      assertEquals(name, storage.getCriteria().getName()));
 
-  @When("I add the criteria")
-  public void addCriteria() {
-    addCriteria(storage.getDecision().getId(), addCriteriaInputBuilder.build());
-  }
+    Then("the criteria unit of measure is {string}", (String unitOfMeasure) ->
+      assertEquals(unitOfMeasure, storage.getCriteria().getUnitOfMeasure()));
 
-  @When("I add the criteria on a random decision")
-  public void addCriteriaOnRandomDecision() {
-    addCriteria(UUID.randomUUID().toString(), addCriteriaInputBuilder.build());
-  }
-
-  private void addCriteria(String decisionId, AddCriteriaInput input) {
-    criteriaService.addCriteria(decisionId, input)
-      .ifPresent(criteria -> {
-        storage.setCriteria(criteria);
-        ofNullable(storage.getDecision())
-          .ifPresent(d -> d.addCriteria(criteria));
-      });
-  }
-
-  @When("I update the criteria by random criteria")
-  public void updateCriteriaOnRandomCriteria() {
-    updateCriteria(storage.getDecision().getId(), UUID.randomUUID().toString(), updateCriteriaInputBuilder.build());
-  }
-
-  @When("I update the criteria by random decision")
-  public void updateCriteriaOnRandomDecision() {
-    updateCriteria(UUID.randomUUID().toString(), storage.getDecision().getId(), updateCriteriaInputBuilder.build());
-  }
-
-  @When("I update the criteria")
-  public void iUpdateTheCriteria() {
-    updateCriteria(storage.getDecision().getId(), storage.getCriteria().getId(), updateCriteriaInputBuilder.build());
-  }
-
-  private void updateCriteria(String decisionId, String criteriaId, UpdateCriteriaInput input) {
-    criteriaService.updateCriteria(decisionId, criteriaId, input)
-      .ifPresent(storage::setCriteria);
-  }
-
-  @When("I delete the criteria with name {string}")
-  public void deleteCriteriaWithName(String name) {
-    storage.getDecision().getCriteria().stream()
-      .filter(c -> name.equals(c.getName()))
-      .findFirst()
-      .ifPresentOrElse(c -> criteriaService.deleteCriteria(storage.getDecision().getId(), c.getId()), () -> {
-        throw Errors.criteriaNotFoundByName(name);
-      });
-  }
-
-  @Then("the criteria weight is {int}")
-  public void theCriteriaWeightIs(int weight) {
-    assertEquals(weight, storage.getCriteria().getWeight());
-  }
-
-  @Then("the criteria name is {string}")
-  public void theCriteriaNameIs(String name) {
-    assertEquals(name, storage.getCriteria().getName());
-  }
-
-  @Then("the criteria unit of measure is {string}")
-  public void theCriteriaUnitOfMeasureIs(String unitOfMeasure) {
-    assertEquals(unitOfMeasure, storage.getCriteria().getUnitOfMeasure());
-  }
-
-  @Then("the criteria type is {string}")
-  public void theCriteriaTypeIs(String type) {
-    assertEquals(type, storage.getCriteria().getType());
+    Then("the criteria type is {string}", (String type) ->
+      assertEquals(type, storage.getCriteria().getType()));
   }
 }

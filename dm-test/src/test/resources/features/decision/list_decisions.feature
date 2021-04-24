@@ -2,19 +2,21 @@ Feature: List decisions
 
   Scenario: List decisions
     # create 2 decisions
-    Given I create a decision with name "Washing machine"
+    Given I plan to create a decision
+    And I set the decision name to "Washing machine"
+    And I create the decision
 
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the type to "minimum" on the add criteria input
-    And I set the weight to 50 on the add criteria input
-    And I set the unit of measure to "euro" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria type to "minimum"
+    And I set the criteria weight to 50
+    And I set the criteria unit of measure to "euro"
     And I add the criteria
 
     Given I plan to add a criteria
-    And I set the name to "capacity" on the add criteria input
-    And I set the type to "maximum" on the add criteria input
-    And I set the weight to 60 on the add criteria input
+    And I set the criteria name to "capacity"
+    And I set the criteria type to "maximum"
+    And I set the criteria weight to 60
     And I add the criteria
 
     Given I plan to add an alternative
@@ -22,8 +24,8 @@ Feature: List decisions
     And I add the alternative
 
     Given I plan to create a decision
-    And I set the name to "Dryer" on the create decision input
-    And I set the description to "for clothes" on the create decision input
+    And I set the decision name to "Dryer"
+    And I set the decision description to "for clothes"
     And I create the decision
 
     # check the decisions

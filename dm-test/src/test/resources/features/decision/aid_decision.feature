@@ -2,19 +2,21 @@ Feature: Aid decision
 
   Scenario: Aid decision
     # create decision
-    Given I create a decision with name "Espressor"
+    Given I plan to create a decision
+    And I set the decision name to "Espressor"
+    And I create the decision
 
     # add 2 criteria
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 60 on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 60
+    And I set the criteria type to "minimum"
     And I add the criteria
 
     Given I plan to add a criteria
-    And I set the name to "beverages" on the add criteria input
-    And I set the weight to 40 on the add criteria input
-    And I set the type to "maximum" on the add criteria input
+    And I set the criteria name to "beverages"
+    And I set the criteria weight to 40
+    And I set the criteria type to "maximum"
     And I add the criteria
 
     # add 2 alternatives

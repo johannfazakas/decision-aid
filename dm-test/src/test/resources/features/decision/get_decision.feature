@@ -3,23 +3,23 @@ Feature: Get decision
   Scenario: Get decision
     # create decision.
     Given I plan to create a decision
-    And I set the name to "Phone" on the create decision input
-    And I set the description to "I would like it to take good pictures" on the create decision input
+    And I set the decision name to "Phone"
+    And I set the decision description to "I would like it to take good pictures"
     And I create the decision
 
     # add 2 criteria
     Given I plan to add a criteria
-    And I set the name to "price" on the add criteria input
-    And I set the weight to 60 on the add criteria input
-    And I set the unit of measure to "$" on the add criteria input
-    And I set the type to "minimum" on the add criteria input
+    And I set the criteria name to "price"
+    And I set the criteria weight to 60
+    And I set the criteria unit of measure to "$"
+    And I set the criteria type to "minimum"
     And I add the criteria
 
     Given I plan to add a criteria
-    And I set the name to "screen size" on the add criteria input
-    And I set the weight to 30 on the add criteria input
-    And I set the unit of measure to "inch" on the add criteria input
-    And I set the type to "maximum" on the add criteria input
+    And I set the criteria name to "screen size"
+    And I set the criteria weight to 30
+    And I set the criteria unit of measure to "inch"
+    And I set the criteria type to "maximum"
     And I add the criteria
 
     # add 2 alternatives
@@ -57,5 +57,6 @@ Feature: Get decision
     Then the property value for the alternative "Samsung Note 10" for the criteria "price" is not set
 
   Scenario: Get decision when not found
-    When I get a decision by random id
+    Given I use a nonexistent decision
+    When I get the decision
     Then the response is 404

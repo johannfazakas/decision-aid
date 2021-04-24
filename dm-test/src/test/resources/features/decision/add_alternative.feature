@@ -1,7 +1,9 @@
 Feature: Add alternative
 
   Scenario: Add alternative to decision
-    Given I create a decision with name "Oven"
+    Given I plan to create a decision
+    And I set the decision name to "Oven"
+    And I create the decision
 
     Given I plan to add an alternative
     And I set the alternative name to "Bosch MFK89"
@@ -19,7 +21,9 @@ Feature: Add alternative
     Given I peek at the alternative with name "Bosch MFK89"
 
   Scenario: Add alternative with invalid name
-    Given I create a decision with name "Hood"
+    Given I plan to create a decision
+    And I set the decision name to "Hood"
+    And I create the decision
 
     Given I plan to add an alternative
     When I add the alternative

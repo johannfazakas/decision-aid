@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder(builderClassName = "Builder")
 @FieldDefaults(level = PRIVATE)
 @JsonInclude(NON_NULL)
-public class UpdateDecisionInput {
+public class DecisionInput {
   String name;
   String description;
 }

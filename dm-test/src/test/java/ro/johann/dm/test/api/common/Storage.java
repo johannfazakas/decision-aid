@@ -22,7 +22,9 @@ public class Storage {
   private AlternativeOutput alternative;
   private PropertyOutput property;
 
+  private DecisionInput.Builder decisionInputBuilder;
   private AlternativeInput.Builder alternativeInputBuilder;
+  private CriteriaInput.Builder criteriaInputBuilder;
 
   public void cleanUp() {
     this.responseStatusCode = 0;
@@ -33,12 +35,11 @@ public class Storage {
     this.property = null;
   }
 
-  public PropertyOutput getPropertyByAlternativeAndCriteriaNames(String alternativeName, String criteriaName) {
-    return decision.getProperties().stream()
-      .filter(p -> p.getAlternativeId().equals(getAlternativeByName(alternativeName).getId()))
-      .filter(p -> p.getCriteriaId().equals(getCriteriaByName(criteriaName).getId()))
+  public DecisionOutput getDecisionByName(String name) {
+    return decisions.stream()
+      .filter(d -> name.equals(d.getName()))
       .findFirst()
-      .orElseThrow(() -> Errors.propertyNotFoundByNames(alternativeName, criteriaName));
+      .orElseThrow(() -> Errors.decisionNotFoundByName(name));
   }
 
   public AlternativeOutput getAlternativeByName(String name) {
@@ -54,4 +55,13 @@ public class Storage {
       .findFirst()
       .orElseThrow(() -> Errors.criteriaNotFoundByName(name));
   }
+
+  public PropertyOutput getPropertyByAlternativeAndCriteriaNames(String alternativeName, String criteriaName) {
+    return decision.getProperties().stream()
+      .filter(p -> p.getAlternativeId().equals(getAlternativeByName(alternativeName).getId()))
+      .filter(p -> p.getCriteriaId().equals(getCriteriaByName(criteriaName).getId()))
+      .findFirst()
+      .orElseThrow(() -> Errors.propertyNotFoundByNames(alternativeName, criteriaName));
+  }
+
 }

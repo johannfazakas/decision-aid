@@ -1,7 +1,9 @@
 Feature: Delete decision
 
   Scenario: Delete decision
-    When I create a decision with name "fridge"
+    Given I plan to create a decision
+    And I set the decision name to "Fridge"
+    And I create the decision
 
     When I delete the decision
     Then the response is 204
@@ -9,5 +11,6 @@ Feature: Delete decision
     Then the response is 404
 
   Scenario: Delete decision when not found
-    When I delete a decision by random id
+    Given I use a nonexistent decision
+    When I delete the decision
     Then the response is 404
