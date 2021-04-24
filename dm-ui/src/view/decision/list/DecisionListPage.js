@@ -34,7 +34,7 @@ DecisionListPage.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  decisions: state.decisions,
+  decisions: Object.values(state.decisions),
 });
 
 const mapDispatchToProps = dispatch => ({

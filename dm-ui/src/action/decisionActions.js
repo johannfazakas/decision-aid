@@ -14,9 +14,9 @@ export const loadDecisions = () => dispatch =>
 
 export const addDecision = decision => dispatch =>
   decisionApi.createDecision(decision)
-    .then(() => dispatch({
+    .then(addedDecision => dispatch({
       type: actionType.ADD_DECISION,
-      decision: decision
+      decision: addedDecision
     }))
     .catch(error => {
       throw error
@@ -24,9 +24,9 @@ export const addDecision = decision => dispatch =>
 
 export const updateDecision = decision => dispatch =>
   decisionApi.updateDecision(decision)
-    .then(decision => dispatch({
+    .then(updatedDecision => dispatch({
       type: actionType.UPDATE_DECISION,
-      decision: decision
+      decision: updatedDecision
     }))
     .catch(error => {
       throw error

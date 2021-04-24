@@ -1,3 +1,3 @@
 export default {
-  decisions: []
+  decisions: {}
 };

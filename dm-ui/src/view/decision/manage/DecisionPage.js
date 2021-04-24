@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import * as decisionActions from "../../../action/decisionActions"
+import { addDecision, loadDecisions, updateDecision } from "../../../action/decisionActions";
 
 import DecisionForm from "./DecisionForm";
 
@@ -71,25 +71,26 @@ DecisionPage.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
+const getDefaultDecision = () => ({
+  id: null,
+  name: "",
+  description: "",
+})
+
 const mapStateToProps = (state, props) => {
   const decisionId = props.match.params.decisionId;
-  const defaultDecisionSupplier = () => ({
-    id: null,
-    name: "",
-    description: "",
-  })
   return {
-    decisions: state.decisions,
+    decisions: Object.values(state.decisions),
     decision: decisionId
-      ? state.decisions.find(decision => decision.id === decisionId) || defaultDecisionSupplier()
-      : defaultDecisionSupplier()
+      ? state.decisions[decisionId] || getDefaultDecision()
+      : getDefaultDecision()
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadDecisions: bindActionCreators(decisionActions.loadDecisions, dispatch),
-  addDecision: bindActionCreators(decisionActions.addDecision, dispatch),
-  updateDecision: bindActionCreators(decisionActions.updateDecision, dispatch)
+  loadDecisions: bindActionCreators(loadDecisions, dispatch),
+  addDecision: bindActionCreators(addDecision, dispatch),
+  updateDecision: bindActionCreators(updateDecision, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecisionPage);

@@ -6,12 +6,12 @@ import HomePage from "./home/HomePage";
 import AboutPage from "./about/AboutPage";
 import DecisionDetailsPage from "./decision/details/DecisionDetailsPage";
 import NotFoundPage from "./error/NotFoundPage";
-import DecisionListPage from "./decision/list/DecisionListPage";
 import AddCriteriaPage from "./decision/criteria/AddCriteriaPage";
 import AddAlternativePage from "./decision/alternative/AddAlternativePage";
 import UpdateAlternativePage from "./decision/alternative/UpdateAlternativePage";
 import UpdateCriteriaPage from "./decision/criteria/UpdateCriteriaPage";
-import ManageDecisionPage from "./decision/manage/DecisionPage";
+import DecisionListPage from "./decision/list/DecisionListPage";
+import DecisionPage from "./decision/manage/DecisionPage";
 
 const App = () => {
   return (
@@ -25,8 +25,8 @@ const App = () => {
         <Route path="/decision/:decisionId/alternative" component={AddAlternativePage} />
         <Route path="/decision/:decisionId/details" component={DecisionDetailsPage} />
         <Route path="/decisions" component={DecisionListPage} />
-        <Route path="/decision/:decisionId" component={ManageDecisionPage} />
-        <Route path="/decision" component={ManageDecisionPage} />
+        <Route path="/decision/:decisionId" component={DecisionPage} />
+        <Route path="/decision" component={DecisionPage} />
         <Route path="/about" component={AboutPage} />
         <Route component={NotFoundPage} />
       </Switch>

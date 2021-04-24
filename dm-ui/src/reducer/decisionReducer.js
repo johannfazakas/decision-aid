@@ -6,15 +6,18 @@ const decisionReducer = (state = initialState.decisions, action) => {
 
     case actionType.LOAD_DECISIONS:
       return action.decisions
+        .reduce((newState, decision) => ({...newState, [decision.id]: decision}), {})
 
     case actionType.ADD_DECISION:
-      return [...state, action.decision]
+      return {...state, [action.decision.id]: action.decision}
 
     case actionType.UPDATE_DECISION:
-      return state.map(decision => decision.id === action.decision.id ? action.decision : decision)
+      return {...state, [action.decision.id]: action.decision}
 
     case actionType.DELETE_DECISION:
-      return state.filter(decision => decision.id !== action.decisionId)
+      return Object.keys(state)
+        .filter(decisionId => decisionId !== String(action.decisionId))
+        .reduce((newState, decisionId) => ({...newState, [decisionId]: state[decisionId]}), {})
 
     default:
       return state;
