@@ -1,23 +1,24 @@
-import dispatcher from "../dispatcher/appDispatcher";
 import actionType from "./actionType";
 import * as decisionApi from "../api/decisionApi";
 
-export const loadDecisions = () => {
-  return decisionApi.fetchDecisions()
-    .then(response => {
-      dispatcher.dispatch({
-        actionType: actionType.LOAD_DECISIONS,
-        decisions: response.items
-      });
+export const loadDecisions = () => dispatch =>
+  decisionApi
+    .fetchDecisions()
+    .then(response => dispatch({
+      type: actionType.LOAD_DECISIONS,
+      decisions: response.items
+    }))
+    .catch(error => {
+      throw error
     });
-};
 
-export const deleteDecision = decisionId => {
-  return decisionApi.deleteDecision(decisionId)
-    .then(() => {
-      dispatcher.dispatch({
-        actionType: actionType.DELETE_DECISION,
-        decisionId
-      });
+export const deleteDecision = decisionId => dispatch =>
+  decisionApi
+    .deleteDecision(decisionId)
+    .then(() => dispatch({
+      type: actionType.DELETE_DECISION,
+      decisionId: decisionId
+    }))
+    .catch(error => {
+      throw error
     });
-}

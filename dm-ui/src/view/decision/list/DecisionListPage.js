@@ -1,34 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as PropTypes from "prop-types";
+
+import * as decisionActions from "../../../action/decisionActions";
 
 import DecisionList from "./DecisionList";
+import { bindActionCreators } from "redux";
 
-import * as decisionActions from "../../../action/decisionActions"
-
-import decisionStore from "../../../store/decisionStore";
-
-const DecisionListPage = () => {
-  const [decisions, setDecisions] = useState(decisionStore.getDecisions());
+const DecisionListPage = ({decisions, loadDecisions, deleteDecision}) => {
 
   useEffect(() => {
-    decisionStore.addChangeListener(onChange);
-    if (decisionStore.getDecisions().length === 0) decisionActions.loadDecisions();
-    return () => decisionStore.removeChangeListener(onChange);
+    if (decisions.length === 0) loadDecisions();
   }, []);
-
-  const onChange = () => setDecisions(decisionStore.getDecisions());
-
-  const handleDelete = decisionId => decisionActions.deleteDecision(decisionId);
 
   return (
     <div className="jumbotron">
       <h1>My decisions</h1>
-      <DecisionList decisions={decisions} deleteCourse={handleDelete} />
-      <Link to="/decision" className="btn btn-dark">
-        New
-      </Link>
+      <Link to="/decision" className="btn btn-dark">New</Link>
+      <DecisionList decisions={decisions} deleteDecision={deleteDecision} />
     </div>
   );
 };
 
-export default DecisionListPage;
+DecisionListPage.propTypes = {
+  decisions: PropTypes.array.isRequired,
+  loadDecisions: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = state => ({
+  decisions: state.decisions,
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadDecisions: bindActionCreators(decisionActions.loadDecisions, dispatch),
+  deleteDecision: bindActionCreators(decisionActions.deleteDecision, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DecisionListPage);
