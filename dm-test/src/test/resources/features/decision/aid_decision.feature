@@ -18,11 +18,15 @@ Feature: Aid decision
     And I add the criteria
 
     # add 2 alternatives
-    Given I add an alternative with name "Philips LatteGo 5400"
+    Given I plan to add an alternative
+    And I set the alternative name to "Philips LatteGo 5400"
+    And I add the alternative
     And I set the property on the alternative "Philips LatteGo 5400" for the criteria "price" to the value 2600
     And I set the property on the alternative "Philips LatteGo 5400" for the criteria "beverages" to the value 12
 
-    Given I add an alternative with name "DeLonghi Eletta"
+    Given I plan to add an alternative
+    And I set the alternative name to "DeLonghi Eletta"
+    And I add the alternative
     And I set the property on the alternative "DeLonghi Eletta" for the criteria "price" to the value 3000
     And I set the property on the alternative "DeLonghi Eletta" for the criteria "beverages" to the value 7
 

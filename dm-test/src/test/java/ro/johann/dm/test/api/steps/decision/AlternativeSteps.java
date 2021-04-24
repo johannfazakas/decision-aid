@@ -1,112 +1,48 @@
 package ro.johann.dm.test.api.steps.decision;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java8.En;
 import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.AlternativeService;
-import ro.johann.dm.test.api.service.decision.transfer.AddAlternativeInput;
-import ro.johann.dm.test.api.service.decision.transfer.UpdateAlternativeInput;
+import ro.johann.dm.test.api.service.decision.transfer.AlternativeInput;
 
 import javax.inject.Inject;
-import java.util.UUID;
 
 import static java.util.Optional.ofNullable;
 import static org.junit.Assert.assertEquals;
 
-public class AlternativeSteps {
-
-  private final Storage storage;
-  private final AlternativeService alternativeService;
-
-  private AddAlternativeInput.Builder addAlternativeInputBuilder;
-  private UpdateAlternativeInput.Builder updateAlternativeInputBuilder;
+public class AlternativeSteps implements En {
 
   @Inject
   public AlternativeSteps(Storage storage, AlternativeService alternativeService) {
-    this.storage = storage;
-    this.alternativeService = alternativeService;
-  }
 
-  @Given("I plan to add an alternative")
-  public void prepareAddAlternativeInput() {
-    addAlternativeInputBuilder = AddAlternativeInput.builder();
-  }
+    Given("I plan to add/update an/the alternative", () ->
+      storage.setAlternativeInputBuilder(AlternativeInput.builder()));
 
-  @Given("I set the name to {string} on the add alternative input")
-  public void setNameOnAddAlternativeInput(String name) {
-    addAlternativeInputBuilder.name(name);
-  }
+    Given("I set the alternative name to {string}", (String name) ->
+      storage.getAlternativeInputBuilder().name(name));
 
-  @Given("I plan to update the alternative")
-  public void prepareUpdateAlternativeInput() {
-    updateAlternativeInputBuilder = UpdateAlternativeInput.builder();
-  }
+    Given("I peek at the alternative with name {string}",
+      (String name) -> storage.setAlternative(storage.getAlternativeByName(name)));
 
-  @Given("I set the name to {string} on the update alternative input")
-  public void setNameOnUpdateAlternativeInput(String name) {
-    updateAlternativeInputBuilder.name(name);
-  }
+    When("I add the alternative", () ->
+      alternativeService.addAlternative(storage.getDecision().getId(), storage.getAlternativeInputBuilder().build())
+        .ifPresent(alternative -> {
+          // TODO refactor, encapsulate?
+          storage.setAlternative(alternative);
+          ofNullable(storage.getDecision()).ifPresent(d -> d.addAlternative(alternative));
+        }));
 
-  @Given("I peek at the alternative with name {string}")
-  public void peekAtAlternative(String name) {
-    storage.getDecision().getAlternatives().stream()
-      .filter(it -> name.equals(it.getName()))
-      .findFirst()
-      .ifPresentOrElse(
-        storage::setAlternative,
-        () -> alternativeNotFound(name));
-  }
+    When("I update the alternative", () ->
+      alternativeService.updateAlternative(
+        storage.getDecision().getId(),
+        storage.getAlternative().getId(),
+        storage.getAlternativeInputBuilder().build())
+        .ifPresent(storage::setAlternative));
 
-  @When("I add the alternative")
-  public void addAlternative() {
-    addAlternative(storage.getDecision().getId(), addAlternativeInputBuilder.build());
-  }
+    When("I delete the alternative", () ->
+      alternativeService.deleteAlternative(storage.getDecision().getId(), storage.getAlternative().getId()));
 
-  @When("I add an alternative with name {string}")
-  public void addAlternativeWithName(String name) {
-    addAlternative(storage.getDecision().getId(), AddAlternativeInput.builder().name(name).build());
-  }
-
-  @When("I add the alternative on a random decision")
-  public void addAlternativeOnRandomDecision() {
-    addAlternative(UUID.randomUUID().toString(), addAlternativeInputBuilder.build());
-  }
-
-  private void addAlternative(String decisionId, AddAlternativeInput input) {
-    alternativeService.addAlternative(decisionId, input)
-      .ifPresent(alternative -> {
-        storage.setAlternative(alternative);
-        ofNullable(storage.getDecision())
-          .ifPresent(d -> d.addAlternative(alternative));
-      });
-  }
-
-  @When("I update the alternative")
-  public void updateAlternative() {
-    alternativeService.updateAlternative(
-      storage.getDecision().getId(),
-      storage.getAlternative().getId(),
-      updateAlternativeInputBuilder.build())
-      .ifPresent(storage::setAlternative);
-  }
-
-  @When("I delete the alternative with name {string}")
-  public void deleteAlternativeWithName(String name) {
-    storage.getDecision().getAlternatives().stream()
-      .filter(a -> name.equals(a.getName()))
-      .findFirst()
-      .ifPresentOrElse(
-        alternative -> alternativeService.deleteAlternative(storage.getDecision().getId(), alternative.getId()),
-        () -> alternativeNotFound(name));
-  }
-
-  @Then("the alternative name is {string}")
-  public void theAlternativeNameIs(String name) {
-    assertEquals(name, storage.getAlternative().getName());
-  }
-
-  private void alternativeNotFound(String name) {
-    throw new RuntimeException(String.format("Alternative not found by name %s.", name));
+    Then("the alternative name is {string}", (String name) ->
+      assertEquals(name, storage.getAlternative().getName()));
   }
 }

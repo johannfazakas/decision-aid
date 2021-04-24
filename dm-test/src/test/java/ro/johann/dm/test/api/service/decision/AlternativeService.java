@@ -4,9 +4,8 @@ import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.BaseService;
 import ro.johann.dm.test.api.service.HttpService;
 import ro.johann.dm.test.api.service.Mapper;
-import ro.johann.dm.test.api.service.decision.transfer.AddAlternativeInput;
 import ro.johann.dm.test.api.service.decision.transfer.AlternativeOutput;
-import ro.johann.dm.test.api.service.decision.transfer.UpdateAlternativeInput;
+import ro.johann.dm.test.api.service.decision.transfer.AlternativeInput;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -20,7 +19,7 @@ public class AlternativeService extends BaseService {
     super(httpService, storage, mapper, properties);
   }
 
-  public Optional<AlternativeOutput> addAlternative(String decisionId, AddAlternativeInput input) {
+  public Optional<AlternativeOutput> addAlternative(String decisionId, AlternativeInput input) {
     var url = getUrl("decisionApi.alternativesUrl", Map.of("decisionId", decisionId));
     return post(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, AlternativeOutput.class));
   }
@@ -31,7 +30,7 @@ public class AlternativeService extends BaseService {
     delete(url);
   }
 
-  public Optional<AlternativeOutput> updateAlternative(String decisionId, String alternativeId, UpdateAlternativeInput input) {
+  public Optional<AlternativeOutput> updateAlternative(String decisionId, String alternativeId, AlternativeInput input) {
     var url = getUrl("decisionApi.alternativeByIdUrl",
       Map.of("decisionId", decisionId, "alternativeId", alternativeId));
     return patch(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, AlternativeOutput.class));

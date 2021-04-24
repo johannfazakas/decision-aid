@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import ro.johann.dm.test.api.common.Storage;
 import ro.johann.dm.test.api.service.decision.DecisionService;
 import ro.johann.dm.test.api.service.decision.transfer.CreateDecisionInput;
+import ro.johann.dm.test.api.service.decision.transfer.DecisionOutput;
 import ro.johann.dm.test.api.service.decision.transfer.DecisionsOutput;
 import ro.johann.dm.test.api.service.decision.transfer.UpdateDecisionInput;
 import ro.johann.dm.test.api.steps.Errors;
@@ -67,6 +68,11 @@ public class DecisionSteps {
   @Given("I set the description to {string} on the update decision input")
   public void setDescriptionOnUpdateDecisionInput(String description) {
     updateDecisionInputBuilder.description(description);
+  }
+
+  @Given("I use a nonexistent decision")
+  public void prepareNonexistentDecision() {
+    storage.setDecision(DecisionOutput.builder().id(UUID.randomUUID().toString()).build());
   }
 
   @When("I create the decision")

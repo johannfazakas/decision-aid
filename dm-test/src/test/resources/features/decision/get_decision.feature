@@ -7,6 +7,7 @@ Feature: Get decision
     And I set the description to "I would like it to take good pictures" on the create decision input
     And I create the decision
 
+    # add 2 criteria
     Given I plan to add a criteria
     And I set the name to "price" on the add criteria input
     And I set the weight to 60 on the add criteria input
@@ -21,8 +22,14 @@ Feature: Get decision
     And I set the type to "maximum" on the add criteria input
     And I add the criteria
 
-    Given I add an alternative with name "Samsung Note 10"
-    And I add an alternative with name "iPhone 12"
+    # add 2 alternatives
+    Given I plan to add an alternative
+    And I set the alternative name to "Samsung Note 10"
+    And I add the alternative
+
+    Given I plan to add an alternative
+    And I set the alternative name to "iPhone 12"
+    And I add the alternative
 
     # get decision
     Given I get the decision

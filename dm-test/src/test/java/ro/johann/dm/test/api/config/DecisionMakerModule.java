@@ -5,7 +5,6 @@ import com.google.inject.Provides;
 import com.google.inject.Scopes;
 import lombok.SneakyThrows;
 import ro.johann.dm.test.api.common.Storage;
-import ro.johann.dm.test.api.steps.decision.AlternativeSteps;
 import ro.johann.dm.test.api.steps.decision.CriteriaSteps;
 import ro.johann.dm.test.api.steps.decision.DecisionSteps;
 
@@ -21,7 +20,6 @@ public class DecisionMakerModule extends AbstractModule {
 
     bind(DecisionSteps.class).in(Scopes.SINGLETON);
     bind(CriteriaSteps.class).in(Scopes.SINGLETON);
-    bind(AlternativeSteps.class).in(Scopes.SINGLETON);
   }
 
   @SneakyThrows

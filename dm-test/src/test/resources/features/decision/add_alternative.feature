@@ -4,12 +4,12 @@ Feature: Add alternative
     Given I create a decision with name "Oven"
 
     Given I plan to add an alternative
-    And I set the name to "Bosch MFK89" on the add alternative input
+    And I set the alternative name to "Bosch MFK89"
     When I add the alternative
     Then the response is 201
 
     Given I plan to add an alternative
-    And I set the name to "Electrolux UXI87" on the add alternative input
+    And I set the alternative name to "Electrolux UXI87"
     When I add the alternative
     Then the response is 201
 
@@ -26,13 +26,14 @@ Feature: Add alternative
     Then the response is 400
 
     Given I plan to add an alternative
-    And I set the name to "" on the add alternative input
+    And I set the alternative name to ""
     When I add the alternative
     Then the response is 400
 
   Scenario: Add alternative on not found decision
+    And I use a nonexistent decision
     Given I plan to add an alternative
-    And I set the name to "Logitech MX50" on the add alternative input
-    When I add the alternative on a random decision
+    And I set the alternative name to "Logitech MX50"
+    When I add the alternative
     Then the response is 404
 

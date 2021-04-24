@@ -18,7 +18,7 @@ Feature: List decisions
     And I add the criteria
 
     Given I plan to add an alternative
-    And I set the name to "Bosch IREW85" on the add alternative input
+    And I set the alternative name to "Bosch IREW85"
     And I add the alternative
 
     Given I plan to create a decision

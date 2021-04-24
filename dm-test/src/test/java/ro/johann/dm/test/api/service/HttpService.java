@@ -73,10 +73,14 @@ public class HttpService {
   @SneakyThrows
   private Response doRequest(HttpRequest httpRequest) {
     var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofByteArray());
-    if (httpResponse.body().length > 0) {
+    if (isSuccessful(httpResponse) && httpResponse.body().length > 0) {
       return Response.withBody(httpResponse.statusCode(), httpResponse.body());
     } else {
       return Response.empty(httpResponse.statusCode());
     }
+  }
+
+  private boolean isSuccessful(HttpResponse<byte[]> response) {
+    return response.statusCode() >= 200 && response.statusCode() < 300;
   }
 }

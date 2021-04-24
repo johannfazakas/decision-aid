@@ -1,16 +1,17 @@
 package ro.johann.dm.test.api.service.decision.transfer;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static lombok.AccessLevel.PRIVATE;
 
 @Value
 @Builder(builderClassName = "Builder")
-@AllArgsConstructor
 @FieldDefaults(level = PRIVATE)
-public class AddAlternativeInput {
+@JsonInclude(NON_NULL)
+public class AlternativeInput {
   String name;
 }
