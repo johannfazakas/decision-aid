@@ -4,13 +4,33 @@ import * as decisionApi from "../api/decisionApi";
 export const loadDecisions = () => dispatch =>
   decisionApi
     .fetchDecisions()
-    .then(response => dispatch({
+    .then(decisions => dispatch({
       type: actionType.LOAD_DECISIONS,
-      decisions: response.items
+      decisions: decisions.items
     }))
     .catch(error => {
       throw error
     });
+
+export const addDecision = decision => dispatch =>
+  decisionApi.createDecision(decision)
+    .then(() => dispatch({
+      type: actionType.ADD_DECISION,
+      decision: decision
+    }))
+    .catch(error => {
+      throw error
+    })
+
+export const updateDecision = decision => dispatch =>
+  decisionApi.updateDecision(decision)
+    .then(decision => dispatch({
+      type: actionType.UPDATE_DECISION,
+      decision: decision
+    }))
+    .catch(error => {
+      throw error
+    })
 
 export const deleteDecision = decisionId => dispatch =>
   decisionApi

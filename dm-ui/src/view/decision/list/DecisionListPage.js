@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import * as PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import * as decisionActions from "../../../action/decisionActions";
 
 import DecisionList from "./DecisionList";
-import { bindActionCreators } from "redux";
 
 const DecisionListPage = ({decisions, loadDecisions, deleteDecision}) => {
 
   useEffect(() => {
-    if (decisions.length === 0) loadDecisions();
+    if (decisions.length === 0) {
+      loadDecisions()
+        .catch(error => {
+          alert("Loading courses failed." + error);
+        });
+    }
   }, []);
 
   return (
