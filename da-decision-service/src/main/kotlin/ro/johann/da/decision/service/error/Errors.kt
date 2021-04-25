@@ -11,6 +11,11 @@ object Errors {
 
   fun alternativeNotFound(decisionId: UUID, alternativeId: UUID) =
     NotFoundException("Alternative $alternativeId on decision $decisionId not found.")
+
+  fun noCriteriaDefined(decisionId: UUID) =
+    ConflictException("Decision $decisionId has no criteria defined.")
 }
 
 class NotFoundException(override val message: String) : RuntimeException(message)
+
+class ConflictException(override val message: String) : RuntimeException(message)

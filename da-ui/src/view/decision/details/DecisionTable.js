@@ -48,7 +48,7 @@ const DecisionTable = props =>
       <th>
         <TableActionButton
           status={props.decision.status}
-          aidWarnings={props.aidWarnings}
+          aidWarning={props.aidWarning}
           onAid={props.onAid}
           onReset={props.onReset}
         />
@@ -59,7 +59,7 @@ const DecisionTable = props =>
 
 DecisionTable.propTypes = {
   decision: PropTypes.object.isRequired,
-  aidWarnings: PropTypes.array.isRequired,
+  aidWarning: PropTypes.string.isRequired,
   onAddCriteria: PropTypes.func.isRequired,
   onAddAlternative: PropTypes.func.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired,

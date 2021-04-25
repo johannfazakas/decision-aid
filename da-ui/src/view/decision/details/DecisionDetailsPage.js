@@ -14,7 +14,9 @@ import DecisionTable from "./DecisionTable"
 const DecisionDetailsPage = props => {
 
   const [decision, setDecision] = useState(props.decision)
-  const [aidWarnings, setAidWarnings] = useState([])
+
+  const [aidWarning, setAidWarning] = useState("")
+  const [showAidWarning, setShowAidWarning] = useState(false)
 
   useEffect(() => {
     if (props.decisions.length === 0) {
@@ -23,7 +25,16 @@ const DecisionDetailsPage = props => {
     } else {
       setDecision(props.decision)
     }
+
+    if (props.decision.criteria.length === 0)
+      setAidWarning("No criteria defined!")
+    else
+      setAidWarning("")
+
+    setShowAidWarning(false)
+
   }, [props.decision])
+
 
   const handleDelete = () => {
     props.deleteDecision(decision.id)
@@ -40,8 +51,11 @@ const DecisionDetailsPage = props => {
   }
 
   const handleAid = () => {
-    props.aidDecision(decision.id)
-      .catch(error => alert("Aid decision failed. " + error))
+    if (aidWarning !== "")
+      setShowAidWarning(true)
+    else
+      props.aidDecision(decision.id)
+        .catch(error => alert("Aid decision failed. " + error))
   }
 
   const handleReset = () => {
@@ -57,7 +71,7 @@ const DecisionDetailsPage = props => {
       <div className="btn btn-danger m-1" onClick={handleDelete}>Delete</div>
       <DecisionTable
         decision={decision}
-        aidWarnings={aidWarnings}
+        aidWarning={aidWarning}
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
         onAid={handleAid}
@@ -65,6 +79,7 @@ const DecisionDetailsPage = props => {
         onDeleteAlternative={props.deleteAlternative}
         onDeleteCriteria={props.deleteCriteria}
       />
+      {showAidWarning && <div className="text-danger text-center">{aidWarning}</div>}
     </div>
   )
 }

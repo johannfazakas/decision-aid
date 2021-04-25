@@ -7,9 +7,7 @@ const TableActionButton = props => {
       {props.status === "design" &&
       <div
         onClick={props.onAid}
-        className={props.aidWarnings && props.aidWarnings.length > 0
-          ? "btn btn-outline-warning"
-          : "btn btn-warning"}
+        className={props.aidWarning !== "" ? "btn btn-outline-warning" : "btn btn-warning"}
       >
         Aid
       </div>
@@ -23,7 +21,7 @@ const TableActionButton = props => {
 
 TableActionButton.propTypes = {
   status: PropTypes.string.isRequired,
-  aidWarnings: PropTypes.array,
+  aidWarning: PropTypes.string,
   onAid: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired
 }

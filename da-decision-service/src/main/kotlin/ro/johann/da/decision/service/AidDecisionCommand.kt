@@ -23,11 +23,18 @@ class AidDecisionCommand(
     logger.info("aid decision >> decisionId = $id")
 
     return decisionRepository.findByIdOrNull(id)
-      ?.also {
-        it.status = DecisionStatus.PROCESSED
-        it.updatedAt = LocalDateTime.now()
+      ?.also(::validateAid)
+      ?.apply {
+        status = DecisionStatus.PROCESSED
+        updatedAt = LocalDateTime.now()
       }
-      ?.let { decisionRepository.save(it) }
+      ?.let(decisionRepository::save)
       ?: throw Errors.decisionNotFound(id)
+  }
+
+  private fun validateAid(decision: Decision) {
+    if (decision.criteria.isEmpty()) {
+      throw Errors.noCriteriaDefined(decision.id)
+    }
   }
 }

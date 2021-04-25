@@ -38,7 +38,19 @@ Feature: Aid decision
     And the decision status is "processed"
 
   Scenario: Aid decision without criteria
-    # TODO
+    # create decision
+    Given I plan to create a decision
+    And I set the decision name to "Laptop"
+    And I create the decision
+
+    # add alternative
+    Given I plan to add an alternative
+    And I set the alternative name to "Dell Latitude E740"
+    And I add the alternative
+
+    # request for aid
+    When I request aid for the decision
+    Then the response is 409
 
   Scenario: Aid decision without alternatives
     # TODO
