@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import CriteriaCell from "./CriteriaCell";
+import CriteriaTableHeader from "./CriteriaTableHeader";
 import AlternativeRow from "./AlternativeRow";
+import MainTableHeader from "./MainTableHeader";
+import TableActionButton from "./TableActionButton";
 
 const DecisionTable = props =>
   <table className="table table-bordered">
     <thead>
     <tr>
-      <th className="text-right">↓ Alternatives | Criteria →</th>
+      <th>
+        <MainTableHeader criteria={props.decision.criteria} />
+      </th>
       {props.decision.criteria.map(criteria =>
         <th key={criteria.id}>
-          <CriteriaCell decisionId={props.decision.id} criteria={criteria} />
+          <CriteriaTableHeader decisionId={props.decision.id} criteria={criteria} />
         </th>
       )}
       <th>
@@ -42,7 +46,7 @@ const DecisionTable = props =>
           </div>
         </td>)}
       <th>
-        <div className="btn btn-warning">Aid!</div>
+        <TableActionButton status={props.decision.status} aidWarnings={props.aidWarnings} />
       </th>
     </tr>
     </tbody>
@@ -50,6 +54,7 @@ const DecisionTable = props =>
 
 DecisionTable.propTypes = {
   decision: PropTypes.object.isRequired,
+  aidWarnings: PropTypes.array.isRequired,
   onAddCriteria: PropTypes.func.isRequired,
   onAddAlternative: PropTypes.func.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired,

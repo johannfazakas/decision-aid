@@ -14,6 +14,7 @@ import DecisionTable from "./DecisionTable"
 const DecisionDetailsPage = props => {
 
   const [decision, setDecision] = useState(props.decision)
+  const [aidWarnings, setAidWarnings] = useState([])
 
   useEffect(() => {
     if (props.decisions.length === 0) {
@@ -46,6 +47,7 @@ const DecisionDetailsPage = props => {
       <div className="btn btn-danger m-1" onClick={handleDelete}>Delete</div>
       <DecisionTable
         decision={decision}
+        aidWarnings={aidWarnings}
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
         onDeleteAlternative={props.deleteAlternative}
