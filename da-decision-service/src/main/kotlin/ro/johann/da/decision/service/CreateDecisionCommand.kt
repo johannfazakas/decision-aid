@@ -7,6 +7,7 @@ import ro.johann.da.decision.api.transfer.CreateDecisionInput
 import ro.johann.da.decision.domain.Decision
 import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.DecisionRepository
+import java.time.LocalDateTime
 
 @Service
 class CreateDecisionCommand(
@@ -18,11 +19,14 @@ class CreateDecisionCommand(
 
   fun execute(input: CreateDecisionInput): Decision {
     logger.info("create decision >> input = $input")
+    val now = LocalDateTime.now()
     return decisionRepository.save(
       Decision(
         name = input.name,
         description = input.description,
         status = DecisionStatus.DEFINE,
+        createdAt = now,
+        updatedAt = now
       )
     )
   }

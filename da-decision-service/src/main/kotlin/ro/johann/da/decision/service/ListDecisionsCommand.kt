@@ -16,6 +16,6 @@ class ListDecisionsCommand(
 
   fun execute(): Iterable<Decision> {
     logger.info("list decisions")
-    return decisionRepository.findAll()
+    return decisionRepository.findAll().sortedBy { it.createdAt }
   }
 }

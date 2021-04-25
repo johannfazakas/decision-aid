@@ -4,7 +4,9 @@ export const defaultDecision = {
   description: "",
   criteria: [],
   alternatives: [],
-  properties: []
+  properties: [],
+  createdAt: null,
+  updatedAt: null
 }
 
 export const defaultCriteria = {

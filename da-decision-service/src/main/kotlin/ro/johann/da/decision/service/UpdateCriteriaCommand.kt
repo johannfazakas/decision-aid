@@ -7,6 +7,7 @@ import ro.johann.da.decision.api.transfer.UpdateCriteriaInput
 import ro.johann.da.decision.domain.Criteria
 import ro.johann.da.decision.persistence.CriteriaRepository
 import ro.johann.da.decision.service.error.Errors
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -26,6 +27,7 @@ class UpdateCriteriaCommand(
         input.name?.also { criteria.name = it }
         input.unitOfMeasure?.also { criteria.unitOfMeasure = it }
         input.type?.also { criteria.type = it }
+        criteria.updatedAt = LocalDateTime.now()
       }
       ?.also(criteriaRepository::save)
       ?: throw Errors.criteriaNotFound(decisionId, criteriaId)

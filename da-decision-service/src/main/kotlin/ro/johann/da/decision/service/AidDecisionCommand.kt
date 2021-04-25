@@ -8,6 +8,7 @@ import ro.johann.da.decision.domain.Decision
 import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -22,7 +23,10 @@ class AidDecisionCommand(
     logger.info("aid decision >> decisionId = $id")
 
     return decisionRepository.findByIdOrNull(id)
-      ?.also { it.status = DecisionStatus.AID }
+      ?.also {
+        it.status = DecisionStatus.AID
+        it.updatedAt = LocalDateTime.now()
+      }
       ?.let { decisionRepository.save(it) }
       ?: throw Errors.decisionNotFound(id)
   }

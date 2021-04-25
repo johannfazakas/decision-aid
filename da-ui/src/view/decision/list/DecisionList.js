@@ -8,6 +8,7 @@ const DecisionList = (props) =>
     <tr>
       <th>Name</th>
       <th>Description</th>
+      <th>Created at</th>
     </tr>
     </thead>
     <tbody>
@@ -17,6 +18,7 @@ const DecisionList = (props) =>
           <Link to={"/decision/" + decision.id + "/details"}>{decision.name}</Link>
         </th>
         <td>{decision.description}</td>
+        <td>{decision.createdAt}</td>
         <td>
           <div className="btn btn-danger" onClick={() => props.deleteDecision(decision.id)}>Delete</div>
         </td>
@@ -29,7 +31,8 @@ DecisionList.propTypes = {
   decisions: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    description: PropTypes.string.description,
+    description: PropTypes.string.isRequired,
+    createdAt: PropTypes.string
   })).isRequired,
   deleteDecision: PropTypes.func.isRequired
 };

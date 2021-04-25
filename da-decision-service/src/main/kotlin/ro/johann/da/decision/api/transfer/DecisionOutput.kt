@@ -1,6 +1,8 @@
 package ro.johann.da.decision.api.transfer
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import ro.johann.da.decision.domain.Decision
+import java.time.LocalDateTime
 import java.util.UUID
 
 data class DecisionOutput(
@@ -10,7 +12,11 @@ data class DecisionOutput(
   val status: String,
   val criteria: List<CriteriaOutput> = emptyList(),
   val alternatives: List<AlternativeOutput> = emptyList(),
-  val properties: List<PropertyOutput> = emptyList()
+  val properties: List<PropertyOutput> = emptyList(),
+  @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+  val createdAt: LocalDateTime,
+  @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
+  val updatedAt: LocalDateTime
 ) {
   constructor(
     decision: Decision
@@ -25,6 +31,8 @@ data class DecisionOutput(
       .asSequence()
       .flatMap { it.properties.asSequence() }
       .map(::PropertyOutput)
-      .toList()
+      .toList(),
+    createdAt = decision.createdAt,
+    updatedAt = decision.updatedAt
   )
 }

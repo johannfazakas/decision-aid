@@ -9,6 +9,7 @@ import ro.johann.da.decision.domain.Alternative
 import ro.johann.da.decision.persistence.AlternativeRepository
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -24,7 +25,15 @@ class AddAlternativeCommand(
     logger.info("add alternative >> decisionId = $decisionId, input = $input")
 
     return decisionRepository.findByIdOrNull(decisionId)
-      ?.let { decision -> alternativeRepository.save(input.toModel(decision)) }
+      ?.let { decision ->
+        val now = LocalDateTime.now()
+        alternativeRepository.save(Alternative(
+          name = input.name,
+          decision = decision,
+          createdAt = now,
+          updatedAt = now
+        ))
+      }
       ?: throw Errors.decisionNotFound(decisionId)
   }
 }

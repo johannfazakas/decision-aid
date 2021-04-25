@@ -7,6 +7,7 @@ import ro.johann.da.decision.api.transfer.UpdateAlternativeInput
 import ro.johann.da.decision.domain.Alternative
 import ro.johann.da.decision.persistence.AlternativeRepository
 import ro.johann.da.decision.service.error.Errors
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -23,6 +24,7 @@ class UpdateAlternativeCommand(
     return alternativeRepository.findByIdAndDecisionId(alternativeId, decisionId)
       ?.also { alternative ->
         input.name?.let { it -> alternative.name = it }
+        alternative.updatedAt = LocalDateTime.now()
       }
       ?.also(alternativeRepository::save)
       ?: throw Errors.alternativeNotFound(decisionId, alternativeId)

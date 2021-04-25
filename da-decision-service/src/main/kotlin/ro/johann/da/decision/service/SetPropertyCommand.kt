@@ -9,6 +9,7 @@ import ro.johann.da.decision.persistence.AlternativeRepository
 import ro.johann.da.decision.persistence.CriteriaRepository
 import ro.johann.da.decision.persistence.PropertyRepository
 import ro.johann.da.decision.service.error.Errors
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -28,14 +29,20 @@ class SetPropertyCommand(
       ?: throw Errors.alternativeNotFound(decisionId, input.alternativeId)
     val property = alternative.properties
       .find { property -> input.criteriaId == property.criteria.id }
-      ?.also { it.value = input.value }
+      ?.also { existingProperty ->
+        existingProperty.value = input.value
+        existingProperty.updatedAt = LocalDateTime.now()
+      }
       ?: let {
         val criteria = criteriaRepository.findByIdAndDecisionId(input.criteriaId, decisionId)
           ?: throw Errors.criteriaNotFound(decisionId, input.criteriaId)
+        val now = LocalDateTime.now()
         Property(
           value = input.value,
           alternative = alternative,
-          criteria = criteria
+          criteria = criteria,
+          createdAt = now,
+          updatedAt = now
         )
       }
     return propertyRepository.save(property)

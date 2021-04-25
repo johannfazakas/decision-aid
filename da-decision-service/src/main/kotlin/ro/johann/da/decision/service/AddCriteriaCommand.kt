@@ -9,6 +9,7 @@ import ro.johann.da.decision.domain.Criteria
 import ro.johann.da.decision.persistence.CriteriaRepository
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -24,7 +25,20 @@ class AddCriteriaCommand(
     logger.info("add criteria >> decisionId = $decisionId, input = $input")
 
     return decisionRepository.findByIdOrNull(decisionId)
-      ?.let { decision -> criteriaRepository.save(input.toModel(decision)) }
+      ?.let { decision ->
+        val now = LocalDateTime.now()
+        criteriaRepository.save(
+          Criteria(
+            name = input.name,
+            weight = input.weight,
+            unitOfMeasure = input.unitOfMeasure,
+            type = input.type,
+            decision = decision,
+            createdAt = now,
+            updatedAt = now
+          )
+        )
+      }
       ?: throw Errors.decisionNotFound(decisionId)
   }
 }

@@ -8,6 +8,7 @@ import ro.johann.da.decision.api.transfer.UpdateDecisionInput
 import ro.johann.da.decision.domain.Decision
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -29,6 +30,7 @@ class UpdateDecisionCommand(
         input.description
           ?.takeIf { it.isNotBlank() }
           ?.let { decision.description = it }
+        decision.updatedAt = LocalDateTime.now()
       }
       ?.also(decisionRepository::save)
       ?: throw Errors.decisionNotFound(decisionId)
