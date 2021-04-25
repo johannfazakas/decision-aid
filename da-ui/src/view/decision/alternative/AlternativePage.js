@@ -13,8 +13,8 @@ import AlternativeForm from "./AlternativeForm";
 const AlternativePage = props => {
 
   const [alternative, setAlternative] = useState({...props.alternative})
-  // TODO evaluate storing only updated criteria/properties
   const [criteria, setCriteria] = useState([...props.criteria])
+  const [properties, setProperties] = useState([])
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
@@ -38,8 +38,6 @@ const AlternativePage = props => {
   const handleSubmit = event => {
     event.preventDefault()
     if (!validateForm()) return
-    const properties = criteria
-      .flatMap(criteria => criteria.property ? [criteria.property] : [])
     const savedAlternative = alternative.id
       ? props.updateAlternative(props.decisionId, alternative, properties)
       : props.addAlternative(props.decisionId, alternative, properties)
@@ -55,11 +53,10 @@ const AlternativePage = props => {
   }
 
   const handlePropertyChange = (criteriaId, value) =>
-    setCriteria(criteria
-      .map(criterion => criterion.id === criteriaId
-        ? {...criterion, property: {criteriaId, value}}
-        : criterion)
-    )
+    setProperties([
+      ...properties.filter(property => property.criteriaId !== criteriaId),
+      {criteriaId, value}
+    ])
 
   return (
     <div className="jumbotron">

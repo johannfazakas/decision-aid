@@ -13,8 +13,8 @@ import CriteriaForm from "./CriteriaForm"
 const CriteriaPage = props => {
 
   const [criteria, setCriteria] = useState({...props.criteria})
-  // TODO evaluate storing only updated alternatives/properties
   const [alternatives, setAlternatives] = useState([...props.alternatives])
+  const [properties, setProperties] = useState([])
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
@@ -48,17 +48,14 @@ const CriteriaPage = props => {
   }
 
   const handlePropertyChange = (alternativeId, value) =>
-    setAlternatives(alternatives
-      .map(alternative => alternative.id === alternativeId
-        ? {...alternative, property: {alternativeId, value}}
-        : alternative)
-    )
+    setProperties([
+      ...properties.filter(property => property.alternativeId !== alternativeId),
+      {alternativeId, value}
+    ])
 
   const handleSubmit = event => {
     event.preventDefault()
     if (!validateForm()) return
-    const properties = alternatives
-      .flatMap(alternative => alternative.property ? [alternative.property] : [])
     const saveCriteria = criteria.id
       ? props.updateCriteria(props.decisionId, criteria, properties)
       : props.addCriteria(props.decisionId, criteria, properties)
