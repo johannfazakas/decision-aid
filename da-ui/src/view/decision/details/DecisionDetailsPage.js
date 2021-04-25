@@ -67,7 +67,7 @@ DecisionDetailsPage.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   decisions: Object.values(state.decisions),
-  decision: state.decisions[props.match.params.decisionId] || defaultDecision()
+  decision: state.decisions[props.match.params.decisionId] || defaultDecision
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { addDecision, loadDecisions, updateDecision } from "../../../action/decisionActions";
+import { defaultDecision } from "../../../store/default";
 
 import DecisionForm from "./DecisionForm";
 
@@ -69,19 +70,13 @@ DecisionPage.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
-const getDefaultDecision = () => ({
-  id: null,
-  name: "",
-  description: "",
-})
-
 const mapStateToProps = (state, props) => {
   const decisionId = props.match.params.decisionId;
   return {
     decisions: Object.values(state.decisions),
     decision: decisionId
-      ? state.decisions[decisionId] || getDefaultDecision()
-      : getDefaultDecision()
+      ? state.decisions[decisionId] || defaultDecision
+      : defaultDecision
   }
 }
 

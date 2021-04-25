@@ -5,8 +5,13 @@ const decisionReducer = (state = initialState.decisions, action) => {
   switch (action.type) {
 
     case actionType.LOAD_DECISIONS:
-      return action.decisions
-        .reduce((newState, decision) => ({...newState, [decision.id]: decision}), {})
+      if (state.decisions === {} && action.decisions === []) {
+        debugger;
+        return state
+      } else {
+        return action.decisions
+          .reduce((newState, decision) => ({...newState, [decision.id]: decision}), {})
+      }
 
     case actionType.ADD_DECISION:
       return {...state, [action.decision.id]: action.decision}
@@ -48,6 +53,26 @@ const decisionReducer = (state = initialState.decisions, action) => {
         }
       }
 
+    case actionType.ADD_ALTERNATIVE:
+      return {
+        ...state,
+        [action.decisionId]: {
+          ...state[action.decisionId],
+          alternatives: [...state[action.decisionId].alternatives, action.alternative]
+        }
+      }
+
+    case actionType.UPDATE_ALTERNATIVE:
+      debugger;
+      return {
+        ...state,
+        [action.decisionId]: {
+          ...state[action.decisionId],
+          alternatives: state[action.decisionId].alternatives
+            .map(alternative => alternative.id === action.alternative.id ? action.alternative : alternative)
+        }
+      }
+
     case actionType.DELETE_ALTERNATIVE:
       return {
         ...state,
@@ -62,12 +87,5 @@ const decisionReducer = (state = initialState.decisions, action) => {
       return state;
   }
 };
-
-export const getCriterion = (state, decisionId, criteriaId) => {
-  const decision = state.decisions[decisionId]
-  if (decision)
-    return decision.criteria.find(criteria => criteria.id === criteriaId) || null
-  return null
-}
 
 export default decisionReducer;

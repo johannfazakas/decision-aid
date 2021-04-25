@@ -5,7 +5,7 @@ import * as PropTypes from "prop-types";
 
 import { loadDecisions } from "../../../action/decisionActions"
 import { addCriteria, updateCriteria } from "../../../action/criteriaActions";
-import { getCriterion } from "../../../reducer/decisionReducer";
+import { getCriterion } from "../../../store/decisionSelector";
 import { defaultCriterion } from "../../../store/default";
 
 import CriteriaForm from "./CriteriaForm"
@@ -27,18 +27,16 @@ const CriteriaPage = props => {
   }, [props.criteria/*, props.properties*/])
 
   const validateForm = () => {
-    const _errors = {};
-    if (!criteria.name) _errors.name = "Name is required";
+    const _errors = {}
+    if (!criteria.name) _errors.name = "Name is required"
     if (!criteria.weight || criteria.weight < 1 || criteria.weight > 100) {
       _errors.weight = "Weight value should be between 1 and 100"
     }
     setErrors(_errors);
-    return Object.keys(_errors).length === 0;
-  };
-
-  const navigateBack = () => {
-    props.history.push("/decision/" + props.decisionId + "/details")
+    return Object.keys(_errors).length === 0
   }
+
+  const navigateBack = () => props.history.push("/decision/" + props.decisionId + "/details")
 
   const handleChange = event => {
     const {name, value} = event.target
@@ -54,12 +52,12 @@ const CriteriaPage = props => {
     const saveCriteria = criteria.id
       ? props.updateCriteria(props.decisionId, criteria)
       : props.addCriteria(props.decisionId, criteria)
-    saveCriteria.then(navigateBack);
+    saveCriteria.then(navigateBack)
   }
 
   return (
     <div className="jumbotron">
-      <h1>Add Criteria</h1>
+      <h1>{criteria.id ? "Update" : "Add"} Criteria</h1>
       <CriteriaForm
         criteria={criteria}
         // alternatives={props.alternatives}
@@ -89,7 +87,9 @@ const mapStateToProps = (state, props) => {
   return {
     decisions: Object.values(state.decisions),
     decisionId: decisionId,
-    criteria: getCriterion(state, decisionId, criteriaId) || defaultCriterion()
+    criteria: criteriaId
+      ? getCriterion(state, decisionId, criteriaId) || defaultCriterion
+      : defaultCriterion
   };
 }
 
