@@ -14,6 +14,8 @@ const decisionReducer = (state = initialState.decisions, action) => {
       return {...state, [action.decision.id]: action.decision}
 
     case actionType.UPDATE_DECISION:
+    case actionType.AID_DECISION:
+    case actionType.DEFINE_DECISION:
       return {...state, [action.decision.id]: action.decision}
 
     case actionType.DELETE_DECISION:

@@ -56,6 +56,10 @@ public class DecisionSteps implements En {
       decisionService.aidDecision(storage.getDecision().getId())
         .ifPresent(storage::setDecision));
 
+    Given("I want to further define the decision", () ->
+      decisionService.defineDecision(storage.getDecision().getId())
+        .ifPresent(storage::setDecision));
+
     Then("the decision name is {string}", (String name) ->
       assertEquals(name, storage.getDecision().getName()));
 

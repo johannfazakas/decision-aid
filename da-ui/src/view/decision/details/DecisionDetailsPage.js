@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux"
 import * as PropTypes from "prop-types"
 
 import { defaultDecision } from "../../../store/default"
-import { deleteDecision, loadDecisions } from "../../../action/decisionActions"
+import { aidDecision, defineDecision, deleteDecision, loadDecisions } from "../../../action/decisionActions"
 import { deleteCriteria } from "../../../action/criteriaActions"
 import { deleteAlternative } from "../../../action/alternativeActions"
 
@@ -39,6 +39,18 @@ const DecisionDetailsPage = props => {
     props.history.push("/decision/" + decision.id + "/alternative")
   }
 
+  const handleAid = () => {
+    props.aidDecision(decision.id)
+      .catch(error => alert("Aid decision failed. " + error))
+  }
+
+  const handleDefine = () => {
+    const x = decision.id
+    debugger
+    props.defineDecision(decision.id)
+      .catch(error => alert("Define decision failed. " + error))
+  }
+
   return (
     <div className="jumbotron">
       <h1>{decision.name}</h1>
@@ -50,6 +62,8 @@ const DecisionDetailsPage = props => {
         aidWarnings={aidWarnings}
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
+        onAid={handleAid}
+        onDefine={handleDefine}
         onDeleteAlternative={props.deleteAlternative}
         onDeleteCriteria={props.deleteCriteria}
       />
@@ -64,6 +78,8 @@ DecisionDetailsPage.propTypes = {
   deleteDecision: PropTypes.func.isRequired,
   deleteCriteria: PropTypes.func.isRequired,
   deleteAlternative: PropTypes.func.isRequired,
+  aidDecision: PropTypes.func.isRequired,
+  defineDecision: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 }
 
@@ -77,6 +93,8 @@ const mapDispatchToProps = dispatch => ({
   deleteDecision: bindActionCreators(deleteDecision, dispatch),
   deleteCriteria: bindActionCreators(deleteCriteria, dispatch),
   deleteAlternative: bindActionCreators(deleteAlternative, dispatch),
+  aidDecision: bindActionCreators(aidDecision, dispatch),
+  defineDecision: bindActionCreators(defineDecision, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecisionDetailsPage)

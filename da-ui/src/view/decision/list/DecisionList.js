@@ -32,6 +32,7 @@ DecisionList.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
     createdAt: PropTypes.string
   })).isRequired,
   deleteDecision: PropTypes.func.isRequired

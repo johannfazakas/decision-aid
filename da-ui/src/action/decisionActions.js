@@ -42,3 +42,25 @@ export const deleteDecision = decisionId => dispatch =>
     .catch(error => {
       throw error
     });
+
+export const aidDecision = decisionId => dispatch =>
+  decisionApi
+    .aidDecision(decisionId)
+    .then(decision => dispatch({
+      type: actionType.AID_DECISION,
+      decision
+    }))
+    .catch(error => {
+      throw error
+    })
+
+export const defineDecision = decisionId => dispatch =>
+  decisionApi
+    .defineDecision(decisionId)
+    .then(decision => dispatch({
+      type: actionType.DEFINE_DECISION,
+      decision
+    }))
+    .catch(error => {
+      throw error
+    })

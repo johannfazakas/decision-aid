@@ -3,10 +3,10 @@ package ro.johann.da.test.api.service.decision;
 import ro.johann.da.test.api.common.Storage;
 import ro.johann.da.test.api.service.BaseService;
 import ro.johann.da.test.api.service.HttpService;
+import ro.johann.da.test.api.service.Mapper;
 import ro.johann.da.test.api.service.decision.transfer.DecisionInput;
 import ro.johann.da.test.api.service.decision.transfer.DecisionOutput;
 import ro.johann.da.test.api.service.decision.transfer.DecisionsOutput;
-import ro.johann.da.test.api.service.Mapper;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -50,6 +50,11 @@ public class DecisionService extends BaseService {
 
   public Optional<DecisionOutput> aidDecision(String decisionId) {
     var url = getUrl("decisionApi.aidDecisionUrl", Map.of("decisionId", decisionId));
+    return put(url, new byte[0]).map(output -> mapper.deserialize(output, DecisionOutput.class));
+  }
+
+  public Optional<DecisionOutput> defineDecision(String decisionId) {
+    var url = getUrl("decisionApi.defineDecisionUrl", Map.of("decisionId", decisionId));
     return put(url, new byte[0]).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 

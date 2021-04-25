@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import CriteriaTableHeader from "./CriteriaTableHeader";
@@ -18,7 +18,7 @@ const DecisionTable = props =>
           <CriteriaTableHeader decisionId={props.decision.id} criteria={criteria} />
         </th>
       )}
-      <th>
+      <th className="text-center">
         <div className="btn btn-dark" onClick={props.onAddCriteria}>New criteria</div>
       </th>
     </tr>
@@ -33,7 +33,7 @@ const DecisionTable = props =>
       />
     ))}
     <tr>
-      <th className="text-right">
+      <th className="text-center">
         <div className="btn btn-dark" onClick={props.onAddAlternative}>New alternative</div>
       </th>
       {[...props.decision.criteria].map(criteria =>
@@ -46,11 +46,16 @@ const DecisionTable = props =>
           </div>
         </td>)}
       <th>
-        <TableActionButton status={props.decision.status} aidWarnings={props.aidWarnings} />
+        <TableActionButton
+          status={props.decision.status}
+          aidWarnings={props.aidWarnings}
+          onAid={props.onAid}
+          onDefine={props.onDefine}
+        />
       </th>
     </tr>
     </tbody>
-  </table>;
+  </table>
 
 DecisionTable.propTypes = {
   decision: PropTypes.object.isRequired,
@@ -58,7 +63,9 @@ DecisionTable.propTypes = {
   onAddCriteria: PropTypes.func.isRequired,
   onAddAlternative: PropTypes.func.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired,
-  onDeleteCriteria: PropTypes.func.isRequired
+  onDeleteCriteria: PropTypes.func.isRequired,
+  onAid: PropTypes.func.isRequired,
+  onDefine: PropTypes.func.isRequired
 }
 
 export default DecisionTable;

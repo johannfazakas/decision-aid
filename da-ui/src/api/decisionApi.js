@@ -6,6 +6,8 @@ const listDecisionsUrl = baseUrl + "/decisions";
 const createDecisionUrl = baseUrl + "/decisions";
 const patchDecisionUrl = baseUrl + "/decisions/{decisionId}";
 const deleteDecisionUrl = baseUrl + "/decisions/{decisionId}";
+const aidDecisionUrl = baseUrl + "/decisions/{decisionId}/aid";
+const defineDecisionUrl = baseUrl + "/decisions/{decisionId}/define";
 
 export const getDecision = decisionId => {
   const url = getDecisionsUrl
@@ -60,4 +62,25 @@ export const deleteDecision = decisionId => {
   })
     .then(handleResponse)
     .catch(handleError);
+}
+
+export const aidDecision = decisionId => {
+  const url = aidDecisionUrl
+    .replace("{decisionId}", decisionId)
+  return fetch(url, {
+    method: "PUT"
+  })
+    .then(handleResponse)
+    .catch(handleError)
+}
+
+export const defineDecision = decisionId => {
+  debugger
+  const url = defineDecisionUrl
+    .replace("{decisionId}", decisionId)
+  return fetch(url, {
+    method: "PUT"
+  })
+    .then(handleResponse)
+    .catch(handleError)
 }

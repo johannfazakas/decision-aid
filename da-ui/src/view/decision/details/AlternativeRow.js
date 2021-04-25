@@ -7,7 +7,7 @@ import PropertyCell from "./PropertyCell";
 const AlternativeRow = props => {
   return (
     <tr>
-      <th className="text-right">
+      <th className="text-center">
         <Link
           to={"/decision/" + props.decision.id + "/alternative/" + props.alternative.id}
         >
@@ -24,7 +24,7 @@ const AlternativeRow = props => {
             </td>
           );
         })}
-      <td>
+      <td className="text-center">
         <div className="btn btn-outline-danger" onClick={props.onDelete}>← Delete alternative</div>
       </td>
     </tr>

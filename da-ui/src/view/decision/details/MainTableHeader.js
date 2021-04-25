@@ -10,14 +10,14 @@ const MainTableHeader = props => {
       .reduce((sum, it) => sum + it, 0))
   }, [props.criteria])
   return <>
-    <div className="text-right">
+    <div className="text-center">
       Criteria (
       <span className={totalWeight < 100 ? "text-success" : totalWeight > 100 ? "text-danger" : "text-warning"}>
         {totalWeight + "%"}
       </span>
       ) →
     </div>
-    <div className="text-right">
+    <div className="text-center">
       Alternatives ↓
     </div>
   </>;
