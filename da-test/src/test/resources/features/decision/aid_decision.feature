@@ -69,7 +69,32 @@ Feature: Aid decision
     Then the response is 409
 
   Scenario: Aid decision without all the properties being set
-    # TODO
+    # create decision
+    Given I plan to create a decision
+    And I set the decision name to "Camera"
+    And I create the decision
+
+    # add criteria
+    Given I plan to add a criteria
+    And I set the criteria name to "Price"
+    And I set the criteria weight to 100
+    And I set the criteria type to "minimum"
+    And I add the criteria
+
+    # add alternatives
+    Given I plan to add an alternative
+    And I set the alternative name to "Nikon XP34"
+    And I add the alternative
+
+    Given I plan to add an alternative
+    And I set the alternative name to "Canon YT86"
+    And I add the alternative
+
+    # set only one property
+    Given I set the property on the alternative "Nikon XP34" for the criteria "Price" to the value 3000
+
+    When I request aid for the decision
+    Then the response is 409
 
   Scenario: Aid decision with invalid total criteria weight
     # TODO

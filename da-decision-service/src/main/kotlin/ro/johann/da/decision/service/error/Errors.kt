@@ -17,6 +17,9 @@ object Errors {
 
   fun noAlternativeDefined(decisionId: UUID) =
     ConflictException("Decision $decisionId has no alternative defined.")
+
+  fun propertiesAreMissing(decisionId: UUID) =
+    ConflictException("Decision $decisionId has missing properties.")
 }
 
 class NotFoundException(override val message: String) : RuntimeException(message)

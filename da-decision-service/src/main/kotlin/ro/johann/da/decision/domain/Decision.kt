@@ -47,4 +47,7 @@ data class Decision(
 
   val alternatives: List<Alternative>
     get() = alternativeList.sortedBy { it.createdAt }
+
+  fun propertiesAreMissing(): Boolean =
+    alternativeList.any { alternative -> alternative.properties.size < criteria.size }
 }
