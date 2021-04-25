@@ -14,8 +14,8 @@ public class PropertySteps implements En {
   @Inject
   public PropertySteps(Storage storage, PropertyService propertyService) {
 
-    When("I set the property on the alternative {string} for the criteria {string} to the value {float}",
-      (String alternativeName, String criteriaName, Float value) -> {
+    When("I set the property value to {float} on the alternative {string} for the criteria {string}",
+      (Float value, String alternativeName, String criteriaName) -> {
         SetPropertyInput input = SetPropertyInput.builder()
           .alternativeId(storage.getAlternativeByName(alternativeName).getId())
           .criteriaId(storage.getCriteriaByName(criteriaName).getId())

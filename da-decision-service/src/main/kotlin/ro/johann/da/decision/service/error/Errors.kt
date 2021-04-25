@@ -20,6 +20,9 @@ object Errors {
 
   fun propertiesAreMissing(decisionId: UUID) =
     ConflictException("Decision $decisionId has missing properties.")
+
+  fun invalidCriteriaWeights(decisionId: UUID) =
+    ConflictException("Decision $decisionId has invalid criteria weights.")
 }
 
 class NotFoundException(override val message: String) : RuntimeException(message)

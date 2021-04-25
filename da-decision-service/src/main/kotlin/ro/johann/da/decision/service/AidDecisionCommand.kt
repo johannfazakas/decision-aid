@@ -36,7 +36,8 @@ class AidDecisionCommand(
     when {
       decision.criteria.isEmpty() -> throw Errors.noCriteriaDefined(decision.id)
       decision.alternatives.isEmpty() -> throw Errors.noAlternativeDefined(decision.id)
-      decision.propertiesAreMissing() -> throw Errors.propertiesAreMissing(decision.id)
+      !decision.allPropertiesAreSet() -> throw Errors.propertiesAreMissing(decision.id)
+      !decision.hasValidCriteriaWeights() -> throw Errors.invalidCriteriaWeights(decision.id)
     }
   }
 }

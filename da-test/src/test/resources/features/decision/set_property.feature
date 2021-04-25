@@ -33,12 +33,12 @@ Feature: Set property
     And I add the alternative
 
     # set the property
-    When I set the property on the alternative "Philips LatteGo" for the criteria "price" to the value 2600
+    When I set the property value to 2600 on the alternative "Philips LatteGo" for the criteria "price"
     Then the response is 200
     And the property value is 2600
-    When I set the property on the alternative "Philips LatteGo" for the criteria "price" to the value 2800
+    When I set the property value to 2800 on the alternative "Philips LatteGo" for the criteria "price"
     Then the response is 200
-    When I set the property on the alternative "Philips LatteGo" for the criteria "beverages" to the value 12
+    When I set the property value to 12 on the alternative "Philips LatteGo" for the criteria "beverages"
 
     # check decision response
     When I get the decision

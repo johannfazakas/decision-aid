@@ -46,8 +46,8 @@ Feature: Delete alternative
     And I set the criteria type to "maximum"
 
     Given I get the decision
-    And I set the property on the alternative "Philips LatteGo 5400" for the criteria "price" to the value 2600
-    And I set the property on the alternative "DeLonghi Eletta" for the criteria "price" to the value 3000
+    And I set the property value to 2600 on the alternative "Philips LatteGo 5400" for the criteria "price"
+    And I set the property value to 3000 on the alternative "DeLonghi Eletta" for the criteria "price"
 
     Given I peek at the alternative with name "DeLonghi Eletta"
     When I delete the alternative

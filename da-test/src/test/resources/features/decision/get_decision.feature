@@ -33,8 +33,8 @@ Feature: Get decision
 
     # get decision
     Given I get the decision
-    And I set the property on the alternative "Samsung Note 10" for the criteria "screen size" to the value 7.0
-    And I set the property on the alternative "iPhone 12" for the criteria "price" to the value 1500
+    And I set the property value to 7.0 on the alternative "Samsung Note 10" for the criteria "screen size"
+    And I set the property value to 1500 on the alternative "iPhone 12" for the criteria "price"
 
     When I get the decision
     Then the response is 200

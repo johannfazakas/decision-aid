@@ -30,9 +30,11 @@ const DecisionDetailsPage = props => {
       setAidWarning("No criteria defined!")
     else if (props.decision.alternatives.length === 0)
       setAidWarning("No alternative defined!")
-    else if (props.decision.properties.length < props.decision.alternatives.length * props.decision.criteria.length) {
+    else if (props.decision.properties.length < props.decision.alternatives.length * props.decision.criteria.length)
       setAidWarning("All the properties should be set!")
-    } else
+    else if (props.decision.criteria.map(c => c.weight).reduce((sum, w) => sum + w, 0) !== 100)
+      setAidWarning("Criteria weight sum should be 100!")
+    else
       setAidWarning("")
 
     setShowAidWarning(false)

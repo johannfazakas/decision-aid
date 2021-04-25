@@ -23,14 +23,14 @@ Feature: Aid decision
     Given I plan to add an alternative
     And I set the alternative name to "Philips LatteGo 5400"
     And I add the alternative
-    And I set the property on the alternative "Philips LatteGo 5400" for the criteria "price" to the value 2600
-    And I set the property on the alternative "Philips LatteGo 5400" for the criteria "beverages" to the value 12
+    And I set the property value to 2600 on the alternative "Philips LatteGo 5400" for the criteria "price"
+    And I set the property value to 12 on the alternative "Philips LatteGo 5400" for the criteria "beverages"
 
     Given I plan to add an alternative
     And I set the alternative name to "DeLonghi Eletta"
     And I add the alternative
-    And I set the property on the alternative "DeLonghi Eletta" for the criteria "price" to the value 3000
-    And I set the property on the alternative "DeLonghi Eletta" for the criteria "beverages" to the value 7
+    And I set the property value to 3000 on the alternative "DeLonghi Eletta" for the criteria "price"
+    And I set the property value to 7 on the alternative "DeLonghi Eletta" for the criteria "beverages"
 
     # request for aid
     When I request aid for the decision
@@ -65,6 +65,7 @@ Feature: Aid decision
     And I set the criteria type to "minimum"
     And I add the criteria
 
+    # request aid
     When I request aid for the decision
     Then the response is 409
 
@@ -91,10 +92,33 @@ Feature: Aid decision
     And I add the alternative
 
     # set only one property
-    Given I set the property on the alternative "Nikon XP34" for the criteria "Price" to the value 3000
+    Given I set the property value to 3000 on the alternative "Nikon XP34" for the criteria "Price"
 
+    # request aid
     When I request aid for the decision
     Then the response is 409
 
   Scenario: Aid decision with invalid total criteria weight
-    # TODO
+    # create decision
+    Given I plan to create a decision
+    And I set the decision name to "Keyboard"
+    And I create the decision
+
+    # add criteria
+    Given I plan to add a criteria
+    And I set the criteria name to "Price"
+    And I set the criteria weight to 70
+    And I set the criteria type to "minimum"
+    And I add the criteria
+
+    # add alternatives
+    Given I plan to add an alternative
+    And I set the alternative name to "Logitech GX500"
+    And I add the alternative
+
+    # set the property
+    Given I set the property value to 250 on the alternative "Logitech GX500" for the criteria "Price"
+
+    # request aid
+    When I request aid for the decision
+    Then the response is 409

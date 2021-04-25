@@ -19,7 +19,7 @@ Feature: Reset decision
     And I add the alternative
 
     # add property
-    Given I set the property on the alternative "MacBook Pro" for the criteria "Price" to the value 12000
+    Given I set the property value to 12000 on the alternative "MacBook Pro" for the criteria "Price"
 
     # request aid
     Given I request aid for the decision
