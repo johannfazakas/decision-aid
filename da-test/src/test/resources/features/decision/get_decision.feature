@@ -39,7 +39,7 @@ Feature: Get decision
     When I get the decision
     Then the response is 200
     And the decision name is "Phone"
-    And the decision status is "define"
+    And the decision status is "design"
     And the decision description is "I would like it to take good pictures"
 
     Then the decision has 2 criteria

@@ -7,7 +7,7 @@ const createDecisionUrl = baseUrl + "/decisions";
 const patchDecisionUrl = baseUrl + "/decisions/{decisionId}";
 const deleteDecisionUrl = baseUrl + "/decisions/{decisionId}";
 const aidDecisionUrl = baseUrl + "/decisions/{decisionId}/aid";
-const defineDecisionUrl = baseUrl + "/decisions/{decisionId}/define";
+const resetDecisionUrl = baseUrl + "/decisions/{decisionId}/reset";
 
 export const getDecision = decisionId => {
   const url = getDecisionsUrl
@@ -74,9 +74,8 @@ export const aidDecision = decisionId => {
     .catch(handleError)
 }
 
-export const defineDecision = decisionId => {
-  debugger
-  const url = defineDecisionUrl
+export const resetDecision = decisionId => {
+  const url = resetDecisionUrl
     .replace("{decisionId}", decisionId)
   return fetch(url, {
     method: "PUT"

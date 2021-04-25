@@ -50,7 +50,7 @@ const DecisionTable = props =>
           status={props.decision.status}
           aidWarnings={props.aidWarnings}
           onAid={props.onAid}
-          onDefine={props.onDefine}
+          onReset={props.onReset}
         />
       </th>
     </tr>
@@ -65,7 +65,7 @@ DecisionTable.propTypes = {
   onDeleteAlternative: PropTypes.func.isRequired,
   onDeleteCriteria: PropTypes.func.isRequired,
   onAid: PropTypes.func.isRequired,
-  onDefine: PropTypes.func.isRequired
+  onReset: PropTypes.func.isRequired
 }
 
 export default DecisionTable;

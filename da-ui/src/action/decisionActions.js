@@ -54,11 +54,11 @@ export const aidDecision = decisionId => dispatch =>
       throw error
     })
 
-export const defineDecision = decisionId => dispatch =>
+export const resetDecision = decisionId => dispatch =>
   decisionApi
-    .defineDecision(decisionId)
+    .resetDecision(decisionId)
     .then(decision => dispatch({
-      type: actionType.DEFINE_DECISION,
+      type: actionType.RESET_DECISION,
       decision
     }))
     .catch(error => {

@@ -24,7 +24,7 @@ class AidDecisionCommand(
 
     return decisionRepository.findByIdOrNull(id)
       ?.also {
-        it.status = DecisionStatus.AID
+        it.status = DecisionStatus.PROCESSED
         it.updatedAt = LocalDateTime.now()
       }
       ?.let { decisionRepository.save(it) }

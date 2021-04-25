@@ -35,7 +35,7 @@ Feature: List decisions
 
     # check the 1st decision
     Given I peek at the decision with name "Washing machine"
-    Then the decision status is "define"
+    Then the decision status is "design"
 
     Then the decision has 2 criteria
     Given I peek at the criteria with name "price"
@@ -49,7 +49,7 @@ Feature: List decisions
     # check the 2nd decision
     Given I peek at the decision with name "Dryer"
     Then the decision description is "for clothes"
-    And the decision status is "define"
+    And the decision status is "design"
 
   Scenario: List decisions when empty
     When I list the decisions

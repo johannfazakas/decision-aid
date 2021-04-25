@@ -53,8 +53,8 @@ public class DecisionService extends BaseService {
     return put(url, new byte[0]).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
-  public Optional<DecisionOutput> defineDecision(String decisionId) {
-    var url = getUrl("decisionApi.defineDecisionUrl", Map.of("decisionId", decisionId));
+  public Optional<DecisionOutput> resetDecision(String decisionId) {
+    var url = getUrl("decisionApi.resetDecisionUrl", Map.of("decisionId", decisionId));
     return put(url, new byte[0]).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 

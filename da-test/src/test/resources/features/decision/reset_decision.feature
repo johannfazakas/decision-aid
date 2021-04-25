@@ -1,6 +1,6 @@
-Feature: Define decision
+Feature: Reset decision
 
-  Scenario: Define decision
+  Scenario: Reset decision
     # create decision
     Given I plan to create a decision
     And I set the decision name to "Laptop"
@@ -24,6 +24,6 @@ Feature: Define decision
     # request aid
     Given I request aid for the decision
 
-    # define
-    Given I want to further define the decision
+    # reset
+    Given I reset the decision
     Then the response is 200

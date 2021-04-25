@@ -19,7 +19,7 @@ import ro.johann.da.decision.api.transfer.ListOutput
 import ro.johann.da.decision.api.transfer.UpdateDecisionInput
 import ro.johann.da.decision.service.AidDecisionCommand
 import ro.johann.da.decision.service.CreateDecisionCommand
-import ro.johann.da.decision.service.DefineDecisionCommand
+import ro.johann.da.decision.service.ResetDecisionCommand
 import ro.johann.da.decision.service.DeleteDecisionCommand
 import ro.johann.da.decision.service.GetDecisionCommand
 import ro.johann.da.decision.service.ListDecisionsCommand
@@ -36,7 +36,7 @@ class DecisionController(
   private val updateDecisionCommand: UpdateDecisionCommand,
   private val deleteDecisionCommand: DeleteDecisionCommand,
   private val aidDecisionCommand: AidDecisionCommand,
-  private val defineDecisionCommand: DefineDecisionCommand
+  private val resetDecisionCommand: ResetDecisionCommand
 ) {
   @GetMapping
   @ResponseStatus(OK)
@@ -85,11 +85,11 @@ class DecisionController(
     aidDecisionCommand.execute(id)
       .let(::DecisionOutput)
 
-  @PutMapping("/{decisionId}/define")
+  @PutMapping("/{decisionId}/reset")
   @ResponseStatus(OK)
-  fun defineDecision(
+  fun resetDecision(
     @PathVariable("decisionId") id: UUID
   ): DecisionOutput =
-    defineDecisionCommand.execute(id)
+    resetDecisionCommand.execute(id)
       .let(::DecisionOutput)
 }

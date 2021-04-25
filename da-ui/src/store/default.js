@@ -2,7 +2,7 @@ export const defaultDecision = {
   id: null,
   name: "",
   description: "",
-  status: "define",
+  status: "design",
   criteria: [],
   alternatives: [],
   properties: [],

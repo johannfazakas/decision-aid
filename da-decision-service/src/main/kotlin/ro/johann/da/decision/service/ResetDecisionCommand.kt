@@ -12,19 +12,19 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
-class DefineDecisionCommand(
+class ResetDecisionCommand(
   private val decisionRepository: DecisionRepository
 ) {
   private companion object {
-    val logger: Logger = LoggerFactory.getLogger(DefineDecisionCommand::class.java)
+    val logger: Logger = LoggerFactory.getLogger(ResetDecisionCommand::class.java)
   }
 
   fun execute(id: UUID): Decision {
-    logger.info("define decision >> decisionId = $id")
+    logger.info("reset decision >> decisionId = $id")
 
     return decisionRepository.findByIdOrNull(id)
       ?.also {
-        it.status = DecisionStatus.DEFINE
+        it.status = DecisionStatus.DESIGN
         it.updatedAt = LocalDateTime.now()
       }
       ?.let { decisionRepository.save(it) }

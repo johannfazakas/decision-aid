@@ -24,7 +24,7 @@ class CreateDecisionCommand(
       Decision(
         name = input.name,
         description = input.description,
-        status = DecisionStatus.DEFINE,
+        status = DecisionStatus.DESIGN,
         createdAt = now,
         updatedAt = now
       )

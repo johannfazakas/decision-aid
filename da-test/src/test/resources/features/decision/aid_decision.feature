@@ -35,7 +35,7 @@ Feature: Aid decision
     # request for aid
     When I request aid for the decision
     Then the response is 200
-    And the decision status is "aid"
+    And the decision status is "processed"
 
   Scenario: Aid decision without criteria
     # TODO

@@ -2,8 +2,8 @@ package ro.johann.da.test.api.steps.decision;
 
 import io.cucumber.java8.En;
 import ro.johann.da.test.api.common.Storage;
-import ro.johann.da.test.api.service.decision.transfer.CriteriaInput;
 import ro.johann.da.test.api.service.decision.CriteriaService;
+import ro.johann.da.test.api.service.decision.transfer.CriteriaInput;
 import ro.johann.da.test.api.service.decision.transfer.CriteriaOutput;
 
 import javax.inject.Inject;

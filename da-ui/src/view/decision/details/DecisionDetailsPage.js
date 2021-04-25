@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux"
 import * as PropTypes from "prop-types"
 
 import { defaultDecision } from "../../../store/default"
-import { aidDecision, defineDecision, deleteDecision, loadDecisions } from "../../../action/decisionActions"
+import { aidDecision, resetDecision, deleteDecision, loadDecisions } from "../../../action/decisionActions"
 import { deleteCriteria } from "../../../action/criteriaActions"
 import { deleteAlternative } from "../../../action/alternativeActions"
 
@@ -44,11 +44,9 @@ const DecisionDetailsPage = props => {
       .catch(error => alert("Aid decision failed. " + error))
   }
 
-  const handleDefine = () => {
-    const x = decision.id
-    debugger
-    props.defineDecision(decision.id)
-      .catch(error => alert("Define decision failed. " + error))
+  const handleReset = () => {
+    props.resetDecision(decision.id)
+      .catch(error => alert("Reset decision failed. " + error))
   }
 
   return (
@@ -63,7 +61,7 @@ const DecisionDetailsPage = props => {
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
         onAid={handleAid}
-        onDefine={handleDefine}
+        onReset={handleReset}
         onDeleteAlternative={props.deleteAlternative}
         onDeleteCriteria={props.deleteCriteria}
       />
@@ -79,7 +77,7 @@ DecisionDetailsPage.propTypes = {
   deleteCriteria: PropTypes.func.isRequired,
   deleteAlternative: PropTypes.func.isRequired,
   aidDecision: PropTypes.func.isRequired,
-  defineDecision: PropTypes.func.isRequired,
+  resetDecision: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 }
 
@@ -94,7 +92,7 @@ const mapDispatchToProps = dispatch => ({
   deleteCriteria: bindActionCreators(deleteCriteria, dispatch),
   deleteAlternative: bindActionCreators(deleteAlternative, dispatch),
   aidDecision: bindActionCreators(aidDecision, dispatch),
-  defineDecision: bindActionCreators(defineDecision, dispatch)
+  resetDecision: bindActionCreators(resetDecision, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecisionDetailsPage)
