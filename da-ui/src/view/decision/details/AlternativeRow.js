@@ -20,7 +20,7 @@ const AlternativeRow = props => {
             .find(p => p.criteriaId === criteria.id && p.alternativeId === props.alternative.id) || {}
           return (
             <td key={criteria.id}>
-              <PropertyCell property={property} />
+              <PropertyCell property={property} unitOfMeasure={criteria.unitOfMeasure} />
             </td>
           );
         })}

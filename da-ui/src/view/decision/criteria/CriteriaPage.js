@@ -28,6 +28,7 @@ const CriteriaPage = props => {
   const validateForm = () => {
     const _errors = {}
     if (!criteria.name) _errors.name = "Name is required"
+    if (!criteria.type || criteria.type === "") _errors.type = "Type is required"
     if (!criteria.weight || criteria.weight < 1 || criteria.weight > 100) {
       _errors.weight = "Weight value should be between 1 and 100"
     }

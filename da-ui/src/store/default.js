@@ -12,7 +12,8 @@ export const defaultDecision = {
 export const defaultCriteria = {
   id: null,
   name: "",
-  weight: null
+  weight: null,
+  unitOfMeasure: ""
 }
 
 export const defaultAlternative = {

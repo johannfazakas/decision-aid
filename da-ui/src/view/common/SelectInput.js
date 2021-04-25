@@ -16,7 +16,7 @@ const SelectInput = props => (
           <option key={option.value} value={option.value}>{option.text}</option>)
         }
       </select>
-      {props.error && <div className="alert alert-danger">{props.error}</div>}
+      {props.error && <div className="alert text-danger">{props.error}</div>}
     </div>
   </div>
 )
@@ -30,6 +30,7 @@ SelectInput.propTypes = {
     text: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
   })).isRequired,
+  error: PropTypes.string,
   onChange: PropTypes.func.isRequired
 }
 

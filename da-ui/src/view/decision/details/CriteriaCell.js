@@ -5,18 +5,16 @@ import PropTypes from "prop-types";
 const CriteriaCell = props => {
   return (
     <div className="row text-center">
+      <div className="col text-warning">
+        {props.criteria.weight + "%"}
+      </div>
       <div className="col">
         <Link to={"/decision/" + props.decisionId + "/criteria/" + props.criteria.id}>
           {props.criteria.name + " "}
         </Link>
       </div>
-      <div className="col">
-        {props.criteria.weight + "%"}
-      </div>
-      <div className="col text-warning">
-        {props.criteria.type === "maximum" && "Max +"}
-        {props.criteria.type === "minimum" && "Min -"}
-      </div>
+      {props.criteria.type === "maximum" && <div className="col text-danger">Max +</div>}
+      {props.criteria.type === "minimum" && <div className="col text-success">Min -</div>}
     </div>
   );
 };

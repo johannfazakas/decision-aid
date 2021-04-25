@@ -20,7 +20,7 @@ const TextInput = props => {
           value={props.value || ""}
         />
       </div>
-      {props.error && <div className="alert alert-danger">{props.error}</div>}
+      {props.error && <div className="alert text-danger">{props.error}</div>}
     </div>
   );
 };
