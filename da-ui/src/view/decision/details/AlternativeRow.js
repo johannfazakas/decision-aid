@@ -7,9 +7,12 @@ import PropertyCell from "./PropertyCell";
 const AlternativeRow = props => {
   return (
     <tr>
-      <th>
+      <th className="text-right">
         <Link
-          to={"/decision/" + props.decision.id + "/alternative/" + props.alternative.id}>{props.alternative.name}</Link>
+          to={"/decision/" + props.decision.id + "/alternative/" + props.alternative.id}
+        >
+          {props.alternative.name}
+        </Link>
       </th>
       {props.decision.criteria
         .map(criteria => {

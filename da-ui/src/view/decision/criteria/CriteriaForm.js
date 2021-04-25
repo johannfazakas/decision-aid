@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TextInput from "../../common/TextInput";
 import NumberInput from "../../common/NumberInput";
 import { defaultProperty } from "../../../store/default";
+import SelectInput from "../../common/SelectInput";
 
 const CriteriaForm = props => {
 
@@ -22,6 +23,17 @@ const CriteriaForm = props => {
         label="Weight"
         number={{value: props.criteria.weight}}
         error={props.errors.weight}
+        onChange={props.onChange}
+      />
+      <SelectInput
+        name="type"
+        label="Type"
+        defaultOption="Select type"
+        value={props.criteria.type || ""}
+        options={[
+          {text: "Maximum", value: "maximum"},
+          {text: "Minimum", value: "minimum"},
+        ]}
         onChange={props.onChange}
       />
 

@@ -5,10 +5,10 @@ import CriteriaCell from "./CriteriaCell";
 import AlternativeRow from "./AlternativeRow";
 
 const DecisionTable = props =>
-  <table className="table">
+  <table className="table table-bordered">
     <thead>
     <tr>
-      <th>↓ Alternatives | Criteria →</th>
+      <th className="text-right">↓ Alternatives | Criteria →</th>
       {props.decision.criteria.map(criteria =>
         <th key={criteria.id}>
           <CriteriaCell decisionId={props.decision.id} criteria={criteria} />
@@ -29,11 +29,11 @@ const DecisionTable = props =>
       />
     ))}
     <tr>
-      <th>
+      <th className="text-right">
         <div className="btn btn-dark" onClick={props.onAddAlternative}>New alternative</div>
       </th>
       {[...props.decision.criteria].map(criteria =>
-        <td key={criteria.id}>
+        <td key={criteria.id} className="text-center">
           <div
             className="btn btn-outline-danger"
             onClick={() => props.onDeleteCriteria(props.decision.id, criteria.id)}
