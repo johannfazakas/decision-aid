@@ -14,6 +14,9 @@ object Errors {
 
   fun noCriteriaDefined(decisionId: UUID) =
     ConflictException("Decision $decisionId has no criteria defined.")
+
+  fun noAlternativeDefined(decisionId: UUID) =
+    ConflictException("Decision $decisionId has no alternative defined.")
 }
 
 class NotFoundException(override val message: String) : RuntimeException(message)

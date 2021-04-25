@@ -33,8 +33,9 @@ class AidDecisionCommand(
   }
 
   private fun validateAid(decision: Decision) {
-    if (decision.criteria.isEmpty()) {
-      throw Errors.noCriteriaDefined(decision.id)
+    when {
+      decision.criteria.isEmpty() -> throw Errors.noCriteriaDefined(decision.id)
+      decision.alternatives.isEmpty() -> throw Errors.noAlternativeDefined(decision.id)
     }
   }
 }

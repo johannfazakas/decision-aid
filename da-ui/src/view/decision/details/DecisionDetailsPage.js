@@ -28,6 +28,8 @@ const DecisionDetailsPage = props => {
 
     if (props.decision.criteria.length === 0)
       setAidWarning("No criteria defined!")
+    else if (props.decision.alternatives.length === 0)
+      setAidWarning("No alternative defined!")
     else
       setAidWarning("")
 

@@ -53,7 +53,20 @@ Feature: Aid decision
     Then the response is 409
 
   Scenario: Aid decision without alternatives
-    # TODO
+    # create decision
+    Given I plan to create a decision
+    And I set the decision name to "PC"
+    And I create the decision
+
+    # add criteria
+    Given I plan to add a criteria
+    And I set the criteria name to "Price"
+    And I set the criteria weight to 100
+    And I set the criteria type to "minimum"
+    And I add the criteria
+
+    When I request aid for the decision
+    Then the response is 409
 
   Scenario: Aid decision without all the properties being set
     # TODO
