@@ -13,7 +13,6 @@ import CriteriaForm from "./CriteriaForm"
 const CriteriaPage = props => {
 
   const [criteria, setCriteria] = useState({...props.criteria})
-  const [alternatives, setAlternatives] = useState([...props.alternatives])
   const [properties, setProperties] = useState([])
   const [errors, setErrors] = useState({})
 
@@ -23,9 +22,8 @@ const CriteriaPage = props => {
         .catch(error => alert("Loading decisions failed. " + error))
     } else {
       setCriteria({...props.criteria})
-      setAlternatives([...props.alternatives])
     }
-  }, [props.criteria, props.alternatives])
+  }, [props.criteria])
 
   const validateForm = () => {
     const _errors = {}
@@ -50,7 +48,7 @@ const CriteriaPage = props => {
   const handlePropertyChange = (alternativeId, value) =>
     setProperties([
       ...properties.filter(property => property.alternativeId !== alternativeId),
-      {alternativeId, value}
+      {alternativeId, value: parseInt(value)}
     ])
 
   const handleSubmit = event => {

@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
-import PropertyCell from "./PropertyCell";
 import CriteriaCell from "./CriteriaCell";
+import AlternativeRow from "./AlternativeRow";
 
 const DecisionTable = props =>
   <table className="table">
@@ -21,31 +20,14 @@ const DecisionTable = props =>
     </tr>
     </thead>
     <tbody>
-    {props.decision.alternatives.map(alternative =>
-      <tr key={alternative.id}>
-        <th>
-          <Link to={"/decision/" + props.decision.id + "/alternative/" + alternative.id}>{alternative.name}</Link>
-        </th>
-        {props.decision.criteria
-          .map(criteria => [
-            criteria,
-            props.decision.properties
-              .filter(p => p.criteriaId === criteria.id)
-              .filter(p => p.alternativeId === alternative.id)[0] || {}
-          ])
-          .map(([criteria, property]) =>
-            <td key={criteria.id}>
-              <PropertyCell property={property} />
-            </td>)}
-        <td>
-          <div
-            className="btn btn-outline-danger"
-            onClick={() => props.onDeleteAlternative(props.decision.id, alternative.id)}
-          >
-            ← Delete alternative
-          </div>
-        </td>
-      </tr>)}
+    {props.decision.alternatives.map(alternative => (
+      <AlternativeRow
+        key={alternative.id}
+        decision={props.decision}
+        alternative={alternative}
+        onDelete={() => props.onDeleteCriteria(props.decision.id, alternative.id)}
+      />
+    ))}
     <tr>
       <th>
         <div className="btn btn-dark" onClick={props.onAddAlternative}>New alternative</div>

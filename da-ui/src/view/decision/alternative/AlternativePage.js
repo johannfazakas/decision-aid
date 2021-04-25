@@ -13,7 +13,6 @@ import AlternativeForm from "./AlternativeForm";
 const AlternativePage = props => {
 
   const [alternative, setAlternative] = useState({...props.alternative})
-  const [criteria, setCriteria] = useState([...props.criteria])
   const [properties, setProperties] = useState([])
   const [errors, setErrors] = useState({})
 
@@ -22,9 +21,8 @@ const AlternativePage = props => {
       props.loadDecisions()
     } else {
       setAlternative({...props.alternative})
-      setCriteria([...criteria])
     }
-  }, [props.alternative, props.criteria])
+  }, [props.alternative])
 
   const navigateBack = () => props.history.push("/decision/" + props.decisionId + "/details")
 
@@ -55,7 +53,7 @@ const AlternativePage = props => {
   const handlePropertyChange = (criteriaId, value) =>
     setProperties([
       ...properties.filter(property => property.criteriaId !== criteriaId),
-      {criteriaId, value}
+      {criteriaId, value: parseInt(value)}
     ])
 
   return (
