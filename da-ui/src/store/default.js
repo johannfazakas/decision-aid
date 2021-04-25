@@ -7,7 +7,7 @@ export const defaultDecision = {
   properties: []
 }
 
-export const defaultCriterion = {
+export const defaultCriteria = {
   id: null,
   name: "",
   weight: null
@@ -16,4 +16,9 @@ export const defaultCriterion = {
 export const defaultAlternative = {
   id: null,
   name: ""
+}
+
+export const defaultProperty = {
+  id: null,
+  value: null
 }

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInput from "../../common/TextInput";
 import NumberInput from "../../common/NumberInput";
+import { defaultProperty } from "../../../store/default";
 
 const CriteriaForm = props => {
 
@@ -23,28 +24,18 @@ const CriteriaForm = props => {
         error={props.errors.weight}
         onChange={props.onChange}
       />
-      {/*<hr />*/}
-      {/*<h4>Properties:</h4>*/}
-      {/*{props.alternatives*/}
-      {/*  .map(alternative => {*/}
-      {/*    const property = props.properties*/}
-      {/*      .filter(p => p.alternativeId === alternative.id)[0] || {};*/}
-      {/*    return [alternative, property]*/}
-      {/*  })*/}
-      {/*  .map(([alternative, property]) => {*/}
-      {/*    return <NumberInput*/}
-      {/*      key={alternative.id}*/}
-      {/*      id={alternative.name}*/}
-      {/*      name={alternative.name}*/}
-      {/*      label={alternative.name}*/}
-      {/*      number={props.properties.filter(p => p.alternativeId === alternative.id)[0]}*/}
-      {/*      onChange={({target}) => props.onPropertyChange({*/}
-      {/*        alternativeId: alternative.id,*/}
-      {/*        value: parseFloat(target.value)*/}
-      {/*      })}*/}
-      {/*    />*/}
-      {/*  })*/}
-      {/*}*/}
+
+      <h4>Properties:</h4>
+      {props.alternatives.map(alternative => (
+        <NumberInput
+          key={alternative.id}
+          number={alternative.property || defaultProperty}
+          label={alternative.name}
+          onChange={event => props.onPropertyChange(alternative.id, event.target.value)}
+          id={alternative.name}
+          name={alternative.name}
+        />
+      ))}
       <input type="submit" value="Save" className="btn btn-warning" />
       <div className="btn btn-light" onClick={props.onCancel}>Cancel</div>
     </form>
@@ -53,11 +44,16 @@ const CriteriaForm = props => {
 
 CriteriaForm.propTypes = {
   criteria: PropTypes.object.isRequired,
-  // alternatives: PropTypes.array.isRequired,
-  // properties: PropTypes.array.isRequired,
+  alternatives: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      property: PropTypes.object
+    }).isRequired
+  ).isRequired,
   errors: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  // onPropertyChange: PropTypes.func.isRequired,
+  onPropertyChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
 }

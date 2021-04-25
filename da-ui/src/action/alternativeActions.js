@@ -1,26 +1,39 @@
 import * as alternativeApi from "../api/alternativesApi";
+import * as propertyApi from "../api/propertyApi";
 import actionType from "./actionType";
 
-export const addAlternative = (decisionId, alternative) => dispatch =>
+export const addAlternative = (decisionId, alternative, properties) => dispatch =>
   alternativeApi
     .addAlternative(decisionId, alternative)
-    .then(addedAlternative => dispatch({
-      type: actionType.ADD_ALTERNATIVE,
-      decisionId,
-      alternative: addedAlternative
-    }))
+    .then(addedAlternative =>
+      Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
+        ...property,
+        alternativeId: addedAlternative.id
+      })))
+        .then(() => dispatch({
+          type: actionType.ADD_ALTERNATIVE,
+          decisionId,
+          alternative: addedAlternative,
+          properties
+        })))
     .catch(error => {
       throw error
     });
 
-export const updateAlternative = (decisionId, alternative) => dispatch =>
+export const updateAlternative = (decisionId, alternative, properties) => dispatch =>
   alternativeApi
     .updateAlternative(decisionId, alternative)
-    .then(updatedAlternative => dispatch({
-      type: actionType.UPDATE_ALTERNATIVE,
-      decisionId,
-      alternative: updatedAlternative
-    }))
+    .then(updatedAlternative =>
+      Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
+        ...property,
+        alternativeId: updatedAlternative.id
+      })))
+        .then(() => dispatch({
+          type: actionType.UPDATE_ALTERNATIVE,
+          decisionId,
+          alternative: updatedAlternative,
+          properties
+        })))
     .catch(error => {
       throw error
     })

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TextInput from "../../common/TextInput";
 import NumberInput from "../../common/NumberInput";
+import { defaultProperty } from "../../../store/default";
 
 const AlternativeForm = props => {
 
@@ -15,27 +16,17 @@ const AlternativeForm = props => {
       error={props.errors.name}
     />
 
-    {/*<h4>Properties:</h4>*/}
-    {/*{props.criteria*/}
-    {/*  .map(criteria => {*/}
-    {/*    const property = props.properties*/}
-    {/*      .filter(p => p.criteriaId === criteria.id)[0] || {};*/}
-    {/*    return [criteria, property];*/}
-    {/*  })*/}
-    {/*  .map(([criteria, property]) => {*/}
-    {/*    return <NumberInput*/}
-    {/*      key={criteria.id}*/}
-    {/*      id={criteria.name}*/}
-    {/*      name={criteria.name}*/}
-    {/*      label={criteria.name + " - " + criteria.weight + "%"}*/}
-    {/*      number={property}*/}
-    {/*      onChange={({target}) => props.onPropertyChange({*/}
-    {/*        criteriaId: criteria.id,*/}
-    {/*        value: parseFloat(target.value)*/}
-    {/*      })}*/}
-    {/*    />*/}
-    {/*  })}*/}
-
+    <h4>Properties:</h4>
+    {props.criteria.map(criteria => (
+      <NumberInput
+        key={criteria.id}
+        number={criteria.property || defaultProperty}
+        label={criteria.name + " - " + criteria.weight + "%"}
+        onChange={event => props.onPropertyChange(criteria.id, event.target.value)}
+        id={criteria.name}
+        name={criteria.name}
+      />
+    ))}
     <input type="submit" value="Save" className="btn btn-warning" />
     <div className="btn btn-light" onClick={props.onCancel}>Cancel</div>
   </form>;
@@ -43,11 +34,17 @@ const AlternativeForm = props => {
 
 AlternativeForm.propTypes = {
   alternative: PropTypes.object.isRequired,
-  // criteria: PropTypes.array.isRequired,
-  // properties: PropTypes.array.isRequired,
+  criteria: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      weight: PropTypes.number.isRequired,
+      property: PropTypes.object
+    }).isRequired
+  ).isRequired,
   errors: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  // onPropertyChange: PropTypes.func.isRequired,
+  onPropertyChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired
 };

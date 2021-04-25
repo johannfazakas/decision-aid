@@ -5,13 +5,10 @@ const decisionReducer = (state = initialState.decisions, action) => {
   switch (action.type) {
 
     case actionType.LOAD_DECISIONS:
-      if (state.decisions === {} && action.decisions === []) {
-        debugger;
-        return state
-      } else {
-        return action.decisions
-          .reduce((newState, decision) => ({...newState, [decision.id]: decision}), {})
-      }
+      return state.decisions === {} && action.decisions === []
+        ? state
+        : action.decisions
+          .reduce((newState, decision) => ({...newState, [decision.id]: decision}), {});
 
     case actionType.ADD_DECISION:
       return {...state, [action.decision.id]: action.decision}
@@ -29,7 +26,14 @@ const decisionReducer = (state = initialState.decisions, action) => {
         ...state,
         [action.decisionId]: {
           ...state[action.decisionId],
-          criteria: [...state[action.decisionId].criteria, action.criteria]
+          criteria: [...state[action.decisionId].criteria, action.criteria],
+          properties: [
+            ...state[action.decisionId].properties
+              .filter(property => !(property.criteriaId === action.criteria.id
+                && action.properties.find(p => p.alternativeId === property.alternativeId))),
+            ...action.properties
+              .map(property => ({...property, criteriaId: action.criteria.id}))
+          ]
         }
       }
 
@@ -39,7 +43,14 @@ const decisionReducer = (state = initialState.decisions, action) => {
         [action.decisionId]: {
           ...state[action.decisionId],
           criteria: state[action.decisionId].criteria
-            .map(criteria => criteria.id === action.criteria.id ? action.criteria : criteria)
+            .map(criteria => criteria.id === action.criteria.id ? action.criteria : criteria),
+          properties: [
+            ...state[action.decisionId].properties
+              .filter(property => !(property.criteriaId === action.criteria.id
+                && action.properties.find(p => p.alternativeId === property.alternativeId))),
+            ...action.properties
+              .map(property => ({...property, criteriaId: action.criteria.id}))
+          ]
         }
       }
 
@@ -49,7 +60,9 @@ const decisionReducer = (state = initialState.decisions, action) => {
         [action.decisionId]: {
           ...state[action.decisionId],
           criteria: state[action.decisionId].criteria
-            .filter(criteria => criteria.id !== action.criteriaId)
+            .filter(criteria => criteria.id !== action.criteriaId),
+          properties: state[action.decisionId].properties
+            .filter(property => property.criteriaId !== action.criteriaId)
         }
       }
 
@@ -58,18 +71,31 @@ const decisionReducer = (state = initialState.decisions, action) => {
         ...state,
         [action.decisionId]: {
           ...state[action.decisionId],
-          alternatives: [...state[action.decisionId].alternatives, action.alternative]
+          alternatives: [...state[action.decisionId].alternatives, action.alternative],
+          properties: [
+            ...state[action.decisionId].properties
+              .filter(property => !(property.alternativeId === action.alternative.id
+                && action.properties.find(p => p.criteriaId === property.criteriaId))),
+            ...action.properties
+              .map(property => ({...property, alternativeId: action.alternative.id}))
+          ]
         }
       }
 
     case actionType.UPDATE_ALTERNATIVE:
-      debugger;
       return {
         ...state,
         [action.decisionId]: {
           ...state[action.decisionId],
           alternatives: state[action.decisionId].alternatives
-            .map(alternative => alternative.id === action.alternative.id ? action.alternative : alternative)
+            .map(alternative => alternative.id === action.alternative.id ? action.alternative : alternative),
+          properties: [
+            ...state[action.decisionId].properties
+              .filter(property => !(property.alternativeId === action.alternative.id
+                && action.properties.find(p => p.criteriaId === property.criteriaId))),
+            ...action.properties
+              .map(property => ({...property, alternativeId: action.alternative.id}))
+          ]
         }
       }
 
@@ -79,7 +105,9 @@ const decisionReducer = (state = initialState.decisions, action) => {
         [action.decisionId]: {
           ...state[action.decisionId],
           alternatives: state[action.decisionId].alternatives
-            .filter(alternative => alternative.id !== action.criteriaId)
+            .filter(alternative => alternative.id !== action.criteriaId),
+          properties: state[action.decisionId].properties
+            .filter(property => property.alternativeId !== action.alternativeId)
         }
       }
 

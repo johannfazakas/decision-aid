@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { loadDecisions } from "../../../action/decisionActions";
 import { addAlternative, updateAlternative } from "../../../action/alternativeActions";
-import { getAlternative } from "../../../store/decisionSelector";
+import { getAlternativeById, getCriteria, getProperty } from "../../../store/decisionSelector";
 import { defaultAlternative } from "../../../store/default";
 
 import AlternativeForm from "./AlternativeForm";
@@ -13,6 +13,8 @@ import AlternativeForm from "./AlternativeForm";
 const AlternativePage = props => {
 
   const [alternative, setAlternative] = useState({...props.alternative})
+  // TODO evaluate storing only updated criteria/properties
+  const [criteria, setCriteria] = useState([...props.criteria])
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
@@ -20,8 +22,9 @@ const AlternativePage = props => {
       props.loadDecisions()
     } else {
       setAlternative({...props.alternative})
+      setCriteria([...criteria])
     }
-  }, [props.alternative])
+  }, [props.alternative, props.criteria])
 
   const navigateBack = () => props.history.push("/decision/" + props.decisionId + "/details")
 
@@ -35,9 +38,11 @@ const AlternativePage = props => {
   const handleSubmit = event => {
     event.preventDefault()
     if (!validateForm()) return
+    const properties = criteria
+      .flatMap(criteria => criteria.property ? [criteria.property] : [])
     const savedAlternative = alternative.id
-      ? props.updateAlternative(props.decisionId, alternative)
-      : props.addAlternative(props.decisionId, alternative)
+      ? props.updateAlternative(props.decisionId, alternative, properties)
+      : props.addAlternative(props.decisionId, alternative, properties)
     savedAlternative.then(navigateBack)
   }
 
@@ -49,13 +54,22 @@ const AlternativePage = props => {
     })
   }
 
+  const handlePropertyChange = (criteriaId, value) =>
+    setCriteria(criteria
+      .map(criterion => criterion.id === criteriaId
+        ? {...criterion, property: {criteriaId, value}}
+        : criterion)
+    )
+
   return (
     <div className="jumbotron">
       <h1>{alternative.id ? "Update" : "Add"} alternative</h1>
       <AlternativeForm
         alternative={alternative}
+        criteria={props.criteria}
         errors={errors}
         onChange={handleChange}
+        onPropertyChange={handlePropertyChange}
         onSubmit={handleSubmit}
         onCancel={navigateBack}
       />
@@ -67,6 +81,7 @@ AlternativePage.propTypes = {
   decisions: PropTypes.array.isRequired,
   decisionId: PropTypes.string.isRequired,
   alternative: PropTypes.object.isRequired,
+  criteria: PropTypes.array.isRequired,
   loadDecisions: PropTypes.func.isRequired,
   addAlternative: PropTypes.func.isRequired,
   updateAlternative: PropTypes.func.isRequired,
@@ -79,8 +94,10 @@ const mapStateToProps = (state, props) => {
     decisions: Object.values(state.decisions),
     decisionId,
     alternative: alternativeId
-      ? getAlternative(state, decisionId, alternativeId) || defaultAlternative
-      : defaultAlternative
+      ? getAlternativeById(state, decisionId, alternativeId) || defaultAlternative
+      : defaultAlternative,
+    criteria: getCriteria(state, decisionId)
+      .map(criteria => ({...criteria, property: getProperty(state, decisionId, criteria.id, alternativeId)}))
   }
 }
 
