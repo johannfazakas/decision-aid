@@ -51,6 +51,10 @@ const DecisionDetailsPage = props => {
   }
 
   const handleAddCriteria = () => {
+    if (props.decision.status === "processed") {
+      setWarning("Reset if you want to add new criteria.")
+      return;
+    }
     props.history.push("/decision/" + decision.id + "/criteria")
   }
 

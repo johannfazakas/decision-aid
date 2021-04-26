@@ -10,8 +10,10 @@ const DecisionTable = props =>
     <thead>
     <HeaderRow
       decisionId={props.decision.id}
+      decisionStatus={props.decision.status}
       criteria={props.decision.criteria}
-      onAddCriteria={props.onAddCriteria} />
+      onAddCriteria={props.onAddCriteria}
+    />
     </thead>
     <tbody>
     {props.decision.alternatives.map(alternative => (
