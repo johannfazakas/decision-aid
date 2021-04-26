@@ -5,20 +5,17 @@ import { bindActionCreators } from "redux"
 import * as PropTypes from "prop-types"
 
 import { defaultDecision } from "../../../store/default"
-import { aidDecision, resetDecision, deleteDecision, loadDecisions } from "../../../action/decisionActions"
+import { aidDecision, deleteDecision, loadDecisions, resetDecision } from "../../../action/decisionActions"
 import { deleteCriteria } from "../../../action/criteriaActions"
 import { deleteAlternative } from "../../../action/alternativeActions"
 
 import DecisionTable from "./table/DecisionTable"
+import Warnings from "./table/Warnings"
 
 const DecisionDetailsPage = props => {
 
   const [decision, setDecision] = useState(props.decision)
-
   const [warning, setWarning] = useState("")
-
-  const [aidWarning, setAidWarning] = useState("")
-  const [showAidWarning, setShowAidWarning] = useState(false)
 
   useEffect(() => {
     if (props.decisions.length === 0) {
@@ -28,18 +25,6 @@ const DecisionDetailsPage = props => {
       setDecision(props.decision)
     }
 
-    if (props.decision.criteria.length === 0)
-      setAidWarning("No criteria defined!")
-    else if (props.decision.alternatives.length === 0)
-      setAidWarning("No alternative defined!")
-    else if (props.decision.properties.length < props.decision.alternatives.length * props.decision.criteria.length)
-      setAidWarning("All the properties should be set!")
-    else if (props.decision.criteria.map(c => c.weight).reduce((sum, w) => sum + w, 0) !== 100)
-      setAidWarning("Criteria weight sum should be 100!")
-    else
-      setAidWarning("")
-
-    setShowAidWarning(false)
     setWarning("")
   }, [props.decision])
 
@@ -53,22 +38,61 @@ const DecisionDetailsPage = props => {
   const handleAddCriteria = () => {
     if (props.decision.status === "processed") {
       setWarning("Reset if you want to add new criteria.")
-      return;
+    } else {
+      props.history.push("/decision/" + decision.id + "/criteria")
     }
-    props.history.push("/decision/" + decision.id + "/criteria")
   }
 
   const handleAddAlternative = () => {
     if (props.decision.status === "processed") {
       setWarning("Reset if you want to add new alternatives.")
-      return;
+    } else {
+      props.history.push("/decision/" + decision.id + "/alternative")
     }
-    props.history.push("/decision/" + decision.id + "/alternative")
+  }
+
+  const handleUpdateAlternative = alternativeId => {
+    debugger;
+    if (props.decision.status === "processed") {
+      setWarning("Reset if you want to update alternatives")
+    } else {
+      props.history.push("/decision/" + decision.id + "/alternative/" + alternativeId)
+    }
+  }
+
+  const handleUpdateCriteria = criteriaId => {
+    if (props.decision.status === "processed") {
+      setWarning("Reset if you want to update criteria")
+    } else {
+      props.history.push("/decision/" + decision.id + "/criteria/" + criteriaId)
+    }
+  }
+
+  const handleDeleteCriteria = criteriaId => {
+    if (props.decision.status === "processed") {
+      setWarning("Reset if you want to delete criteria.")
+    } else {
+      props.deleteCriteria(props.decision.id, criteriaId)
+    }
+  }
+
+  const handleDeleteAlternative = alternativeId => {
+    if (props.decision.status === "processed") {
+      setWarning("Reset if you want to delete alternatives.")
+    } else {
+      props.deleteAlternative(props.decision.id, alternativeId)
+    }
   }
 
   const handleAid = () => {
-    if (aidWarning !== "")
-      setShowAidWarning(true)
+    if (props.decision.criteria.length === 0)
+      setWarning("No criteria defined!")
+    else if (props.decision.alternatives.length === 0)
+      setWarning("No alternative defined!")
+    else if (props.decision.properties.length < props.decision.alternatives.length * props.decision.criteria.length)
+      setWarning("All the properties should be set!")
+    else if (props.decision.criteria.map(c => c.weight).reduce((sum, w) => sum + w, 0) !== 100)
+      setWarning("Criteria weight sum should be 100!")
     else
       props.aidDecision(decision.id)
         .catch(error => alert("Aid decision failed. " + error))
@@ -81,23 +105,24 @@ const DecisionDetailsPage = props => {
 
   return (
     <div className="jumbotron">
-      {/*TODO extract components. commands, links, warning*/}
+      {/* TODO extract components*/}
       <h1>{decision.name}</h1>
       <h5>{decision.description}</h5>
       <Link to={"/decision/" + decision.id} className="btn btn-dark m-1">Update</Link>
       <div className="btn btn-danger m-1" onClick={handleDelete}>Delete</div>
       <DecisionTable
         decision={decision}
-        aidWarning={aidWarning}
+        readOnly={decision.status === "processed"}
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
+        onUpdateCriteria={handleUpdateCriteria}
+        onUpdateAlternative={handleUpdateAlternative}
+        onDeleteCriteria={handleDeleteCriteria}
+        onDeleteAlternative={handleDeleteAlternative}
         onAid={handleAid}
         onReset={handleReset}
-        onDeleteAlternative={props.deleteAlternative}
-        onDeleteCriteria={props.deleteCriteria}
       />
-      {showAidWarning && <div className="text-danger text-center">{aidWarning}</div>}
-      {warning !== "" && <div className="text-danger text-center">{warning}</div>}
+      <Warnings warning={warning} />
     </div>
   )
 }

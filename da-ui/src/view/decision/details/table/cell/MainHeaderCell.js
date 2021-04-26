@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import * as PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const MainHeaderCell = props => {
   const [totalWeight, setTotalWeight] = useState(0)
@@ -15,8 +15,8 @@ const MainHeaderCell = props => {
       <div className="text-center">
         Criteria (
         <span className={totalWeight < 100 ? "text-success" : totalWeight > 100 ? "text-danger" : "text-warning"}>
-        {totalWeight + "%"}
-      </span>
+          {totalWeight + "%"}
+        </span>
         ) →
       </div>
       <div className="text-center">

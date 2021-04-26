@@ -47,8 +47,8 @@ class AddCriteriaCommand(
   }
 
   private fun validate(decision: Decision) {
-    when {
-      decision.status == DecisionStatus.PROCESSED -> throw Errors.invalidDecisionStatus(decision.id, decision.status)
+    if (decision.status == DecisionStatus.PROCESSED) {
+      throw Errors.invalidDecisionStatus(decision.id, decision.status)
     }
   }
 }

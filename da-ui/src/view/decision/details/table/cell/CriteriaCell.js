@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const CriteriaCell = props =>
   <th>
@@ -8,24 +8,36 @@ const CriteriaCell = props =>
       <div className="col text-warning text-right">
         {props.criteria.weight + "%"}
       </div>
-      {props.criteria.type === "maximum" && <div className="col text-danger text-left">Max +</div>}
-      {props.criteria.type === "minimum" && <div className="col text-success text-left">Min -</div>}
+      {
+        props.criteria.type === "maximum" &&
+        <div className="col text-danger text-left">Max +</div>
+      }
+      {
+        props.criteria.type === "minimum" &&
+        <div className="col text-success text-left">Min -</div>
+      }
     </div>
-    <div className="col text-center">
-      <Link to={"/decision/" + props.decisionId + "/criteria/" + props.criteria.id}>
-        {props.criteria.name + " "}
-      </Link>
+    <div className="text-center">
+      {
+        props.readOnly ||
+        <Link to="#" onClick={props.onUpdateCriteria}><u>{props.criteria.name + " "}</u></Link>
+      }
+      {
+        props.readOnly &&
+        <span className="font-weight-bold text-primary">{props.criteria.name}</span>
+      }
     </div>
   </th>
 
 CriteriaCell.propTypes = {
-  decisionId: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   criteria: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     weight: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  onUpdateCriteria: PropTypes.func.isRequired,
 }
 
 export default CriteriaCell;

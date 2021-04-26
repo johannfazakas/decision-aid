@@ -10,24 +10,29 @@ const DecisionTable = props =>
     <thead>
     <HeaderRow
       decisionId={props.decision.id}
-      decisionStatus={props.decision.status}
+      readOnly={props.readOnly}
       criteria={props.decision.criteria}
       onAddCriteria={props.onAddCriteria}
+      onUpdateCriteria={props.onUpdateCriteria}
     />
     </thead>
     <tbody>
-    {props.decision.alternatives.map(alternative => (
-      <AlternativeRow
-        key={alternative.id}
-        decision={props.decision}
-        alternative={alternative}
-        onDelete={() => props.onDeleteCriteria(props.decision.id, alternative.id)}
-      />
-    ))}
+    {
+      props.decision.alternatives
+        .map(alternative => (
+          <AlternativeRow
+            key={alternative.id}
+            readOnly={props.readOnly}
+            decision={props.decision}
+            alternative={alternative}
+            onDeleteAlternative={props.onDeleteAlternative}
+            onUpdateAlternative={props.onUpdateAlternative}
+          />
+        ))
+    }
     <FooterRow
       criteria={props.decision.criteria}
-      decisionStatus={props.decision.status}
-      aidWarning={props.aidWarning}
+      readOnly={props.readOnly}
       onAddAlternative={props.onAddAlternative}
       onDeleteCriteria={props.onDeleteCriteria}
       onAid={props.onAid}
@@ -38,10 +43,11 @@ const DecisionTable = props =>
 
 DecisionTable.propTypes = {
   decision: PropTypes.object.isRequired,
-  // TODO change warning type. a boolean is enough
-  aidWarning: PropTypes.string.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   onAddCriteria: PropTypes.func.isRequired,
   onAddAlternative: PropTypes.func.isRequired,
+  onUpdateCriteria: PropTypes.func.isRequired,
+  onUpdateAlternative: PropTypes.func.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired,
   onDeleteCriteria: PropTypes.func.isRequired,
   onAid: PropTypes.func.isRequired,

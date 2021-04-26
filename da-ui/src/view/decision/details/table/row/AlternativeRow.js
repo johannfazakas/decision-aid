@@ -1,20 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import PropertyCell from "../cell/PropertyCell";
+import AlternativeCell from "../cell/AlternativeCell";
+import DeleteAlternativeCell from "../cell/DeleteAlternativeCell";
 
-const AlternativeRow = props => {
-  return (
-    <tr>
-      <th className="text-center">
-        <Link
-          to={"/decision/" + props.decision.id + "/alternative/" + props.alternative.id}
-        >
-          {props.alternative.name}
-        </Link>
-      </th>
-      {props.decision.criteria
+const AlternativeRow = props =>
+  <tr>
+    <AlternativeCell
+      readOnly={props.readOnly}
+      alternative={props.alternative}
+      onUpdateAlternative={() => props.onUpdateAlternative(props.alternative.id)}
+    />
+    {
+      props.decision.criteria
         .map(criteria => [
           criteria,
           props.decision.properties
@@ -27,18 +26,19 @@ const AlternativeRow = props => {
             unitOfMeasure={criteria.unitOfMeasure}
           />
         )
-      }
-      <td className="text-center">
-        <div className="btn btn-outline-danger" onClick={props.onDelete}>← Delete alternative</div>
-      </td>
-    </tr>
-  )
-}
+    }
+    <DeleteAlternativeCell
+      readOnly={props.readOnly}
+      onDeleteAlternative={() => props.onDeleteAlternative(props.alternative.id)}
+    />
+  </tr>
 
 AlternativeRow.propTypes = {
   decision: PropTypes.object.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   alternative: PropTypes.object.isRequired,
-  onDelete: PropTypes.func.isRequired
+  onDeleteAlternative: PropTypes.func.isRequired,
+  onUpdateAlternative: PropTypes.func.isRequired
 }
 
 export default AlternativeRow

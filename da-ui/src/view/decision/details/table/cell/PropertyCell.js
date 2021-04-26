@@ -2,14 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const PropertyCell = props =>
-  <th>
+  <td>
     <div className="text-center font-weight-bold">
       <span>{props.property.value || "-"}</span>
-      {props.unitOfMeasure && props.property.value &&
-      <span className="text-secondary">{" " + props.unitOfMeasure}</span>
+      {
+        props.unitOfMeasure && props.property.value &&
+        <span className="text-secondary">{" " + props.unitOfMeasure}</span>
       }
     </div>
-  </th>
+  </td>
 
 
 PropertyCell.propTypes = {
