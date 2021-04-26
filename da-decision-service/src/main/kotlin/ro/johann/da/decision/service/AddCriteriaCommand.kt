@@ -24,21 +24,22 @@ class AddCriteriaCommand(
   fun execute(decisionId: UUID, input: AddCriteriaInput): Criteria {
     logger.info("add criteria >> decisionId = $decisionId, input = $input")
 
-    return decisionRepository.findByIdOrNull(decisionId)
-      ?.let { decision ->
+    val decision = decisionRepository.findByIdOrNull(decisionId)
+      ?: throw Errors.decisionNotFound(decisionId)
+
+    return decision
+      .let {
         val now = LocalDateTime.now()
-        criteriaRepository.save(
-          Criteria(
-            name = input.name,
-            weight = input.weight,
-            unitOfMeasure = input.unitOfMeasure,
-            type = input.type,
-            decision = decision,
-            createdAt = now,
-            updatedAt = now
-          )
+        Criteria(
+          name = input.name,
+          weight = input.weight,
+          unitOfMeasure = input.unitOfMeasure,
+          type = input.type,
+          decision = it,
+          createdAt = now,
+          updatedAt = now
         )
       }
-      ?: throw Errors.decisionNotFound(decisionId)
+      .let(criteriaRepository::save)
   }
 }

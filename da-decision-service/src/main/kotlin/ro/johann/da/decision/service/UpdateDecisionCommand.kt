@@ -22,17 +22,19 @@ class UpdateDecisionCommand(
   fun execute(decisionId: UUID, input: UpdateDecisionInput): Decision {
     logger.info("update decision >> decisionId = $decisionId, input = $input")
 
-    return decisionRepository.findByIdOrNull(decisionId)
-      ?.also { decision ->
+    val decision = decisionRepository.findByIdOrNull(decisionId)
+      ?: throw Errors.decisionNotFound(decisionId)
+
+    return decision
+      .apply {
         input.name
           ?.takeIf { it.isNotBlank() }
-          ?.let { decision.name = it }
+          ?.let { name = it }
         input.description
           ?.takeIf { it.isNotBlank() }
-          ?.let { decision.description = it }
-        decision.updatedAt = LocalDateTime.now()
+          ?.let { description = it }
+        updatedAt = LocalDateTime.now()
       }
-      ?.also(decisionRepository::save)
-      ?: throw Errors.decisionNotFound(decisionId)
+      .also(decisionRepository::save)
   }
 }

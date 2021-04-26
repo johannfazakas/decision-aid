@@ -19,6 +19,7 @@ class GetDecisionCommand(
 
   fun execute(id: UUID): Decision {
     logger.info("get decision >> id = $id")
+
     return decisionRepository.findByIdOrNull(id)
       ?: throw decisionNotFound(id)
   }

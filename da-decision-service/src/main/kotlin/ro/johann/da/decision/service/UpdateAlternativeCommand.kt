@@ -21,12 +21,14 @@ class UpdateAlternativeCommand(
   fun execute(decisionId: UUID, alternativeId: UUID, input: UpdateAlternativeInput): Alternative {
     logger.info("update alternative >> decisionId = $decisionId, alternativeId = $alternativeId, input = $input")
 
-    return alternativeRepository.findByIdAndDecisionId(alternativeId, decisionId)
-      ?.also { alternative ->
-        input.name?.let { it -> alternative.name = it }
-        alternative.updatedAt = LocalDateTime.now()
-      }
-      ?.also(alternativeRepository::save)
+    val alternative = alternativeRepository.findByIdAndDecisionId(alternativeId, decisionId)
       ?: throw Errors.alternativeNotFound(decisionId, alternativeId)
+
+    return alternative
+      .apply {
+        input.name?.let { name = it }
+        updatedAt = LocalDateTime.now()
+      }
+      .also(alternativeRepository::save)
   }
 }

@@ -9,11 +9,13 @@ import { aidDecision, resetDecision, deleteDecision, loadDecisions } from "../..
 import { deleteCriteria } from "../../../action/criteriaActions"
 import { deleteAlternative } from "../../../action/alternativeActions"
 
-import DecisionTable from "./DecisionTable"
+import DecisionTable from "./table/DecisionTable"
 
 const DecisionDetailsPage = props => {
 
   const [decision, setDecision] = useState(props.decision)
+
+  const [warning, setWarning] = useState("")
 
   const [aidWarning, setAidWarning] = useState("")
   const [showAidWarning, setShowAidWarning] = useState(false)
@@ -38,7 +40,7 @@ const DecisionDetailsPage = props => {
       setAidWarning("")
 
     setShowAidWarning(false)
-
+    setWarning("")
   }, [props.decision])
 
 
@@ -53,6 +55,10 @@ const DecisionDetailsPage = props => {
   }
 
   const handleAddAlternative = () => {
+    if (props.decision.status === "processed") {
+      setWarning("Reset if you want to add new alternatives.")
+      return;
+    }
     props.history.push("/decision/" + decision.id + "/alternative")
   }
 
@@ -71,6 +77,7 @@ const DecisionDetailsPage = props => {
 
   return (
     <div className="jumbotron">
+      {/*TODO extract components. commands, links, warning*/}
       <h1>{decision.name}</h1>
       <h5>{decision.description}</h5>
       <Link to={"/decision/" + decision.id} className="btn btn-dark m-1">Update</Link>
@@ -86,6 +93,7 @@ const DecisionDetailsPage = props => {
         onDeleteCriteria={props.deleteCriteria}
       />
       {showAidWarning && <div className="text-danger text-center">{aidWarning}</div>}
+      {warning !== "" && <div className="text-danger text-center">{warning}</div>}
     </div>
   )
 }

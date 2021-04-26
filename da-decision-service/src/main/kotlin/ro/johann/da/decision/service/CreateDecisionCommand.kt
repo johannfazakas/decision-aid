@@ -19,6 +19,7 @@ class CreateDecisionCommand(
 
   fun execute(input: CreateDecisionInput): Decision {
     logger.info("create decision >> input = $input")
+
     val now = LocalDateTime.now()
     return decisionRepository.save(
       Decision(

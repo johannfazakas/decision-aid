@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types";
 
-const TableActionButton = props => {
+const AidCell = props => {
   return (
     <div className="text-center">
       {props.status === "design" &&
@@ -19,11 +19,11 @@ const TableActionButton = props => {
   )
 }
 
-TableActionButton.propTypes = {
+AidCell.propTypes = {
   status: PropTypes.string.isRequired,
   aidWarning: PropTypes.string,
   onAid: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired
 }
 
-export default TableActionButton
+export default AidCell

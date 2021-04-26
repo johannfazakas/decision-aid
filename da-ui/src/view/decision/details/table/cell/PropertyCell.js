@@ -2,12 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const PropertyCell = props =>
-  <div className="text-center font-weight-bold">
-    <span>{props.property.value || "-"}</span>
-    {props.unitOfMeasure && props.property.value &&
-    <span className="text-secondary">{" " + props.unitOfMeasure}</span>
-    }
-  </div>
+  <th>
+    <div className="text-center font-weight-bold">
+      <span>{props.property.value || "-"}</span>
+      {props.unitOfMeasure && props.property.value &&
+      <span className="text-secondary">{" " + props.unitOfMeasure}</span>
+      }
+    </div>
+  </th>
 
 
 PropertyCell.propTypes = {

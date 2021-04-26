@@ -23,6 +23,9 @@ object Errors {
 
   fun invalidCriteriaWeights(decisionId: UUID) =
     ConflictException("Decision $decisionId has invalid criteria weights.")
+
+  fun invalidDecisionStatus(decisionId: UUID) =
+    ConflictException("Decision $decisionId has conflicting status.")
 }
 
 class NotFoundException(override val message: String) : RuntimeException(message)

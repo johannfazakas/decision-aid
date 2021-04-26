@@ -21,15 +21,17 @@ class UpdateCriteriaCommand(
   fun execute(decisionId: UUID, criteriaId: UUID, input: UpdateCriteriaInput): Criteria {
     logger.info("update criteria >> decisionId = $decisionId, criteriaId = $criteriaId, input = $input")
 
-    return criteriaRepository.findByIdAndDecisionId(criteriaId, decisionId)
-      ?.also { criteria ->
-        input.weight?.also { criteria.weight = it }
-        input.name?.also { criteria.name = it }
-        input.unitOfMeasure?.also { criteria.unitOfMeasure = it }
-        input.type?.also { criteria.type = it }
-        criteria.updatedAt = LocalDateTime.now()
-      }
-      ?.also(criteriaRepository::save)
+    val criteria = criteriaRepository.findByIdAndDecisionId(criteriaId, decisionId)
       ?: throw Errors.criteriaNotFound(decisionId, criteriaId)
+
+    return criteria
+      .apply {
+        input.weight?.also { weight = it }
+        input.name?.also { name = it }
+        input.unitOfMeasure?.also { unitOfMeasure = it }
+        input.type?.also { type = it }
+        updatedAt = LocalDateTime.now()
+      }
+      .also(criteriaRepository::save)
   }
 }

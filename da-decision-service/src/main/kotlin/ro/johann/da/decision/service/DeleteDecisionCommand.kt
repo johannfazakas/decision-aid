@@ -18,6 +18,7 @@ class DeleteDecisionCommand(
 
   fun execute(id: UUID) {
     logger.info("delete decision >> id = $id")
+
     decisionRepository.findByIdOrNull(id)
       ?.also { decisionRepository.deleteById(id) }
       ?: throw Errors.decisionNotFound(id)

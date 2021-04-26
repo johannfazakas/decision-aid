@@ -22,14 +22,16 @@ class AidDecisionCommand(
   fun execute(id: UUID): Decision {
     logger.info("aid decision >> decisionId = $id")
 
-    return decisionRepository.findByIdOrNull(id)
-      ?.also(::validateAid)
-      ?.apply {
+    val decision = decisionRepository.findByIdOrNull(id)
+      ?: throw Errors.decisionNotFound(id)
+
+    return decision
+      .also(::validateAid)
+      .apply {
         status = DecisionStatus.PROCESSED
         updatedAt = LocalDateTime.now()
       }
-      ?.let(decisionRepository::save)
-      ?: throw Errors.decisionNotFound(id)
+      .let(decisionRepository::save)
   }
 
   private fun validateAid(decision: Decision) {

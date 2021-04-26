@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import PropertyCell from "./PropertyCell";
+import PropertyCell from "../cell/PropertyCell";
 
 const AlternativeRow = props => {
   return (
@@ -15,15 +15,19 @@ const AlternativeRow = props => {
         </Link>
       </th>
       {props.decision.criteria
-        .map(criteria => {
-          const property = props.decision.properties
+        .map(criteria => [
+          criteria,
+          props.decision.properties
             .find(p => p.criteriaId === criteria.id && p.alternativeId === props.alternative.id) || {}
-          return (
-            <td key={criteria.id}>
-              <PropertyCell property={property} unitOfMeasure={criteria.unitOfMeasure} />
-            </td>
-          );
-        })}
+        ])
+        .map(([criteria, property]) =>
+          <PropertyCell
+            key={criteria.id}
+            property={property}
+            unitOfMeasure={criteria.unitOfMeasure}
+          />
+        )
+      }
       <td className="text-center">
         <div className="btn btn-outline-danger" onClick={props.onDelete}>← Delete alternative</div>
       </td>

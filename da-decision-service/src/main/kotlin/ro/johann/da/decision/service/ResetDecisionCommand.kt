@@ -22,12 +22,14 @@ class ResetDecisionCommand(
   fun execute(id: UUID): Decision {
     logger.info("reset decision >> decisionId = $id")
 
-    return decisionRepository.findByIdOrNull(id)
-      ?.also {
+    val decision = decisionRepository.findByIdOrNull(id)
+      ?: throw Errors.decisionNotFound(id)
+
+    return decision
+      .also {
         it.status = DecisionStatus.DESIGN
         it.updatedAt = LocalDateTime.now()
       }
-      ?.let { decisionRepository.save(it) }
-      ?: throw Errors.decisionNotFound(id)
+      .let { decisionRepository.save(it) }
   }
 }
