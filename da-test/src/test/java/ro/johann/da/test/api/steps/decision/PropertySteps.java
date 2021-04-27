@@ -6,13 +6,16 @@ import ro.johann.da.test.api.common.Storage;
 import ro.johann.da.test.api.service.decision.PropertyService;
 import ro.johann.da.test.api.service.decision.transfer.SetPropertyInput;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class PropertySteps implements En {
 
   @Inject
   public PropertySteps(Storage storage, PropertyService propertyService) {
+
+    Given("I peek at the property on the alternative {string} for the criteria {string}",
+      (String alternativeName, String criteriaName) ->
+        storage.setProperty(storage.getPropertyByAlternativeAndCriteriaNames(alternativeName, criteriaName)));
 
     When("I set the property value to {float} on the alternative {string} for the criteria {string}",
       (Float value, String alternativeName, String criteriaName) -> {
@@ -30,13 +33,17 @@ public class PropertySteps implements En {
         assertEquals(value, property.getValue());
       });
 
-    Then("the property value for the alternative {string} for the criteria {string} is not set",
-      (String alternativeName, String criteriaName) ->
-        assertThrows(RuntimeException.class,
-          () -> storage.getPropertyByAlternativeAndCriteriaNames(alternativeName, criteriaName)));
+    Then("the property utility is not set", () -> assertNull(storage.getProperty().getUtility()));
 
-    Then("the property value is {float}", (Float value) -> {
-      assertEquals(value, storage.getProperty().getValue());
-    });
+    Then("the property utility is {float}", (Float utility) ->
+      assertEquals(utility, storage.getProperty().getUtility()));
+
+    Then("the property rank is not set", () -> assertNull(storage.getProperty().getUtility()));
+
+    Then("the property rank is {int}", (Integer rank) ->
+      assertEquals(rank, storage.getProperty().getRank()));
+
+    Then("the property value is {float}", (Float value) ->
+      assertEquals(value, storage.getProperty().getValue()));
   }
 }

@@ -28,8 +28,9 @@ public class DecisionService extends BaseService {
     return post(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 
-  public Optional<DecisionOutput> getDecision(String decisionId) {
-    var url = getUrl("decisionApi.decisionByIdUrl", Map.of("decisionId", decisionId));
+  public Optional<DecisionOutput> getDecision(String decisionId, Boolean aid) {
+    var url = getUrl("decisionApi.getDecisionByIdUrl",
+      Map.of("decisionId", decisionId, "aid", aid.toString()));
     return get(url).map(output -> mapper.deserialize(output, DecisionOutput.class));
   }
 

@@ -13,4 +13,6 @@ public class PropertyOutput {
   String alternativeId;
   String criteriaId;
   Float value;
+  Float utility;
+  Integer rank;
 }

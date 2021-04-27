@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import static java.util.Optional.ofNullable;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class AlternativeSteps implements En {
 
@@ -44,5 +45,17 @@ public class AlternativeSteps implements En {
 
     Then("the alternative name is {string}", (String name) ->
       assertEquals(name, storage.getAlternative().getName()));
+
+    Then("the alternative utility is not set", () ->
+      assertNull(storage.getAlternative().getUtility()));
+
+    Then("the alternative utility is {float}", (Float utility) ->
+      assertEquals(utility, storage.getAlternative().getUtility()));
+
+    Then("the alternative rank is not set", () ->
+      assertNull(storage.getAlternative().getRank()));
+
+    Then("the alternative rank is {int}", (Integer rank) ->
+      assertEquals(rank, storage.getAlternative().getRank()));
   }
 }

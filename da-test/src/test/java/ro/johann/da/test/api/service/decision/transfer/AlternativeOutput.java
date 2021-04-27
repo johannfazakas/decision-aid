@@ -12,4 +12,6 @@ import static lombok.AccessLevel.PRIVATE;
 public class AlternativeOutput {
   String id;
   String name;
+  Float utility;
+  Integer rank;
 }

@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -20,21 +18,7 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(NON_NULL)
-public class DecisionOutput {
-  String id;
-  String name;
-  String description;
+public class AidSummary {
   String status;
-  AidSummary aidSummary;
-  List<CriteriaOutput> criteria;
-  List<AlternativeOutput> alternatives;
-  List<PropertyOutput> properties;
-
-  public void addAlternative(AlternativeOutput alternative) {
-    alternatives.add(alternative);
-  }
-
-  public void addCriteria(CriteriaOutput criterion) {
-    criteria.add(criterion);
-  }
+  String reason;
 }

@@ -52,32 +52,3 @@ data class Criteria(
     get() = propertyList
 }
 
-//sealed class Criteria() {
-//  abstract val id: UUID
-//  abstract val name: String
-//  abstract val weight: Int
-//  abstract val type: CriteriaType
-//  abstract val propertyType: PropertyType
-//}
-//
-//class QuantitativeCriteria(
-//  override val id: UUID,
-//  override val name: String,
-//  override val weight: Int,
-//  override val propertyType: PropertyType,
-//  val quantitativeType: QuantitativeCriteriaType,
-//  val unitOfMeasure: String
-//): Criteria() {
-//  override val type = CriteriaType.QUALITATIVE
-//}
-//
-//class QualitativeCriteria(
-//  override val id: UUID,
-//  override val name: String,
-//  override val weight: Int,
-//  override val propertyType: PropertyType,
-//  val options: List<QualitativeCriteriaOption>
-//): Criteria() {
-//  override val type = CriteriaType.QUANTITATIVE
-//}
-//

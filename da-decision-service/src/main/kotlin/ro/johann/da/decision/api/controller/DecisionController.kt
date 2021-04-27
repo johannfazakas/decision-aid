@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import ro.johann.da.decision.api.transfer.CreateDecisionInput
@@ -19,10 +20,11 @@ import ro.johann.da.decision.api.transfer.ListOutput
 import ro.johann.da.decision.api.transfer.UpdateDecisionInput
 import ro.johann.da.decision.service.AidDecisionCommand
 import ro.johann.da.decision.service.CreateDecisionCommand
-import ro.johann.da.decision.service.ResetDecisionCommand
 import ro.johann.da.decision.service.DeleteDecisionCommand
 import ro.johann.da.decision.service.GetDecisionCommand
 import ro.johann.da.decision.service.ListDecisionsCommand
+import ro.johann.da.decision.service.ProcessDecisionCommand
+import ro.johann.da.decision.service.ResetDecisionCommand
 import ro.johann.da.decision.service.UpdateDecisionCommand
 import java.util.UUID
 import javax.validation.Valid
@@ -36,22 +38,40 @@ class DecisionController(
   private val updateDecisionCommand: UpdateDecisionCommand,
   private val deleteDecisionCommand: DeleteDecisionCommand,
   private val aidDecisionCommand: AidDecisionCommand,
-  private val resetDecisionCommand: ResetDecisionCommand
+  private val resetDecisionCommand: ResetDecisionCommand,
+  private val processDecisionCommand: ProcessDecisionCommand,
 ) {
   @GetMapping
   @ResponseStatus(OK)
-  fun listDecisions(): ListOutput<DecisionOutput> =
+  fun listDecisions(
+    @RequestParam("aid") aid: Boolean = true
+  ): ListOutput<DecisionOutput> =
     listDecisionsCommand.execute()
-      .map(::DecisionOutput)
+      .map { decision ->
+        if (aid) {
+          val processingResult = processDecisionCommand.execute(decision)
+          DecisionOutput(decision, processingResult)
+        } else {
+          DecisionOutput(decision)
+        }
+      }
       .let(::ListOutput)
 
   @GetMapping("/{decisionId}")
   @ResponseStatus(OK)
   fun getDecision(
-    @PathVariable("decisionId") id: UUID
+    @PathVariable("decisionId") id: UUID,
+    @RequestParam("aid") aid: Boolean = false
   ): DecisionOutput =
     getDecisionCommand.execute(id)
-      .let(::DecisionOutput)
+      .let { decision ->
+        if (aid) {
+          val processingResult = processDecisionCommand.execute(decision)
+          DecisionOutput(decision, processingResult)
+        } else {
+          DecisionOutput(decision)
+        }
+      }
 
   @PostMapping
   @ResponseStatus(CREATED)

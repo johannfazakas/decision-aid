@@ -41,7 +41,11 @@ public class DecisionSteps implements En {
         .ifPresent(storage::setDecision));
 
     When("I get the decision", () ->
-      decisionService.getDecision(storage.getDecision().getId())
+      decisionService.getDecision(storage.getDecision().getId(), false)
+        .ifPresent(storage::setDecision));
+
+    When("I get the decision with aid", () ->
+      decisionService.getDecision(storage.getDecision().getId(), true)
         .ifPresent(storage::setDecision));
 
     When("I list the decisions", () ->
@@ -80,5 +84,11 @@ public class DecisionSteps implements En {
 
     Then("the decision status is {string}", (String status) ->
       assertEquals(status, storage.getDecision().getStatus()));
+
+    Then("the decision aid status is {string}", (String aidResult) ->
+      assertEquals(aidResult, storage.getDecision().getAidSummary().getStatus()));
+
+    Then("the decision aid failure reason is {string}", (String reason) ->
+      assertEquals(reason, storage.getDecision().getAidSummary().getReason()));
   }
 }

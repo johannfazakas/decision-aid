@@ -45,4 +45,3 @@ Feature: Set property
     Then the decision has 2 properties
     Then the property value for the alternative "Philips LatteGo" for the criteria "price" is 2800
     Then the property value for the alternative "Philips LatteGo" for the criteria "beverages" is 12
-    Then the property value for the alternative "Philips LatteGo" for the criteria "water capacity" is not set
