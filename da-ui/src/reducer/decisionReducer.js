@@ -10,6 +10,12 @@ const decisionReducer = (state = initialState.decisions, action) => {
         : action.decisions
           .reduce((newState, decision) => ({...newState, [decision.id]: decision}), {});
 
+    case actionType.GET_DECISION:
+      return {
+        ...state.decisions,
+        [action.decision.id]: action.decision
+      }
+
     case actionType.ADD_DECISION:
       return {...state, [action.decision.id]: action.decision}
 

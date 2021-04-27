@@ -30,6 +30,7 @@ const DecisionTable = props =>
     }
     <FooterRow
       criteria={props.decision.criteria}
+      warning={props.decision.aidSummary && props.decision.aidSummary.reason || ""}
       onAddAlternative={props.onAddAlternative}
       onDeleteCriteria={props.onDeleteCriteria}
       onAid={props.onAid}

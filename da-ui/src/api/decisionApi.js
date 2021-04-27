@@ -1,8 +1,8 @@
 import { handleError, handleResponse } from "./apiUtils";
 
 const baseUrl = "http://localhost:7049/decision/v1";
-const getDecisionsUrl = baseUrl + "/decisions/{decisionId}";
-const listDecisionsUrl = baseUrl + "/decisions";
+const getDecisionsUrl = baseUrl + "/decisions/{decisionId}?aid=true";
+const listDecisionsUrl = baseUrl + "/decisions?aid=true";
 const createDecisionUrl = baseUrl + "/decisions";
 const patchDecisionUrl = baseUrl + "/decisions/{decisionId}";
 const deleteDecisionUrl = baseUrl + "/decisions/{decisionId}";

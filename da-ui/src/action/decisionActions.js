@@ -12,6 +12,18 @@ export const loadDecisions = () => dispatch =>
       throw error
     });
 
+export const getDecision = decisionId => dispatch => {
+  return decisionApi
+    .getDecision(decisionId)
+    .then(decision => dispatch({
+      type: actionType.GET_DECISION,
+      decision
+    }))
+    .catch(error => {
+      throw error
+    });
+}
+
 export const addDecision = decision => dispatch =>
   decisionApi.createDecision(decision)
     .then(addedDecision => dispatch({

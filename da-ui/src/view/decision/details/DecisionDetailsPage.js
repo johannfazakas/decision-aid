@@ -10,12 +10,10 @@ import { deleteCriteria } from "../../../action/criteriaActions"
 import { deleteAlternative } from "../../../action/alternativeActions"
 
 import DecisionTable from "./table/DecisionTable"
-import Warnings from "./table/Warnings"
 
 const DecisionDetailsPage = props => {
 
   const [decision, setDecision] = useState(props.decision)
-  const [warning, setWarning] = useState("")
 
   useEffect(() => {
     if (props.decisions.length === 0) {
@@ -24,8 +22,6 @@ const DecisionDetailsPage = props => {
     } else {
       setDecision(props.decision)
     }
-
-    setWarning("")
   }, [props.decision])
 
 
@@ -35,67 +31,22 @@ const DecisionDetailsPage = props => {
       .catch(error => alert("Delete decision failed. " + error))
   }
 
-  const handleAddCriteria = () => {
-    if (props.decision.status === "processed") {
-      setWarning("Reset if you want to add new criteria.")
-    } else {
-      props.history.push("/decision/" + decision.id + "/criteria")
-    }
-  }
+  const handleAddCriteria = () => props.history.push("/decision/" + decision.id + "/criteria")
 
-  const handleAddAlternative = () => {
-    if (props.decision.status === "processed") {
-      setWarning("Reset if you want to add new alternatives.")
-    } else {
-      props.history.push("/decision/" + decision.id + "/alternative")
-    }
-  }
+  const handleAddAlternative = () => props.history.push("/decision/" + decision.id + "/alternative")
 
-  const handleUpdateAlternative = alternativeId => {
-    debugger;
-    if (props.decision.status === "processed") {
-      setWarning("Reset if you want to update alternatives")
-    } else {
-      props.history.push("/decision/" + decision.id + "/alternative/" + alternativeId)
-    }
-  }
+  const handleUpdateAlternative = alternativeId =>
+    props.history.push("/decision/" + decision.id + "/alternative/" + alternativeId)
 
-  const handleUpdateCriteria = criteriaId => {
-    if (props.decision.status === "processed") {
-      setWarning("Reset if you want to update criteria")
-    } else {
-      props.history.push("/decision/" + decision.id + "/criteria/" + criteriaId)
-    }
-  }
+  const handleUpdateCriteria = criteriaId => props.history.push("/decision/" + decision.id + "/criteria/" + criteriaId)
 
-  const handleDeleteCriteria = criteriaId => {
-    if (props.decision.status === "processed") {
-      setWarning("Reset if you want to delete criteria.")
-    } else {
-      props.deleteCriteria(props.decision.id, criteriaId)
-    }
-  }
+  const handleDeleteCriteria = criteriaId => props.deleteCriteria(props.decision.id, criteriaId)
 
-  const handleDeleteAlternative = alternativeId => {
-    if (props.decision.status === "processed") {
-      setWarning("Reset if you want to delete alternatives.")
-    } else {
-      props.deleteAlternative(props.decision.id, alternativeId)
-    }
-  }
+  const handleDeleteAlternative = alternativeId => props.deleteAlternative(props.decision.id, alternativeId)
 
   const handleAid = () => {
-    if (props.decision.criteria.length === 0)
-      setWarning("No criteria defined!")
-    else if (props.decision.alternatives.length === 0)
-      setWarning("No alternative defined!")
-    else if (props.decision.properties.length < props.decision.alternatives.length * props.decision.criteria.length)
-      setWarning("All the properties should be set!")
-    else if (props.decision.criteria.map(c => c.weight).reduce((sum, w) => sum + w, 0) !== 100)
-      setWarning("Criteria weight sum should be 100!")
-    else
-      props.aidDecision(decision.id)
-        .catch(error => alert("Aid decision failed. " + error))
+    props.aidDecision(decision.id)
+      .catch(error => alert("Aid decision failed. " + error))
   }
 
   const handleReset = () => {
@@ -121,7 +72,6 @@ const DecisionDetailsPage = props => {
         onAid={handleAid}
         onReset={handleReset}
       />
-      <Warnings warning={warning} />
     </div>
   )
 }

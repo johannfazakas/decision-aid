@@ -2,6 +2,7 @@ export const defaultDecision = {
   id: null,
   name: "",
   description: "",
+  aidSummary: {},
   criteria: [],
   alternatives: [],
   properties: [],

@@ -6,7 +6,7 @@ import AlternativeCell from "../cell/AlternativeCell";
 import DeleteAlternativeCell from "../cell/DeleteAlternativeCell";
 
 const AlternativeRow = props =>
-  <tr>
+  <tr className={props.alternative.rank === 1 ? "table-active" : ""}>
     <AlternativeCell
       alternative={props.alternative}
       onUpdateAlternative={() => props.onUpdateAlternative(props.alternative.id)}

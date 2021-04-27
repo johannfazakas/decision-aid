@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 import AddAlternativeCell from "../cell/AddAlternativeCell";
 import DeleteCriteriaCell from "../cell/DeleteCriteriaCell";
+import WarningCell from "../cell/WarningCell";
 
 const FooterRow = props =>
   <tr>
@@ -18,10 +19,12 @@ const FooterRow = props =>
           />
         )
     }
+    <WarningCell warning={props.warning} />
   </tr>
 
 FooterRow.propTypes = {
   criteria: PropTypes.array.isRequired,
+  warning: PropTypes.string.isRequired,
   onAddAlternative: PropTypes.func.isRequired,
   onDeleteCriteria: PropTypes.func.isRequired,
   onAid: PropTypes.func.isRequired,
