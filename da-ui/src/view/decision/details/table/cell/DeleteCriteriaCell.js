@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 const DeleteCriteriaCell = props =>
   <td className="text-center">
     <div
-      className={props.readOnly ? "btn btn-outline-danger" : "btn btn-danger"}
+      className="btn btn-outline-danger"
       onClick={props.onDeleteCriteria}
     >
       ↑ Delete criteria
@@ -12,7 +12,6 @@ const DeleteCriteriaCell = props =>
   </td>
 
 DeleteCriteriaCell.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
   onDeleteCriteria: PropTypes.func.isRequired
 }
 

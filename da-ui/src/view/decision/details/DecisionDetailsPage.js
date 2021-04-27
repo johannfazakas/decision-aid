@@ -112,7 +112,6 @@ const DecisionDetailsPage = props => {
       <div className="btn btn-danger m-1" onClick={handleDelete}>Delete</div>
       <DecisionTable
         decision={decision}
-        readOnly={decision.status === "processed"}
         onAddCriteria={handleAddCriteria}
         onAddAlternative={handleAddAlternative}
         onUpdateCriteria={handleUpdateCriteria}

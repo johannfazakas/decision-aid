@@ -14,19 +14,16 @@ const HeaderRow = props =>
           <CriteriaCell
             key={criteria.id}
             criteria={criteria}
-            readOnly={props.readOnly}
             onUpdateCriteria={() => props.onUpdateCriteria(criteria.id)}
           />
         )
     }
     <AddCriteriaCell
-      readOnly={props.readOnly}
       onSubmit={props.onAddCriteria}
     />
   </tr>
 
 HeaderRow.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
   criteria: PropTypes.array.isRequired,
   onAddCriteria: PropTypes.func.isRequired,
   onUpdateCriteria: PropTypes.func.isRequired

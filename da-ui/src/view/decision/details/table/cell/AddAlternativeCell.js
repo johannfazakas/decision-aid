@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 const AddAlternativeCell = props =>
   <td className="text-center">
     <div
-      className={props.readOnly ? "btn btn-outline-dark" : "btn btn-dark"}
+      className="btn btn-dark"
       onClick={props.onSubmit}
     >
       New alternative
@@ -12,7 +12,6 @@ const AddAlternativeCell = props =>
   </td>
 
 AddAlternativeCell.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
 }
 

@@ -8,7 +8,6 @@ import DeleteAlternativeCell from "../cell/DeleteAlternativeCell";
 const AlternativeRow = props =>
   <tr>
     <AlternativeCell
-      readOnly={props.readOnly}
       alternative={props.alternative}
       onUpdateAlternative={() => props.onUpdateAlternative(props.alternative.id)}
     />
@@ -28,14 +27,12 @@ const AlternativeRow = props =>
         )
     }
     <DeleteAlternativeCell
-      readOnly={props.readOnly}
       onDeleteAlternative={() => props.onDeleteAlternative(props.alternative.id)}
     />
   </tr>
 
 AlternativeRow.propTypes = {
   decision: PropTypes.object.isRequired,
-  readOnly: PropTypes.bool.isRequired,
   alternative: PropTypes.object.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired,
   onUpdateAlternative: PropTypes.func.isRequired

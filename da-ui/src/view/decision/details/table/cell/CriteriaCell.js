@@ -18,19 +18,11 @@ const CriteriaCell = props =>
       }
     </div>
     <div className="text-center">
-      {
-        props.readOnly ||
-        <Link to="#" onClick={props.onUpdateCriteria}><u>{props.criteria.name + " "}</u></Link>
-      }
-      {
-        props.readOnly &&
-        <span className="font-weight-bold text-primary">{props.criteria.name}</span>
-      }
+      <Link to="#" onClick={props.onUpdateCriteria}>{props.criteria.name + " "}</Link>
     </div>
   </th>
 
 CriteriaCell.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
   criteria: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

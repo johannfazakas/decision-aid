@@ -8,7 +8,6 @@ const DecisionList = (props) =>
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Status</th>
       <th>Created at</th>
     </tr>
     </thead>
@@ -19,9 +18,6 @@ const DecisionList = (props) =>
           <Link to={"/decision/" + decision.id + "/details"}>{decision.name}</Link>
         </th>
         <td>{decision.description}</td>
-        <td className={decision.status === "design" ? "text-warning" : "text-success"}>
-          {decision.status}
-        </td>
         <td>{decision.createdAt}</td>
         <td>
           <div className="btn btn-danger" onClick={() => props.deleteDecision(decision.id)}>Delete</div>

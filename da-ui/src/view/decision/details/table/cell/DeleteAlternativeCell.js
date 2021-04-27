@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 const DeleteAlternativeCell = props =>
   <td className="text-center">
     <div
-      className={props.readOnly ? "btn btn-outline-danger" : "btn btn-danger"}
+      className="btn btn-outline-danger"
       onClick={props.onDeleteAlternative}
     >
       ← Delete alternative
@@ -12,7 +12,6 @@ const DeleteAlternativeCell = props =>
   </td>
 
 DeleteAlternativeCell.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired
 }
 
