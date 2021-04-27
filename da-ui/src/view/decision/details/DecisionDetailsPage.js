@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux"
 import * as PropTypes from "prop-types"
 
 import { defaultDecision } from "../../../store/default"
-import { aidDecision, deleteDecision, loadDecisions, resetDecision } from "../../../action/decisionActions"
+import { deleteDecision, loadDecisions } from "../../../action/decisionActions"
 import { deleteCriteria } from "../../../action/criteriaActions"
 import { deleteAlternative } from "../../../action/alternativeActions"
 
@@ -44,16 +44,6 @@ const DecisionDetailsPage = props => {
 
   const handleDeleteAlternative = alternativeId => props.deleteAlternative(props.decision.id, alternativeId)
 
-  const handleAid = () => {
-    props.aidDecision(decision.id)
-      .catch(error => alert("Aid decision failed. " + error))
-  }
-
-  const handleReset = () => {
-    props.resetDecision(decision.id)
-      .catch(error => alert("Reset decision failed. " + error))
-  }
-
   return (
     <div className="jumbotron">
       {/* TODO extract components*/}
@@ -69,8 +59,6 @@ const DecisionDetailsPage = props => {
         onUpdateAlternative={handleUpdateAlternative}
         onDeleteCriteria={handleDeleteCriteria}
         onDeleteAlternative={handleDeleteAlternative}
-        onAid={handleAid}
-        onReset={handleReset}
       />
     </div>
   )
@@ -83,8 +71,6 @@ DecisionDetailsPage.propTypes = {
   deleteDecision: PropTypes.func.isRequired,
   deleteCriteria: PropTypes.func.isRequired,
   deleteAlternative: PropTypes.func.isRequired,
-  aidDecision: PropTypes.func.isRequired,
-  resetDecision: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 }
 
@@ -98,8 +84,6 @@ const mapDispatchToProps = dispatch => ({
   deleteDecision: bindActionCreators(deleteDecision, dispatch),
   deleteCriteria: bindActionCreators(deleteCriteria, dispatch),
   deleteAlternative: bindActionCreators(deleteAlternative, dispatch),
-  aidDecision: bindActionCreators(aidDecision, dispatch),
-  resetDecision: bindActionCreators(resetDecision, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DecisionDetailsPage)

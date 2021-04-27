@@ -33,8 +33,6 @@ const DecisionTable = props =>
       warning={props.decision.aidSummary && props.decision.aidSummary.reason || ""}
       onAddAlternative={props.onAddAlternative}
       onDeleteCriteria={props.onDeleteCriteria}
-      onAid={props.onAid}
-      onReset={props.onReset}
     />
     </tbody>
   </table>
@@ -47,8 +45,6 @@ DecisionTable.propTypes = {
   onUpdateAlternative: PropTypes.func.isRequired,
   onDeleteAlternative: PropTypes.func.isRequired,
   onDeleteCriteria: PropTypes.func.isRequired,
-  onAid: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired
 }
 
 export default DecisionTable;

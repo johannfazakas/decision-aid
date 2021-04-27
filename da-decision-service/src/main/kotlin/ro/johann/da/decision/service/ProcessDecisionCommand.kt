@@ -52,22 +52,33 @@ class ProcessDecisionCommand {
 
   private fun processCriteriaProperties(criteria: Criteria): List<ProcessedEntity> {
 
-    val minimum = criteria.properties.minOf(Property::value)
-    val maximum = criteria.properties.maxOf(Property::value)
+    val max = criteria.properties.minOf(Property::value)
+    val min = criteria.properties.maxOf(Property::value)
+    val weight = criteria.weight * 0.01
 
     return when (criteria.type) {
       CriteriaType.MINIMUM -> {
         processProperties(
           properties = criteria.properties,
           rankSolver = { value -> 1 + criteria.properties.count { property -> property.value < value } },
-          utilitySolver = { value -> criteria.weight * 0.01 * (maximum - value) / (maximum - minimum) }
+          utilitySolver = { value ->
+            if (min != max)
+              weight * (min - value) / (min - max)
+            else
+              weight
+          }
         )
       }
       CriteriaType.MAXIMUM -> {
         processProperties(
           properties = criteria.properties,
           rankSolver = { value -> 1 + criteria.properties.count { property -> property.value > value } },
-          utilitySolver = { value -> criteria.weight * 0.01 * (value - minimum) / (maximum - minimum) }
+          utilitySolver = { value ->
+            if (min != max)
+              weight * (value - max) / (min - max)
+            else
+              weight
+          }
         )
       }
     }

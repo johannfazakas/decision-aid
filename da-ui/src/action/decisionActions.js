@@ -12,8 +12,8 @@ export const loadDecisions = () => dispatch =>
       throw error
     });
 
-export const getDecision = decisionId => dispatch => {
-  return decisionApi
+export const getDecision = decisionId => dispatch =>
+  decisionApi
     .getDecision(decisionId)
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
@@ -21,8 +21,7 @@ export const getDecision = decisionId => dispatch => {
     }))
     .catch(error => {
       throw error
-    });
-}
+    })
 
 export const addDecision = decision => dispatch =>
   decisionApi.createDecision(decision)
@@ -54,25 +53,3 @@ export const deleteDecision = decisionId => dispatch =>
     .catch(error => {
       throw error
     });
-
-export const aidDecision = decisionId => dispatch =>
-  decisionApi
-    .aidDecision(decisionId)
-    .then(decision => dispatch({
-      type: actionType.AID_DECISION,
-      decision
-    }))
-    .catch(error => {
-      throw error
-    })
-
-export const resetDecision = decisionId => dispatch =>
-  decisionApi
-    .resetDecision(decisionId)
-    .then(decision => dispatch({
-      type: actionType.RESET_DECISION,
-      decision
-    }))
-    .catch(error => {
-      throw error
-    })

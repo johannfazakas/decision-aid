@@ -1,5 +1,6 @@
 import * as alternativeApi from "../api/alternativesApi";
 import * as propertyApi from "../api/propertyApi";
+import * as decisionApi from "../api/decisionApi";
 import actionType from "./actionType";
 
 export const addAlternative = (decisionId, alternative, properties) => dispatch =>
@@ -9,13 +10,12 @@ export const addAlternative = (decisionId, alternative, properties) => dispatch 
       Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
         ...property,
         alternativeId: addedAlternative.id
-      })))
-        .then(() => dispatch({
-          type: actionType.ADD_ALTERNATIVE,
-          decisionId,
-          alternative: addedAlternative,
-          properties
-        })))
+      }))))
+    .then(() => decisionApi.getDecision(decisionId))
+    .then(decision => dispatch({
+      type: actionType.GET_DECISION,
+      decision: decision
+    }))
     .catch(error => {
       throw error
     });
@@ -27,13 +27,12 @@ export const updateAlternative = (decisionId, alternative, properties) => dispat
       Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
         ...property,
         alternativeId: updatedAlternative.id
-      })))
-        .then(() => dispatch({
-          type: actionType.UPDATE_ALTERNATIVE,
-          decisionId,
-          alternative: updatedAlternative,
-          properties
-        })))
+      }))))
+    .then(() => decisionApi.getDecision(decisionId))
+    .then(decision => dispatch({
+      type: actionType.GET_DECISION,
+      decision: decision
+    }))
     .catch(error => {
       throw error
     })
@@ -41,10 +40,10 @@ export const updateAlternative = (decisionId, alternative, properties) => dispat
 export const deleteAlternative = (decisionId, alternativeId) => dispatch =>
   alternativeApi
     .deleteAlternative(decisionId, alternativeId)
-    .then(() => dispatch({
-      type: actionType.DELETE_ALTERNATIVE,
-      decisionId,
-      criteriaId: alternativeId
+    .then(() => decisionApi.getDecision(decisionId))
+    .then(decision => dispatch({
+      type: actionType.GET_DECISION,
+      decision: decision
     }))
     .catch(error => {
       throw error

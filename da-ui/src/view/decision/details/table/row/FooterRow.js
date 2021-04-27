@@ -27,8 +27,6 @@ FooterRow.propTypes = {
   warning: PropTypes.string.isRequired,
   onAddAlternative: PropTypes.func.isRequired,
   onDeleteCriteria: PropTypes.func.isRequired,
-  onAid: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired
 }
 
 export default FooterRow
