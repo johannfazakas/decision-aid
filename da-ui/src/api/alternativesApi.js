@@ -8,7 +8,8 @@ export const addAlternative = (decisionId, alternative) => {
   return fetch(getAlternativesUrl(decisionId), {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": "Let me in!"
     },
     body: JSON.stringify({...alternative})
   })
@@ -21,7 +22,8 @@ export const updateAlternative = (decisionId, alternative) => {
   return fetch(getAlternativeByIdUrl(decisionId, id), {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": "Let me in!"
     },
     body: JSON.stringify(body)
   })
@@ -31,7 +33,10 @@ export const updateAlternative = (decisionId, alternative) => {
 
 export const deleteAlternative = (decisionId, alternativeId) => {
   return fetch(getAlternativeByIdUrl(decisionId, alternativeId), {
-    method: "DELETE"
+    method: "DELETE",
+    headers: {
+      "Authorization": "Let me in!"
+    }
   })
     .then(handleResponse)
     .catch(handleError)

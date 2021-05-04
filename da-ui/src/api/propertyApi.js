@@ -7,7 +7,8 @@ export const setProperty = (decisionId, property) => {
   return fetch(getPropertyUrl(decisionId), {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": "Let me in!"
     },
     body: JSON.stringify({...property})
   })

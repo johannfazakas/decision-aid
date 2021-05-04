@@ -13,7 +13,10 @@ export const getDecision = decisionId => {
   const url = getDecisionsUrl
     .replace("{decisionId}", decisionId);
   return fetch(url, {
-    method: "GET"
+    method: "GET",
+    headers: {
+      "Authorization": "Let me in!"
+    }
   })
     .then(handleResponse)
     .catch(handleError);
@@ -21,7 +24,10 @@ export const getDecision = decisionId => {
 
 export const fetchDecisions = () => {
   return fetch(listDecisionsUrl, {
-    method: "GET"
+    method: "GET",
+    headers: {
+      "Authorization": "Let me in!"
+    }
   })
     .then(handleResponse)
     .catch(handleError);
@@ -31,7 +37,8 @@ export const createDecision = decision => {
   return fetch(createDecisionUrl, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": "Let me in!"
     },
     body: JSON.stringify({...decision})
   })
@@ -46,7 +53,8 @@ export const updateDecision = decision => {
   return fetch(url, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": "Let me in!"
     },
     body: JSON.stringify(body)
   })
@@ -58,7 +66,10 @@ export const deleteDecision = decisionId => {
   const url = deleteDecisionUrl
     .replace("{decisionId}", decisionId);
   return fetch(url, {
-    method: "DELETE"
+    method: "DELETE",
+    headers: {
+      "Authorization": "Let me in!"
+    }
   })
     .then(handleResponse)
     .catch(handleError);
@@ -68,7 +79,10 @@ export const aidDecision = decisionId => {
   const url = aidDecisionUrl
     .replace("{decisionId}", decisionId)
   return fetch(url, {
-    method: "PUT"
+    method: "PUT",
+    headers: {
+      "Authorization": "Let me in!"
+    }
   })
     .then(handleResponse)
     .catch(handleError)
@@ -78,7 +92,10 @@ export const resetDecision = decisionId => {
   const url = resetDecisionUrl
     .replace("{decisionId}", decisionId)
   return fetch(url, {
-    method: "PUT"
+    method: "PUT",
+    headers: {
+      "Authorization": "Let me in!"
+    }
   })
     .then(handleResponse)
     .catch(handleError)

@@ -8,7 +8,8 @@ export const addCriteria = (decisionId, criteria) => {
   return fetch(getCriteriaUrl(decisionId), {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": "Let me in!"
     },
     body: JSON.stringify({...criteria})
   })
@@ -21,7 +22,8 @@ export const updateCriteria = (decisionId, criteria) => {
   return fetch(getCriteriaByIdUrl(decisionId, id), {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": "Let me in!"
     },
     body: JSON.stringify({...body})
   })
@@ -31,7 +33,10 @@ export const updateCriteria = (decisionId, criteria) => {
 
 export const deleteCriteria = (decisionId, criteriaId) => {
   return fetch(getCriteriaByIdUrl(decisionId, criteriaId), {
-    method: "DELETE"
+    method: "DELETE",
+    headers: {
+      "Authorization": "Let me in!"
+    }
   })
     .then(handleResponse)
     .catch(handleError);
