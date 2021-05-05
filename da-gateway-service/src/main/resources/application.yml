@@ -6,7 +6,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:7085"
+            allowedOrigins: "http://localhost:7084"
             allowedHeaders: "*"
             allowedMethods:
               - GET

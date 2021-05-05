@@ -3,7 +3,7 @@
   "description": "Web App for Decision Aid application",
   "version": "0.1.0",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.dev.js --port 7085"
+    "start": "webpack-dev-server --config webpack.config.dev.js --port 7084"
   },
   "dependencies": {
     "bootstrap": "4.3.1",

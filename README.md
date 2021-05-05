@@ -16,8 +16,21 @@
 ### Decision Service
 
     Decisions domain API.
-    technologies: Spring, Kotlin, Gradle.
+    technologies: Spring, Kotlin, Gradle, Postgresql
     default port: 7032.
+
+#### Run
+
+```bash
+cd da-decision-service/
+./gradlew bootRun
+```
+
+### User Service
+
+    User domain API.
+    technologies: Spring, Java, Gradle, Postgresql
+    default port: 7087.
 
 #### Run
 
@@ -43,7 +56,7 @@ cd da-gateway-service
 
     Single page web app for Decision Aid application.
     technology: React, Node, Bootstrap.
-    default host: 7085.
+    default host: 7084.
 
 #### Run
 
