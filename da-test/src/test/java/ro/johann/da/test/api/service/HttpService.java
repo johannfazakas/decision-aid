@@ -12,6 +12,8 @@ public class HttpService {
 
   private static final String CONTENT_TYPE = "Content-Type";
   private static final String APPLICATION_JSON = "application/json";
+  private static final String AUTHORIZATION = "Authorization";
+  private static final String LET_ME_IN = "Let me in!";
 
   private final HttpClient httpClient;
 
@@ -24,7 +26,7 @@ public class HttpService {
   public Response get(String uri) {
     var httpRequest = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON)
+      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
       .GET()
       .build();
     return doRequest(httpRequest);
@@ -34,7 +36,7 @@ public class HttpService {
   public Response post(String uri, byte[] body) {
     var httpRequest = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON)
+      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
       .POST(HttpRequest.BodyPublishers.ofByteArray(body))
       .build();
     return doRequest(httpRequest);
@@ -44,7 +46,7 @@ public class HttpService {
   public Response put(String uri, byte[] body) {
     var httpRequest = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON)
+      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
       .PUT(HttpRequest.BodyPublishers.ofByteArray(body))
       .build();
     return doRequest(httpRequest);
@@ -54,7 +56,7 @@ public class HttpService {
   public Response patch(String uri, byte[] body) {
     var httpRequest = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .header(CONTENT_TYPE, APPLICATION_JSON)
+      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
       .method("PATCH", HttpRequest.BodyPublishers.ofByteArray(body))
       .build();
     return doRequest(httpRequest);
@@ -64,7 +66,7 @@ public class HttpService {
   public Response delete(String uri) {
     var httpRequest = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON)
+      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
       .DELETE()
       .build();
     return doRequest(httpRequest);
