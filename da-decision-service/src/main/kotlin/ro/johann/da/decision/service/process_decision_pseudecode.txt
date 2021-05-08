@@ -1,0 +1,58 @@
+pseudo code added as an example
+
+    FUNC PROCESS_DECISION(decision)
+      processed_properties_map = COMPUTE PROCESS_PROPERTIES(decision->criteria)
+      processed_alternatives = COMPUTE PROCESS_ALTERNATIVES(decision->alternatives, processed_properties)
+      return (processed_properties, processed_alternatives)
+    END FUNC
+
+    FUNC PROCESS_CRITERIA_PROPERTIES(criteria_list)
+      processed_properties = empty map
+      FOR criteria IN criteria_list
+        IF criteria->type is minimum
+          worst = MAX(criteria->properties)
+          best = MIN(criteria->properties)
+        ELSE IF criteria->type is maximum
+          worst = MIN(criteria->properties)
+          best = MAX(criteria->properties)
+        END IF
+        dif = ABS(worst - best)
+
+        FOR property in criteria->properties
+          rank = 1
+          FOR prop IN criteria->properties
+            IF ABS(prop - best) < ABS(property - best)
+              INCREMENT rank
+            END IF
+          END FOR
+          utility = criteria->weight * ABS(property - worst) / diff
+
+          processed_properties[property->id] = (rank, utility)
+        END FOR
+      END FOR
+      return processed_properties
+    END FUNC
+
+    FUNC PROCESS_ALTERNATIVES(alternatives, processed_properties)
+      alternatives_utility = empty map
+      FOR alternative IN alternatives
+        utility = 0
+        FOR property IN alternative->properties
+          utility = utility + processed_properties[property->id]->utility
+        END FOR
+        alternatives_utility[alternative->id] = utility
+      END FOR
+
+      processed_alternatives = empty map
+      FOR alternative IN alternatives
+        rank = 1
+        current_utility = alternatives_utility[alternative->id]
+        FOR utility IN alternatives_utility->values
+          IF utility > current_utility
+            INCREMENT rank
+          END IF
+        END FOR
+        processed_alternatives[alternative->id] = (rank, current_utility)
+      END FOR
+      return processed_alternatives
+    END FUNC
