@@ -24,4 +24,8 @@ public class Token {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User user;
+
+  public boolean isAlive() {
+    return expiresAt.isAfter(LocalDateTime.now());
+  }
 }

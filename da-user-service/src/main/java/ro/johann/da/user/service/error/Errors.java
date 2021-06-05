@@ -8,4 +8,8 @@ public class Errors {
   public static AuthenticationException wrongEmailOrPassword() {
     return new AuthenticationException("Wrong user or email.");
   }
+
+  public static AuthenticationException invalidToken() {
+    return new AuthenticationException("Invalid authentication token.");
+  }
 }
