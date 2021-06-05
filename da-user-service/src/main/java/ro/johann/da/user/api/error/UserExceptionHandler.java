@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ro.johann.da.user.api.transfer.ErrorOutput;
+import ro.johann.da.user.service.error.AuthenticationException;
 import ro.johann.da.user.service.error.ValidationException;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
+import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
 public class UserExceptionHandler extends ResponseEntityExceptionHandler {
@@ -26,6 +26,14 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
     return new ErrorOutput(exception.getMessage());
   }
 
+  @ResponseStatus(UNAUTHORIZED)
+  @ExceptionHandler(value = AuthenticationException.class)
+  @ResponseBody
+  public ErrorOutput handleAuthenticationException(AuthenticationException exception) {
+    log.warn("authentication error >> {}", exception.getMessage());
+    return new ErrorOutput(exception.getMessage());
+  }
+
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   @ExceptionHandler(value = Exception.class)
   @ResponseBody
@@ -33,5 +41,4 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
     log.warn("internal error >> {}", exception.getMessage());
     return new ErrorOutput(exception.getMessage());
   }
-
 }

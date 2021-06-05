@@ -4,12 +4,14 @@ import org.springframework.web.bind.annotation.*;
 import ro.johann.da.user.api.transfer.RegisterInput;
 import ro.johann.da.user.api.transfer.UserOutput;
 import ro.johann.da.user.service.DeleteUserCommand;
+import ro.johann.da.user.service.GenerateTokenCommand;
 import ro.johann.da.user.service.RegisterUserCommand;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/user/v1/users")
@@ -18,7 +20,11 @@ public class UserController {
   private final RegisterUserCommand registerUserCommand;
   private final DeleteUserCommand deleteUserCommand;
 
-  public UserController(RegisterUserCommand registerUserCommand, DeleteUserCommand deleteUserCommand) {
+  public UserController(
+    RegisterUserCommand registerUserCommand,
+    DeleteUserCommand deleteUserCommand,
+    GenerateTokenCommand generateTokenCommand
+  ) {
     this.registerUserCommand = registerUserCommand;
     this.deleteUserCommand = deleteUserCommand;
   }
@@ -33,14 +39,5 @@ public class UserController {
   @ResponseStatus(NO_CONTENT)
   public void deleteUser(@PathVariable("userId") UUID userId) {
     deleteUserCommand.execute(userId);
-  }
-
-  @GetMapping("/authenticate")
-  @ResponseStatus(OK)
-  public UserOutput authenticate(@RequestHeader("Authorization") String authorization) {
-    return UserOutput.builder()
-      .id(UUID.randomUUID())
-      .email("success")
-      .build();
   }
 }

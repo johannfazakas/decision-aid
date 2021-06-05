@@ -6,24 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "tokens")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Token {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
-  @Column(nullable = false, unique = true)
-  private String email;
-  @Column(name = "encrypted_password", nullable = false)
-  private String encryptedPassword;
-  @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+  @Column(name = "expires_at", nullable = false)
+  private LocalDateTime expiresAt;
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-  private List<Token> tokens = List.of();
+  private User user;
 }
