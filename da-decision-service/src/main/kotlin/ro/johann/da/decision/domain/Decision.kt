@@ -13,7 +13,7 @@ import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
-@Table(name = "decision")
+@Table(name = "decisions")
 data class Decision(
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

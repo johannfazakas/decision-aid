@@ -15,7 +15,7 @@ import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
-@Table(name = "alternative")
+@Table(name = "alternatives")
 data class Alternative(
 
   @Id

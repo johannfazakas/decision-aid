@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
     "pretty"
   },
   features = {
+    // users
+    "src/text/resources/features/user/register.feature",
     // decisions
     "src/test/resources/features/decision/create_decision.feature",
     "src/test/resources/features/decision/get_decision.feature",
@@ -27,7 +29,7 @@ import org.junit.runner.RunWith;
     "src/test/resources/features/decision/update_alternative.feature",
     "src/test/resources/features/decision/delete_alternative.feature",
     // properties
-    "src/test/resources/features/decision/set_property.feature"
+    "src/test/resources/features/decision/set_property.feature",
   }
 )
 public class DecisionAidApiTests {

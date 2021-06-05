@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "property")
+@Table(name = "properties")
 data class Property(
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

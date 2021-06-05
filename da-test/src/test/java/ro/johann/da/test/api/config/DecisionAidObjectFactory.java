@@ -8,6 +8,7 @@ import io.cucumber.guice.CucumberModules;
 import io.cucumber.guice.ScenarioScope;
 import ro.johann.da.test.api.common.Storage;
 import ro.johann.da.test.api.service.decision.DecisionService;
+import ro.johann.da.test.api.service.user.UserService;
 
 public class DecisionAidObjectFactory implements ObjectFactory {
 
@@ -30,6 +31,7 @@ public class DecisionAidObjectFactory implements ObjectFactory {
     // TODO find another solution for cleanup
     this.injector.getInstance(ScenarioScope.class).exitScope();
     this.injector.getInstance(DecisionService.class).cleanUp();
+    this.injector.getInstance(UserService.class).cleanUp();
     this.injector.getInstance(Storage.class).cleanUp();
   }
 

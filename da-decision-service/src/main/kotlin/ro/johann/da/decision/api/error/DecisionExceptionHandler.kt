@@ -28,7 +28,7 @@ class DecisionExceptionHandler : ResponseEntityExceptionHandler() {
   @ExceptionHandler(value = [NotFoundException::class])
   @ResponseBody
   fun handleNotFound(exception: NotFoundException): ErrorOutput {
-    log.warn(exception.message)
+    log.warn("not found >> ${exception.message}")
     return ErrorOutput(exception.message)
   }
 
@@ -36,7 +36,7 @@ class DecisionExceptionHandler : ResponseEntityExceptionHandler() {
   @ExceptionHandler(value = [ConflictException::class])
   @ResponseBody
   fun handleConflict(exception: ConflictException): ErrorOutput {
-    log.warn(exception.message)
+    log.warn("conflict >> ${exception.message}")
     return ErrorOutput(exception.message)
   }
 
@@ -44,7 +44,7 @@ class DecisionExceptionHandler : ResponseEntityExceptionHandler() {
   @ExceptionHandler(value = [RuntimeException::class])
   @ResponseBody
   fun handleInternalError(exception: RuntimeException): ErrorOutput {
-    log.error(exception.message)
+    log.error("internal error >> ${exception.message}")
     return ErrorOutput(Message.INTERNAL_ERROR)
   }
 }

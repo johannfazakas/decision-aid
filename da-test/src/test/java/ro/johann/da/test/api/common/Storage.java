@@ -3,6 +3,8 @@ package ro.johann.da.test.api.common;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import ro.johann.da.test.api.service.decision.transfer.*;
+import ro.johann.da.test.api.service.user.transfer.RegisterInput;
+import ro.johann.da.test.api.service.user.transfer.UserOutput;
 import ro.johann.da.test.api.steps.Errors;
 
 import java.util.List;
@@ -22,9 +24,12 @@ public class Storage {
   private AlternativeOutput alternative;
   private PropertyOutput property;
 
+  private UserOutput user;
+
   private DecisionInput.Builder decisionInputBuilder;
   private AlternativeInput.Builder alternativeInputBuilder;
   private CriteriaInput.Builder criteriaInputBuilder;
+  private RegisterInput.Builder registerInputBuilder;
 
   public void cleanUp() {
     this.responseStatusCode = 0;
@@ -33,6 +38,7 @@ public class Storage {
     this.criteria = null;
     this.alternative = null;
     this.property = null;
+    this.user = null;
   }
 
   public DecisionOutput getDecisionByName(String name) {
