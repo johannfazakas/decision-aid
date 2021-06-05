@@ -45,7 +45,7 @@ class DecisionController(
   @GetMapping
   @ResponseStatus(OK)
   fun listDecisions(
-    @RequestHeader("X-DA-UserId") userId: UUID,
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @RequestParam("aid") aid: Boolean = true
   ): ListOutput<DecisionOutput> =
     listDecisionsCommand.execute(userId)
@@ -62,10 +62,11 @@ class DecisionController(
   @GetMapping("/{decisionId}")
   @ResponseStatus(OK)
   fun getDecision(
-    @PathVariable("decisionId") id: UUID,
+    @RequestHeader(Headers.USER_ID) userId: UUID,
+    @PathVariable("decisionId") decisionId: UUID,
     @RequestParam("aid") aid: Boolean = false
   ): DecisionOutput =
-    getDecisionCommand.execute(id)
+    getDecisionCommand.execute(userId, decisionId)
       .let { decision ->
         if (aid) {
           val processingResult = processDecisionCommand.execute(decision)
@@ -78,7 +79,7 @@ class DecisionController(
   @PostMapping
   @ResponseStatus(CREATED)
   fun createDecision(
-    @RequestHeader("X-DA-UserId") userId: UUID,
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @Valid @RequestBody input: CreateDecisionInput
   ): DecisionOutput =
     createDecisionCommand.execute(userId, input)
@@ -87,32 +88,36 @@ class DecisionController(
   @PatchMapping("/{decisionId}")
   @ResponseStatus(OK)
   fun updateDecision(
-    @PathVariable("decisionId") id: UUID,
+    @RequestHeader(Headers.USER_ID) userId: UUID,
+    @PathVariable("decisionId") decisionId: UUID,
     @Valid @RequestBody input: UpdateDecisionInput
   ): DecisionOutput =
-    updateDecisionCommand.execute(id, input)
+    updateDecisionCommand.execute(userId, decisionId, input)
       .let(::DecisionOutput)
 
   @DeleteMapping("/{decisionId}")
   @ResponseStatus(NO_CONTENT)
   fun deleteDecision(
-    @PathVariable("decisionId") id: UUID
+    @RequestHeader(Headers.USER_ID) userId: UUID,
+    @PathVariable("decisionId") decisionId: UUID
   ): Unit =
-    deleteDecisionCommand.execute(id)
+    deleteDecisionCommand.execute(userId, decisionId)
 
   @PutMapping("/{decisionId}/aid")
   @ResponseStatus(OK)
   fun aidDecision(
-    @PathVariable("decisionId") id: UUID
+    @RequestHeader(Headers.USER_ID) userId: UUID,
+    @PathVariable("decisionId") decisionId: UUID
   ): DecisionOutput =
-    aidDecisionCommand.execute(id)
+    aidDecisionCommand.execute(userId, decisionId)
       .let(::DecisionOutput)
 
   @PutMapping("/{decisionId}/reset")
   @ResponseStatus(OK)
   fun resetDecision(
-    @PathVariable("decisionId") id: UUID
+    @RequestHeader(Headers.USER_ID) userId: UUID,
+    @PathVariable("decisionId") decisionId: UUID
   ): DecisionOutput =
-    resetDecisionCommand.execute(id)
+    resetDecisionCommand.execute(userId, decisionId)
       .let(::DecisionOutput)
 }

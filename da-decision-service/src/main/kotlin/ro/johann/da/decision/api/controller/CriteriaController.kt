@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
@@ -28,27 +29,30 @@ class CriteriaController(
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   fun addCriteria(
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @PathVariable("decisionId") decisionId: UUID,
     @Valid @RequestBody input: AddCriteriaInput
   ): CriteriaOutput =
-    addCriteriaCommand.execute(decisionId, input)
+    addCriteriaCommand.execute(userId, decisionId, input)
       .let(::CriteriaOutput)
 
   @PatchMapping("/{criteriaId}")
   @ResponseStatus(HttpStatus.OK)
   fun updateCriteria(
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @PathVariable("decisionId") decisionId: UUID,
     @PathVariable("criteriaId") criteriaId: UUID,
     @Valid @RequestBody input: UpdateCriteriaInput
   ): CriteriaOutput =
-    updateCriteriaCommand.execute(decisionId, criteriaId, input)
+    updateCriteriaCommand.execute(userId, decisionId, criteriaId, input)
       .let(::CriteriaOutput)
 
   @DeleteMapping("/{criteriaId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   fun deleteCriteria(
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @PathVariable("decisionId") decisionId: UUID,
     @PathVariable("criteriaId") criteriaId: UUID
   ): Unit =
-    deleteCriteriaCommand.execute(decisionId, criteriaId)
+    deleteCriteriaCommand.execute(userId, decisionId, criteriaId)
 }

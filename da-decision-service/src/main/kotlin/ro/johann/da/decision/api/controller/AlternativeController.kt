@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
@@ -30,27 +31,30 @@ class AlternativeController(
   @PostMapping
   @ResponseStatus(CREATED)
   fun addAlternative(
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @PathVariable("decisionId") decisionId: UUID,
     @Valid @RequestBody input: AddAlternativeInput
   ): AlternativeOutput =
-    addAlternativeCommand.execute(decisionId, input)
+    addAlternativeCommand.execute(userId, decisionId, input)
       .let(::AlternativeOutput)
 
   @PatchMapping("/{alternativeId}")
   @ResponseStatus(OK)
   fun updateAlternative(
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @PathVariable("decisionId") decisionId: UUID,
     @PathVariable("alternativeId") alternativeId: UUID,
     @Valid @RequestBody input: UpdateAlternativeInput
   ): AlternativeOutput =
-    updateAlternativeCommand.execute(decisionId, alternativeId, input)
+    updateAlternativeCommand.execute(userId, decisionId, alternativeId, input)
       .let(::AlternativeOutput)
 
   @DeleteMapping("/{alternativeId}")
   @ResponseStatus(NO_CONTENT)
   fun deleteAlternative(
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @PathVariable("decisionId") decisionId: UUID,
     @PathVariable("alternativeId") alternativeId: UUID,
   ): Unit =
-    deleteAlternativeCommand.execute(decisionId, alternativeId)
+    deleteAlternativeCommand.execute(userId, decisionId, alternativeId)
 }

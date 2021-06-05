@@ -23,11 +23,13 @@ class AddCriteriaCommand(
     val logger: Logger = LoggerFactory.getLogger(AddCriteriaCommand::class.java)
   }
 
-  fun execute(decisionId: UUID, input: AddCriteriaInput): Criteria {
-    logger.info("add criteria >> decisionId = $decisionId, input = $input")
+  fun execute(userId: UUID, decisionId: UUID, input: AddCriteriaInput): Criteria {
+    logger.info("add criteria >> userId = $userId, decisionId = $decisionId, input = $input")
 
     val decision = decisionRepository.findByIdOrNull(decisionId)
       ?: throw Errors.decisionNotFound(decisionId)
+    decision.takeIf { it.userId == userId }
+      ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     return decision
       .also(::validate)

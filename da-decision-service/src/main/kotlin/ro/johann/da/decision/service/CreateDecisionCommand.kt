@@ -24,6 +24,7 @@ class CreateDecisionCommand(
     val now = LocalDateTime.now()
     return decisionRepository.save(
       Decision(
+        userId = userId,
         name = input.name,
         description = input.description,
         status = DecisionStatus.DESIGN,

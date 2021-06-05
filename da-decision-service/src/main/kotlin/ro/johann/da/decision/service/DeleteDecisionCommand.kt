@@ -16,11 +16,12 @@ class DeleteDecisionCommand(
     val logger: Logger = LoggerFactory.getLogger(DeleteDecisionCommand::class.java)
   }
 
-  fun execute(id: UUID) {
-    logger.info("delete decision >> id = $id")
+  fun execute(userId: UUID, decisionId: UUID) {
+    logger.info("delete decision >> userId = $userId, decisionId = $decisionId")
 
-    decisionRepository.findByIdOrNull(id)
-      ?.also { decisionRepository.deleteById(id) }
-      ?: throw Errors.decisionNotFound(id)
+    decisionRepository.findByIdOrNull(decisionId)
+      ?.takeIf { it.userId == userId }
+      ?.also { decisionRepository.deleteById(decisionId) }
+      ?: throw Errors.decisionNotFound(decisionId)
   }
 }

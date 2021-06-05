@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus.OK
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
@@ -22,9 +23,10 @@ class PropertyController(
   @PutMapping
   @ResponseStatus(OK)
   fun setProperty(
+    @RequestHeader(Headers.USER_ID) userId: UUID,
     @PathVariable("decisionId") decisionId: UUID,
     @RequestBody @Valid input: SetPropertyInput
   ): PropertyOutput =
-    setPropertyCommand.execute(decisionId, input)
+    setPropertyCommand.execute(userId, decisionId, input)
       .let(::PropertyOutput)
 }

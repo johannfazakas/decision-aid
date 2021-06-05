@@ -23,11 +23,13 @@ class AddAlternativeCommand(
     val logger: Logger = LoggerFactory.getLogger(AddAlternativeCommand::class.java)
   }
 
-  fun execute(decisionId: UUID, input: AddAlternativeInput): Alternative {
-    logger.info("add alternative >> decisionId = $decisionId, input = $input")
+  fun execute(userId: UUID, decisionId: UUID, input: AddAlternativeInput): Alternative {
+    logger.info("add alternative >> userId = $userId, decisionId = $decisionId, input = $input")
 
     val decision = decisionRepository.findByIdOrNull(decisionId)
       ?: throw Errors.decisionNotFound(decisionId)
+    decision.takeIf { it.userId == userId }
+      ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     return decision
       .also { validate(it) }
@@ -43,6 +45,7 @@ class AddAlternativeCommand(
       .let { alternative -> alternativeRepository.save(alternative) }
   }
 
+  // TODO this is probably not needed anymore
   private fun validate(decision: Decision) {
     if (decision.status == DecisionStatus.PROCESSED) {
       throw Errors.invalidDecisionStatus(decision.id, decision.status)

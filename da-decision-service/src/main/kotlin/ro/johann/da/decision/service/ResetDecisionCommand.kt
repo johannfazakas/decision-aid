@@ -19,11 +19,13 @@ class ResetDecisionCommand(
     val logger: Logger = LoggerFactory.getLogger(ResetDecisionCommand::class.java)
   }
 
-  fun execute(id: UUID): Decision {
-    logger.info("reset decision >> decisionId = $id")
+  fun execute(userId: UUID, decisionId: UUID): Decision {
+    logger.info("reset decision >> userId = $userId, decisionId = $decisionId")
 
-    val decision = decisionRepository.findByIdOrNull(id)
-      ?: throw Errors.decisionNotFound(id)
+    val decision = decisionRepository.findByIdOrNull(decisionId)
+      ?: throw Errors.decisionNotFound(decisionId)
+    decision.takeIf { it.userId == userId }
+      ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     return decision
       .also {

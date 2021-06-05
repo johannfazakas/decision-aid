@@ -19,11 +19,13 @@ class UpdateDecisionCommand(
     val logger: Logger = LoggerFactory.getLogger(UpdateDecisionCommand::class.java)
   }
 
-  fun execute(decisionId: UUID, input: UpdateDecisionInput): Decision {
-    logger.info("update decision >> decisionId = $decisionId, input = $input")
+  fun execute(userId: UUID, decisionId: UUID, input: UpdateDecisionInput): Decision {
+    logger.info("update decision >> userId = $userId, decisionId = $decisionId, input = $input")
 
     val decision = decisionRepository.findByIdOrNull(decisionId)
       ?: throw Errors.decisionNotFound(decisionId)
+    decision.takeIf { it.userId == userId }
+      ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     return decision
       .apply {

@@ -18,6 +18,6 @@ class ListDecisionsCommand(
   fun execute(userId: UUID): Iterable<Decision> {
     logger.info("list decisions >> userId = $userId")
 
-    return decisionRepository.findAll().sortedBy { it.createdAt }
+    return decisionRepository.findByUserId(userId).sortedBy { it.createdAt }
   }
 }

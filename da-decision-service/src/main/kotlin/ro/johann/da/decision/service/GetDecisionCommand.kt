@@ -17,10 +17,11 @@ class GetDecisionCommand(
     val logger: Logger = LoggerFactory.getLogger(GetDecisionCommand::class.java)
   }
 
-  fun execute(id: UUID): Decision {
-    logger.info("get decision >> id = $id")
+  fun execute(userId: UUID, decisionId: UUID): Decision {
+    logger.info("get decision >> userId = $userId, decisionId = $decisionId")
 
-    return decisionRepository.findByIdOrNull(id)
-      ?: throw decisionNotFound(id)
+    return decisionRepository.findByIdOrNull(decisionId)
+      ?.takeIf { it.userId == userId }
+      ?: throw decisionNotFound(decisionId)
   }
 }

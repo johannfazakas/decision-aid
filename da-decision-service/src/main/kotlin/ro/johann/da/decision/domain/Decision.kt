@@ -19,6 +19,9 @@ data class Decision(
   @GeneratedValue(strategy = GenerationType.AUTO)
   var id: UUID = UUID.randomUUID(),
 
+  @Column(name = "user_id", nullable = false)
+  var userId: UUID,
+
   @Column(nullable = false)
   var name: String,
 
