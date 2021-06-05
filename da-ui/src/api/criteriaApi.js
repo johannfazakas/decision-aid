@@ -9,7 +9,7 @@ export const addCriteria = (decisionId, criteria) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     },
     body: JSON.stringify({...criteria})
   })
@@ -23,7 +23,7 @@ export const updateCriteria = (decisionId, criteria) => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     },
     body: JSON.stringify({...body})
   })
@@ -35,7 +35,7 @@ export const deleteCriteria = (decisionId, criteriaId) => {
   return fetch(getCriteriaByIdUrl(decisionId, criteriaId), {
     method: "DELETE",
     headers: {
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     }
   })
     .then(handleResponse)

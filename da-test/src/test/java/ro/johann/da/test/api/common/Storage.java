@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import ro.johann.da.test.api.service.decision.transfer.*;
 import ro.johann.da.test.api.service.user.transfer.RegisterInput;
+import ro.johann.da.test.api.service.user.transfer.TokenOutput;
 import ro.johann.da.test.api.service.user.transfer.UserOutput;
 import ro.johann.da.test.api.steps.Errors;
 
@@ -25,6 +26,8 @@ public class Storage {
   private PropertyOutput property;
 
   private UserOutput user;
+  // TODO remove hardcoded token
+  private TokenOutput token = TokenOutput.builder().token("11112222-3333-4444-5555-666677778888").build();
 
   private DecisionInput.Builder decisionInputBuilder;
   private AlternativeInput.Builder alternativeInputBuilder;

@@ -15,3 +15,5 @@ spring:
               - PATCH
               - DELETE
               - OPTIONS
+userApi:
+  validateTokenUrl: http://localhost:7087/user/v1/tokens/{token}

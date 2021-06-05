@@ -8,6 +8,7 @@ import ro.johann.da.decision.domain.Decision
 import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.DecisionRepository
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Service
 class CreateDecisionCommand(
@@ -17,8 +18,8 @@ class CreateDecisionCommand(
     val logger: Logger = LoggerFactory.getLogger(CreateDecisionCommand::class.java)
   }
 
-  fun execute(input: CreateDecisionInput): Decision {
-    logger.info("create decision >> input = $input")
+  fun execute(userId: UUID, input: CreateDecisionInput): Decision {
+    logger.info("create decision >> userId = $userId input = $input")
 
     val now = LocalDateTime.now()
     return decisionRepository.save(

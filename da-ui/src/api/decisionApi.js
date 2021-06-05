@@ -15,7 +15,7 @@ export const getDecision = decisionId => {
   return fetch(url, {
     method: "GET",
     headers: {
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     }
   })
     .then(handleResponse)
@@ -26,7 +26,7 @@ export const fetchDecisions = () => {
   return fetch(listDecisionsUrl, {
     method: "GET",
     headers: {
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     }
   })
     .then(handleResponse)
@@ -38,7 +38,7 @@ export const createDecision = decision => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     },
     body: JSON.stringify({...decision})
   })
@@ -54,7 +54,7 @@ export const updateDecision = decision => {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     },
     body: JSON.stringify(body)
   })
@@ -68,7 +68,7 @@ export const deleteDecision = decisionId => {
   return fetch(url, {
     method: "DELETE",
     headers: {
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     }
   })
     .then(handleResponse)
@@ -81,7 +81,7 @@ export const aidDecision = decisionId => {
   return fetch(url, {
     method: "PUT",
     headers: {
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     }
   })
     .then(handleResponse)
@@ -94,7 +94,7 @@ export const resetDecision = decisionId => {
   return fetch(url, {
     method: "PUT",
     headers: {
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     }
   })
     .then(handleResponse)

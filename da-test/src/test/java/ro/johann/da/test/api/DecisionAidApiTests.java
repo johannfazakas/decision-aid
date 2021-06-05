@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
   },
   features = {
     // users
-    "src/text/resources/features/user/register.feature",
+    "src/test/resources/features/user/register.feature",
     // decisions
     "src/test/resources/features/decision/create_decision.feature",
     "src/test/resources/features/decision/get_decision.feature",

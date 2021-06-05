@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ro.johann.da.decision.domain.Decision
 import ro.johann.da.decision.persistence.DecisionRepository
+import java.util.UUID
 
 @Service
 class ListDecisionsCommand(
@@ -14,8 +15,8 @@ class ListDecisionsCommand(
     val logger: Logger = LoggerFactory.getLogger(ListDecisionsCommand::class.java)
   }
 
-  fun execute(): Iterable<Decision> {
-    logger.info("list decisions")
+  fun execute(userId: UUID): Iterable<Decision> {
+    logger.info("list decisions >> userId = $userId")
 
     return decisionRepository.findAll().sortedBy { it.createdAt }
   }

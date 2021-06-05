@@ -10,16 +10,11 @@ import ro.johann.da.decision.gateway.filter.AuthenticationFilter;
 public class Router {
 
   @Bean
-  public AuthenticationFilter authenticationFilter() {
-    return new AuthenticationFilter();
-  }
-
-  @Bean
   public RouteLocator route(RouteLocatorBuilder builder, AuthenticationFilter authenticationFilter) {
     return builder.routes()
       .route(r -> r
         .path("/decision/v1/**")
-        .filters(f -> f.filter(new AuthenticationFilter()))
+        .filters(f -> f.filter(authenticationFilter))
         .uri("http://localhost:7032/"))
       .route(r -> r
         .path("/user/v1/**")

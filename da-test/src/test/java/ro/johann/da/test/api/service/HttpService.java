@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Map;
 
 public class HttpService {
 
@@ -23,58 +24,53 @@ public class HttpService {
   }
 
   @SneakyThrows
-  public Response get(String uri) {
-    var httpRequest = HttpRequest.newBuilder()
+  public Response get(String uri, Map<String, String> headers) {
+    var requestBuilder = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
-      .GET()
-      .build();
-    return doRequest(httpRequest);
+      .GET();
+    headers.forEach(requestBuilder::header);
+    return doRequest(requestBuilder, headers);
   }
 
   @SneakyThrows
-  public Response post(String uri, byte[] body) {
-    var httpRequest = HttpRequest.newBuilder()
+  public Response post(String uri, byte[] body, Map<String, String> headers) {
+    var requestBuilder = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
-      .POST(HttpRequest.BodyPublishers.ofByteArray(body))
-      .build();
-    return doRequest(httpRequest);
+      .POST(HttpRequest.BodyPublishers.ofByteArray(body));
+    headers.forEach(requestBuilder::header);
+    return doRequest(requestBuilder, headers);
   }
 
   @SneakyThrows
-  public Response put(String uri, byte[] body) {
-    var httpRequest = HttpRequest.newBuilder()
+  public Response put(String uri, byte[] body, Map<String, String> headers) {
+    var requestBuilder = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
-      .PUT(HttpRequest.BodyPublishers.ofByteArray(body))
-      .build();
-    return doRequest(httpRequest);
+      .PUT(HttpRequest.BodyPublishers.ofByteArray(body));
+    headers.forEach(requestBuilder::header);
+    return doRequest(requestBuilder, headers);
   }
 
   @SneakyThrows
-  public Response patch(String uri, byte[] body) {
-    var httpRequest = HttpRequest.newBuilder()
+  public Response patch(String uri, byte[] body, Map<String, String> headers) {
+    var requestBuilder = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
-      .method("PATCH", HttpRequest.BodyPublishers.ofByteArray(body))
-      .build();
-    return doRequest(httpRequest);
+      .method("PATCH", HttpRequest.BodyPublishers.ofByteArray(body));
+    headers.forEach(requestBuilder::header);
+    return doRequest(requestBuilder, headers);
   }
 
   @SneakyThrows
-  public Response delete(String uri) {
-    var httpRequest = HttpRequest.newBuilder()
+  public Response delete(String uri, Map<String, String> headers) {
+    var requestBuilder = HttpRequest.newBuilder()
       .uri(new URI(uri))
-      .headers(CONTENT_TYPE, APPLICATION_JSON, AUTHORIZATION, LET_ME_IN)
-      .DELETE()
-      .build();
-    return doRequest(httpRequest);
+      .DELETE();
+    return doRequest(requestBuilder, headers);
   }
 
   @SneakyThrows
-  private Response doRequest(HttpRequest httpRequest) {
-    var httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofByteArray());
+  private Response doRequest(HttpRequest.Builder requestBuilder, Map<String, String> headers) {
+    headers.forEach(requestBuilder::header);
+    var httpResponse = httpClient.send(requestBuilder.build(), HttpResponse.BodyHandlers.ofByteArray());
     if (isSuccessful(httpResponse) && httpResponse.body().length > 0) {
       return Response.withBody(httpResponse.statusCode(), httpResponse.body());
     } else {

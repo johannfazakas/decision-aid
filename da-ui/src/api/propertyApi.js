@@ -8,7 +8,7 @@ export const setProperty = (decisionId, property) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Let me in!"
+      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
     },
     body: JSON.stringify({...property})
   })

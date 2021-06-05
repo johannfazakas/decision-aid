@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -44,9 +45,10 @@ class DecisionController(
   @GetMapping
   @ResponseStatus(OK)
   fun listDecisions(
+    @RequestHeader("X-DA-UserId") userId: UUID,
     @RequestParam("aid") aid: Boolean = true
   ): ListOutput<DecisionOutput> =
-    listDecisionsCommand.execute()
+    listDecisionsCommand.execute(userId)
       .map { decision ->
         if (aid) {
           val processingResult = processDecisionCommand.execute(decision)
@@ -76,9 +78,10 @@ class DecisionController(
   @PostMapping
   @ResponseStatus(CREATED)
   fun createDecision(
+    @RequestHeader("X-DA-UserId") userId: UUID,
     @Valid @RequestBody input: CreateDecisionInput
   ): DecisionOutput =
-    createDecisionCommand.execute(input)
+    createDecisionCommand.execute(userId, input)
       .let(::DecisionOutput)
 
   @PatchMapping("/{decisionId}")
