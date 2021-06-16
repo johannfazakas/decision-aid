@@ -1,6 +1,7 @@
 export default {
   // users
   REGISTER_USER: "REGISTER_USER",
+  LOGIN_USER: "LOGIN_USER",
   // decisions
   LOAD_DECISIONS: "LOAD_DECISIONS",
   GET_DECISION: "GET_DECISION",

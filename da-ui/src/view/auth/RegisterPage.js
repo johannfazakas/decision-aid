@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import RegisterForm from "./RegisterForm";
-import { defaultRegisterUser } from "../../store/default";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { registerUser } from "../../action/userActions";
 import * as PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { bindActionCreators } from "redux";
+import { defaultRegisterUser } from "../../store/default";
+import { registerUser } from "../../action/userActions";
+
+import RegisterForm from "./RegisterForm";
 
 const RegisterPage = props => {
   const [user, setUser] = useState(defaultRegisterUser)

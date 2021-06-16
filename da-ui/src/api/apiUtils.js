@@ -7,7 +7,7 @@ export async function handleResponse(response) {
     }
   }
   // TODO refactor error handling
-  if (response.status === 400) {
+  if (response.status > 400 && response.status < 500) {
     const error = await response.text();
     throw new Error(error);
   }

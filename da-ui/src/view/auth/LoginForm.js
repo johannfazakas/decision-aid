@@ -1,8 +1,8 @@
 import React from "react";
 import * as PropTypes from "prop-types";
-import TextInput from "../common/TextInput";
+import TextInput from "../common/TextInput"
 
-const RegisterForm = props => (
+const LoginForm = props => (
   <form onSubmit={props.onSubmit}>
     <TextInput
       id="email"
@@ -21,24 +21,14 @@ const RegisterForm = props => (
       onChange={props.onChange}
       error={props.errors.password}
     />
-    <TextInput
-      id="confirmPassword"
-      name="confirmPassword"
-      label="Confirm Password"
-      value={props.user.confirmPassword}
-      type="password"
-      onChange={props.onChange}
-      error={props.errors.confirmPassword}
-    />
-    <input type="submit" value="Register" className="btn btn-warning" />
+    <input type="submit" value="Login" className="btn btn-warning" />
   </form>
 )
 
-RegisterForm.propTypes = {
+LoginForm.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string,
-    password: PropTypes.string,
-    confirmPassword: PropTypes.string
+    password: PropTypes.string
   }),
   errors: PropTypes.shape({
     email: PropTypes.string,
@@ -49,4 +39,4 @@ RegisterForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
-export default RegisterForm;
+export default LoginForm;

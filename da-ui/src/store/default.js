@@ -32,3 +32,8 @@ export const defaultRegisterUser = {
   password: "",
   confirmPassword: ""
 }
+
+export const defaultLoginUser = {
+  email: "",
+  password: ""
+}

@@ -10,3 +10,17 @@ export const registerUser = user => dispatch =>
     .catch(error => {
       throw error
     })
+
+export const loginUser = user => dispatch =>
+  userApi.loginUser(user)
+    .then(token => dispatch({
+      type: actionType.LOGIN_USER,
+      user: {
+        id: token.userId,
+        email: user.email,
+        token: token.token
+      }
+    }))
+    .catch(error => {
+      throw error
+    })
