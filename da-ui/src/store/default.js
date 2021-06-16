@@ -26,3 +26,9 @@ export const defaultProperty = {
   id: null,
   value: null
 }
+
+export const defaultRegisterUser = {
+  email: "",
+  password: "",
+  confirmPassword: ""
+}

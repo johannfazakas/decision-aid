@@ -13,7 +13,7 @@ const TextInput = props => {
       <div className="field">
         <input
           id={props.id}
-          type="text"
+          type={props.type}
           onChange={props.onChange}
           name={props.name}
           className="form-control"
@@ -31,11 +31,13 @@ TextInput.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   error: PropTypes.string,
+  type: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
 TextInput.defaultProps = {
-  error: ""
+  error: "",
+  type: "text"
 };
 
 export default TextInput;

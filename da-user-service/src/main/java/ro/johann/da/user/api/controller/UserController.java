@@ -22,8 +22,7 @@ public class UserController {
 
   public UserController(
     RegisterUserCommand registerUserCommand,
-    DeleteUserCommand deleteUserCommand,
-    GenerateTokenCommand generateTokenCommand
+    DeleteUserCommand deleteUserCommand
   ) {
     this.registerUserCommand = registerUserCommand;
     this.deleteUserCommand = deleteUserCommand;

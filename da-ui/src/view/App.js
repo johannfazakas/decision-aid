@@ -10,6 +10,9 @@ import DecisionListPage from "./decision/list/DecisionListPage";
 import DecisionPage from "./decision/manage/DecisionPage";
 import CriteriaPage from "./decision/criteria/CriteriaPage";
 import AlternativePage from "./decision/alternative/AlternativePage";
+import RegisterPage from "./auth/RegisterPage";
+import LogoutPage from "./auth/LogoutPage";
+import LoginPage from "./auth/LoginPage";
 
 const App = () => {
   return (
@@ -25,6 +28,9 @@ const App = () => {
         <Route path="/decisions" component={DecisionListPage} />
         <Route path="/decision/:decisionId" component={DecisionPage} />
         <Route path="/decision" component={DecisionPage} />
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/logout" component={LogoutPage} />
         <Route path="/about" component={AboutPage} />
         <Route component={NotFoundPage} />
       </Switch>
