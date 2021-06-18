@@ -56,14 +56,6 @@ public class DecisionSteps implements En {
     When("I delete the decision", () ->
       decisionService.deleteDecision(storage.getDecision().getId()));
 
-    When("I request aid for the decision", () ->
-      decisionService.aidDecision(storage.getDecision().getId())
-        .ifPresent(storage::setDecision));
-
-    Given("I reset the decision", () ->
-      decisionService.resetDecision(storage.getDecision().getId())
-        .ifPresent(storage::setDecision));
-
     Then("the decision name is {string}", (String name) ->
       assertEquals(name, storage.getDecision().getName()));
 
@@ -81,12 +73,6 @@ public class DecisionSteps implements En {
 
     Then("the decision has {int} properties", (Integer count) ->
       assertEquals((int) count, storage.getDecision().getProperties().size()));
-
-    Then("the decision status is {string}", (String status) ->
-      assertEquals(status, storage.getDecision().getStatus()));
-
-    Then("the decision aid status is {string}", (String aidResult) ->
-      assertEquals(aidResult, storage.getDecision().getAidSummary().getStatus()));
 
     Then("the decision aid failure reason is {string}", (String reason) ->
       assertEquals(reason, storage.getDecision().getAidSummary().getReason()));

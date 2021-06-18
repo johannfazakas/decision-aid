@@ -1,6 +1,8 @@
 Feature: Delete alternative
 
   Scenario: Delete alternative
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Phone"
     And I create the decision
@@ -22,6 +24,8 @@ Feature: Delete alternative
     And I peek at the alternative with name "iPhone 12"
 
   Scenario: Delete alternative should delete associated properties
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Espressor"
     And I create the decision

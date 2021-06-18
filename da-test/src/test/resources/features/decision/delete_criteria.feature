@@ -1,6 +1,8 @@
 Feature: Delete criteria
 
   Scenario: Delete criteria
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Washing machine"
     And I create the decision

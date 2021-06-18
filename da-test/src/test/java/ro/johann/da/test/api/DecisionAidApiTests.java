@@ -18,8 +18,6 @@ import org.junit.runner.RunWith;
     "src/test/resources/features/decision/list_decisions.feature",
     "src/test/resources/features/decision/update_decision.feature",
     "src/test/resources/features/decision/delete_decision.feature",
-    "src/test/resources/features/decision/aid_decision.feature",
-    "src/test/resources/features/decision/reset_decision.feature",
     // criteria
     "src/test/resources/features/decision/add_criteria.feature",
     "src/test/resources/features/decision/update_criteria.feature",

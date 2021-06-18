@@ -1,6 +1,8 @@
 Feature: Update decision
 
   Scenario: Update decision
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Keyboard"
     And I set the decision description to "I want it to be clicky"
@@ -26,6 +28,8 @@ Feature: Update decision
     And the decision description is "description updated"
 
   Scenario: Update decision with invalid name
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Mouse"
     And I create the decision
@@ -35,6 +39,8 @@ Feature: Update decision
     Then the response is 400
 
   Scenario: Update decision when decision not found
+    Given I use a valid user
+
     Given I use a nonexistent decision
     Given I plan to update the decision
     And I set the decision name to "TV"

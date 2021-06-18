@@ -1,6 +1,8 @@
 Feature: Update criteria
 
   Scenario: Update criteria
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Hood"
     And I create the decision
@@ -40,6 +42,8 @@ Feature: Update criteria
     And the criteria type is "maximum"
 
   Scenario: Update criteria with invalid weight
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "TV"
     And I create the decision
@@ -60,6 +64,8 @@ Feature: Update criteria
     Then the response is 400
 
   Scenario: Update criteria with invalid type
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "TV"
     And I create the decision
@@ -76,6 +82,8 @@ Feature: Update criteria
     Then the response is 400
 
   Scenario: Update criteria when decision not found
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "TV"
     And I create the decision
@@ -94,6 +102,8 @@ Feature: Update criteria
     Then the response is 404
 
   Scenario: Update criteria when criteria not found
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "TV"
     And I create the decision

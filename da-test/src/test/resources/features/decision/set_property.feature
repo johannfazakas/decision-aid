@@ -1,6 +1,7 @@
 Feature: Set property
 
   Scenario: Set property
+    Given I use a valid user
     # create decision
     Given I plan to create a decision
     And I set the decision name to "Espressor"

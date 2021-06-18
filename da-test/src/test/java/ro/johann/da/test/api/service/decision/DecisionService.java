@@ -49,16 +49,6 @@ public class DecisionService extends BaseService {
     delete(url);
   }
 
-  public Optional<DecisionOutput> aidDecision(String decisionId) {
-    var url = getUrl("decisionApi.aidDecisionUrl", Map.of("decisionId", decisionId));
-    return put(url, new byte[0]).map(output -> mapper.deserialize(output, DecisionOutput.class));
-  }
-
-  public Optional<DecisionOutput> resetDecision(String decisionId) {
-    var url = getUrl("decisionApi.resetDecisionUrl", Map.of("decisionId", decisionId));
-    return put(url, new byte[0]).map(output -> mapper.deserialize(output, DecisionOutput.class));
-  }
-
   // TODO extract cleanup logic
   public void cleanUp() {
     listDecisions()

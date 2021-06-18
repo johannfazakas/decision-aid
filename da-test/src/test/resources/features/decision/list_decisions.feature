@@ -1,6 +1,7 @@
 Feature: List decisions
 
   Scenario: List decisions
+    Given I use a valid user
     # create 2 decisions
     Given I plan to create a decision
     And I set the decision name to "Washing machine"
@@ -35,7 +36,6 @@ Feature: List decisions
 
     # check the 1st decision
     Given I peek at the decision with name "Washing machine"
-    Then the decision status is "design"
 
     Then the decision has 2 criteria
     Given I peek at the criteria with name "price"
@@ -49,9 +49,9 @@ Feature: List decisions
     # check the 2nd decision
     Given I peek at the decision with name "Dryer"
     Then the decision description is "for clothes"
-    And the decision status is "design"
 
   Scenario: List decisions when empty
+    Given I use a valid user
     When I list the decisions
     Then the response is 200
     And the decisions count is 0

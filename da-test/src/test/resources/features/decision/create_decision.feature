@@ -1,6 +1,8 @@
 Feature: Create decision
 
   Scenario: Create decision
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Fridge"
     And I set the decision description to "I want my meat to be cold"
@@ -11,9 +13,10 @@ Feature: Create decision
     Then the response is 200
     And the decision name is "Fridge"
     And the decision description is "I want my meat to be cold"
-    And the decision status is "design"
 
   Scenario: Create decision with invalid name
+    Given I use a valid user
+
     Given I plan to create a decision
     When I create the decision
     Then the response is 400

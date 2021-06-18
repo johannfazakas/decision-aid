@@ -1,6 +1,8 @@
 Feature: Add criteria
 
   Scenario: Add criteria to decision
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Phone"
     And I create the decision
@@ -24,6 +26,8 @@ Feature: Add criteria
     Then the criteria weight is 100
 
   Scenario: Add criteria with invalid name
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Keyboard"
     And I create the decision
@@ -42,6 +46,8 @@ Feature: Add criteria
     Then the response is 400
 
   Scenario: Add criteria with invalid price
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Mouse"
     And I create the decision
@@ -61,6 +67,8 @@ Feature: Add criteria
     Then the response is 400
 
   Scenario: Add criteria without type
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Headphones"
     And I create the decision
@@ -73,6 +81,8 @@ Feature: Add criteria
     Then the response is 400
 
   Scenario: Add criteria with invalid type
+    Given I use a valid user
+
     Given I plan to create a decision
     And I set the decision name to "Mouse pad"
     And I create the decision
@@ -85,6 +95,8 @@ Feature: Add criteria
     Then the response is 400
 
   Scenario: Add criteria on not found decision
+    Given I use a valid user
+
     Given I use a nonexistent decision
 
     Given I plan to add a criteria
@@ -93,36 +105,3 @@ Feature: Add criteria
     And I set the criteria type to "minimum"
     When I add the criteria
     Then the response is 404
-
-  Scenario: Add criteria when decision was processed
-        # create decision
-    Given I plan to create a decision
-    And I set the decision name to "Light bulb"
-    And I create the decision
-
-    # add criteria
-    Given I plan to add a criteria
-    And I set the criteria name to "Price"
-    And I set the criteria weight to 100
-    And I set the criteria type to "minimum"
-    And I add the criteria
-
-    # add alternatives
-    Given I plan to add an alternative
-    And I set the alternative name to "LED 6W"
-    And I add the alternative
-
-    # set the property
-    Given I set the property value to 10 on the alternative "LED 6W" for the criteria "Price"
-
-    # request aid
-    Given I request aid for the decision
-
-    # add another alternative
-    Given I plan to add a criteria
-    And I set the criteria name to "Power"
-    And I set the criteria weight to 20
-    And I set the criteria type to "maximum"
-    And I set the criteria unit of measure to "W"
-    When I add the criteria
-    Then the response is 409

@@ -5,7 +5,9 @@ import ro.johann.da.test.api.common.Storage;
 import ro.johann.da.test.api.service.BaseService;
 import ro.johann.da.test.api.service.HttpService;
 import ro.johann.da.test.api.service.Mapper;
+import ro.johann.da.test.api.service.user.transfer.LoginInput;
 import ro.johann.da.test.api.service.user.transfer.RegisterInput;
+import ro.johann.da.test.api.service.user.transfer.TokenOutput;
 import ro.johann.da.test.api.service.user.transfer.UserOutput;
 
 import java.util.Map;
@@ -24,6 +26,16 @@ public class UserService extends BaseService {
   public Optional<UserOutput> registerUser(RegisterInput input) {
     var url = getUrl("userApi.usersUrl", emptyMap());
     return post(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, UserOutput.class));
+  }
+
+  public Optional<TokenOutput> loginUser(LoginInput input) {
+    var url = getUrl("userApi.loginUrl", emptyMap());
+    return post(url, mapper.serialize(input)).map(output -> mapper.deserialize(output, TokenOutput.class));
+  }
+
+  public void logoutUser(String token) {
+    var url = getUrl("userApi.logoutUrl", Map.of("token", token));
+    deleteUser(url);
   }
 
   public void deleteUser(String userId) {
