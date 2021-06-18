@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,13 +18,11 @@ import ro.johann.da.decision.api.transfer.CreateDecisionInput
 import ro.johann.da.decision.api.transfer.DecisionOutput
 import ro.johann.da.decision.api.transfer.ListOutput
 import ro.johann.da.decision.api.transfer.UpdateDecisionInput
-import ro.johann.da.decision.service.AidDecisionCommand
 import ro.johann.da.decision.service.CreateDecisionCommand
 import ro.johann.da.decision.service.DeleteDecisionCommand
 import ro.johann.da.decision.service.GetDecisionCommand
 import ro.johann.da.decision.service.ListDecisionsCommand
 import ro.johann.da.decision.service.ProcessDecisionCommand
-import ro.johann.da.decision.service.ResetDecisionCommand
 import ro.johann.da.decision.service.UpdateDecisionCommand
 import java.util.UUID
 import javax.validation.Valid
@@ -38,8 +35,6 @@ class DecisionController(
   private val createDecisionCommand: CreateDecisionCommand,
   private val updateDecisionCommand: UpdateDecisionCommand,
   private val deleteDecisionCommand: DeleteDecisionCommand,
-  private val aidDecisionCommand: AidDecisionCommand,
-  private val resetDecisionCommand: ResetDecisionCommand,
   private val processDecisionCommand: ProcessDecisionCommand,
 ) {
   @GetMapping
@@ -102,22 +97,4 @@ class DecisionController(
     @PathVariable("decisionId") decisionId: UUID
   ): Unit =
     deleteDecisionCommand.execute(userId, decisionId)
-
-  @PutMapping("/{decisionId}/aid")
-  @ResponseStatus(OK)
-  fun aidDecision(
-    @RequestHeader(Headers.USER_ID) userId: UUID,
-    @PathVariable("decisionId") decisionId: UUID
-  ): DecisionOutput =
-    aidDecisionCommand.execute(userId, decisionId)
-      .let(::DecisionOutput)
-
-  @PutMapping("/{decisionId}/reset")
-  @ResponseStatus(OK)
-  fun resetDecision(
-    @RequestHeader(Headers.USER_ID) userId: UUID,
-    @PathVariable("decisionId") decisionId: UUID
-  ): DecisionOutput =
-    resetDecisionCommand.execute(userId, decisionId)
-      .let(::DecisionOutput)
 }

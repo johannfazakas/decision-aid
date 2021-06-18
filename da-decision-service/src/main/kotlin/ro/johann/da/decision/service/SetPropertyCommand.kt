@@ -6,7 +6,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ro.johann.da.decision.api.transfer.SetPropertyInput
 import ro.johann.da.decision.domain.Decision
-import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.domain.Property
 import ro.johann.da.decision.persistence.AlternativeRepository
 import ro.johann.da.decision.persistence.CriteriaRepository
@@ -36,7 +35,6 @@ class SetPropertyCommand(
       ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     val alternative = alternativeRepository.findByIdAndDecisionId(input.alternativeId, decisionId)
-      ?.also { validate(it.decision) }
       ?: throw Errors.alternativeNotFound(decisionId, input.alternativeId)
 
     val property = alternative.properties
@@ -58,11 +56,5 @@ class SetPropertyCommand(
         )
       }
     return propertyRepository.save(property)
-  }
-
-  private fun validate(decision: Decision) {
-    if (decision.status === DecisionStatus.PROCESSED) {
-      throw Errors.invalidDecisionStatus(decision.id, decision.status)
-    }
   }
 }

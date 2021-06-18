@@ -6,7 +6,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ro.johann.da.decision.api.transfer.UpdateCriteriaInput
 import ro.johann.da.decision.domain.Criteria
-import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.CriteriaRepository
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
@@ -34,7 +33,6 @@ class UpdateCriteriaCommand(
       ?: throw Errors.criteriaNotFound(decisionId, criteriaId)
 
     return criteria
-      .also(::validate)
       .apply {
         input.weight?.also { weight = it }
         input.name?.also { name = it }
@@ -43,11 +41,5 @@ class UpdateCriteriaCommand(
         updatedAt = LocalDateTime.now()
       }
       .also(criteriaRepository::save)
-  }
-
-  private fun validate(criteria: Criteria) {
-    if (criteria.decision.status === DecisionStatus.PROCESSED) {
-      throw Errors.invalidDecisionStatus(decisionId = criteria.decision.id, DecisionStatus.PROCESSED)
-    }
   }
 }

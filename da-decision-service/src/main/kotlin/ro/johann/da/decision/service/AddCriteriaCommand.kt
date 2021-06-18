@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service
 import ro.johann.da.decision.api.transfer.AddCriteriaInput
 import ro.johann.da.decision.domain.Criteria
 import ro.johann.da.decision.domain.Decision
-import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.CriteriaRepository
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
@@ -32,7 +31,6 @@ class AddCriteriaCommand(
       ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     return decision
-      .also(::validate)
       .let {
         val now = LocalDateTime.now()
         Criteria(
@@ -46,11 +44,5 @@ class AddCriteriaCommand(
         )
       }
       .let(criteriaRepository::save)
-  }
-
-  private fun validate(decision: Decision) {
-    if (decision.status == DecisionStatus.PROCESSED) {
-      throw Errors.invalidDecisionStatus(decision.id, decision.status)
-    }
   }
 }

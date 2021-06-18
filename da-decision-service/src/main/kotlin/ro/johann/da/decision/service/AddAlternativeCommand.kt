@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service
 import ro.johann.da.decision.api.transfer.AddAlternativeInput
 import ro.johann.da.decision.domain.Alternative
 import ro.johann.da.decision.domain.Decision
-import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.AlternativeRepository
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
@@ -32,7 +31,6 @@ class AddAlternativeCommand(
       ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     return decision
-      .also { validate(it) }
       .let {
         val now = LocalDateTime.now()
         Alternative(
@@ -43,12 +41,5 @@ class AddAlternativeCommand(
         )
       }
       .let { alternative -> alternativeRepository.save(alternative) }
-  }
-
-  // TODO this is probably not needed anymore
-  private fun validate(decision: Decision) {
-    if (decision.status == DecisionStatus.PROCESSED) {
-      throw Errors.invalidDecisionStatus(decision.id, decision.status)
-    }
   }
 }

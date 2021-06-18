@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ro.johann.da.decision.domain.Alternative
-import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.AlternativeRepository
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
@@ -29,14 +28,6 @@ class DeleteAlternativeCommand(
       ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     alternativeRepository.findByIdAndDecisionId(alternativeId, decisionId)
-      ?.also { validate(it) }
       ?.also { alternativeRepository.deleteById(alternativeId) }
-  }
-
-  // TODO check if still required
-  private fun validate(alternative: Alternative) {
-    if (alternative.decision.status == DecisionStatus.PROCESSED) {
-      throw Errors.invalidDecisionStatus(alternative.decision.id, DecisionStatus.PROCESSED)
-    }
   }
 }

@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ro.johann.da.decision.domain.Criteria
-import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.CriteriaRepository
 import ro.johann.da.decision.persistence.DecisionRepository
 import ro.johann.da.decision.service.error.Errors
@@ -29,13 +28,6 @@ class DeleteCriteriaCommand(
       ?: throw Errors.notAuthorizedOnDecision(decisionId)
 
     criteriaRepository.findByIdAndDecisionId(criteriaId, decisionId)
-      ?.also { validate(it) }
       ?.also { criteriaRepository.deleteById(criteriaId) }
-  }
-
-  private fun validate(criteria: Criteria) {
-    if (criteria.decision.status === DecisionStatus.PROCESSED) {
-      throw Errors.invalidDecisionStatus(criteria.decision.id, DecisionStatus.PROCESSED)
-    }
   }
 }

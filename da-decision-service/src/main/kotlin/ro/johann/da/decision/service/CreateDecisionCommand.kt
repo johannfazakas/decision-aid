@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ro.johann.da.decision.api.transfer.CreateDecisionInput
 import ro.johann.da.decision.domain.Decision
-import ro.johann.da.decision.domain.DecisionStatus
 import ro.johann.da.decision.persistence.DecisionRepository
 import java.time.LocalDateTime
 import java.util.UUID
@@ -27,7 +26,6 @@ class CreateDecisionCommand(
         userId = userId,
         name = input.name,
         description = input.description,
-        status = DecisionStatus.DESIGN,
         createdAt = now,
         updatedAt = now
       )

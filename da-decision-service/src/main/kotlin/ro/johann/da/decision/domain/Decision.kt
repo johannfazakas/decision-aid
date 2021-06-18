@@ -29,9 +29,6 @@ data class Decision(
   var description: String? = null,
 
   @Column
-  var status: DecisionStatus,
-
-  @Column
   var createdAt: LocalDateTime,
 
   @Column

@@ -10,7 +10,6 @@ data class DecisionOutput(
   val id: UUID?,
   val name: String?,
   val description: String?,
-  val status: String,
   val aidSummary: AidSummary? = null,
   val criteria: List<CriteriaOutput> = emptyList(),
   val alternatives: List<AlternativeOutput> = emptyList(),
@@ -27,7 +26,6 @@ data class DecisionOutput(
     id = decision.id,
     name = decision.name,
     description = decision.description,
-    status = decision.status.value,
     aidSummary = processingResult?.let(::AidSummary),
     criteria = decision.criteria.map(::CriteriaOutput),
     alternatives = decision.alternatives
