@@ -22,6 +22,9 @@ const decisionReducer = (state = initialState.decisions, action) => {
     case actionType.UPDATE_DECISION:
       return {...state, [action.decision.id]: action.decision}
 
+    case actionType.LOGOUT_USER:
+      return {};
+
     default:
       return state;
   }

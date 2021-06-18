@@ -1,15 +1,15 @@
-import { handleError, handleResponse } from "./apiUtils";
+import { handleError, handleResponse, generateAuthorizationHeader } from "./apiUtils";
 
 const baseUrl = "http://localhost:7049/decision/v1";
 const criteriaUrl = baseUrl + "/decisions/{decisionId}/criteria";
 const criteriaByIdUrl = baseUrl + "/decisions/{decisionId}/criteria/{criteriaId}";
 
-export const addCriteria = (decisionId, criteria) => {
+export const addCriteria = (decisionId, criteria, token) => {
   return fetch(getCriteriaUrl(decisionId), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
+      "Authorization": generateAuthorizationHeader(token)
     },
     body: JSON.stringify({...criteria})
   })
@@ -17,13 +17,13 @@ export const addCriteria = (decisionId, criteria) => {
     .catch(handleError);
 };
 
-export const updateCriteria = (decisionId, criteria) => {
+export const updateCriteria = (decisionId, criteria, token) => {
   const {id, ...body} = criteria;
   return fetch(getCriteriaByIdUrl(decisionId, id), {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
+      "Authorization": generateAuthorizationHeader(token)
     },
     body: JSON.stringify({...body})
   })
@@ -31,11 +31,11 @@ export const updateCriteria = (decisionId, criteria) => {
     .catch(handleError);
 }
 
-export const deleteCriteria = (decisionId, criteriaId) => {
+export const deleteCriteria = (decisionId, criteriaId, token) => {
   return fetch(getCriteriaByIdUrl(decisionId, criteriaId), {
     method: "DELETE",
     headers: {
-      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
+      "Authorization": generateAuthorizationHeader(token)
     }
   })
     .then(handleResponse)

@@ -3,15 +3,15 @@ import * as propertyApi from "../api/propertyApi";
 import * as decisionApi from "../api/decisionApi";
 import actionType from "./actionType";
 
-export const addAlternative = (decisionId, alternative, properties) => dispatch =>
+export const addAlternative = (decisionId, alternative, properties, token) => dispatch =>
   alternativeApi
-    .addAlternative(decisionId, alternative)
+    .addAlternative(decisionId, alternative, token)
     .then(addedAlternative =>
       Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
         ...property,
         alternativeId: addedAlternative.id
-      }))))
-    .then(() => decisionApi.getDecision(decisionId))
+      }, token))))
+    .then(() => decisionApi.getDecision(decisionId, token))
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
       decision: decision
@@ -20,15 +20,15 @@ export const addAlternative = (decisionId, alternative, properties) => dispatch 
       throw error
     });
 
-export const updateAlternative = (decisionId, alternative, properties) => dispatch =>
+export const updateAlternative = (decisionId, alternative, properties, token) => dispatch =>
   alternativeApi
-    .updateAlternative(decisionId, alternative)
+    .updateAlternative(decisionId, alternative, token)
     .then(updatedAlternative =>
       Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
         ...property,
         alternativeId: updatedAlternative.id
-      }))))
-    .then(() => decisionApi.getDecision(decisionId))
+      }, token))))
+    .then(() => decisionApi.getDecision(decisionId, token))
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
       decision: decision
@@ -37,10 +37,10 @@ export const updateAlternative = (decisionId, alternative, properties) => dispat
       throw error
     })
 
-export const deleteAlternative = (decisionId, alternativeId) => dispatch =>
+export const deleteAlternative = (decisionId, alternativeId, token) => dispatch =>
   alternativeApi
-    .deleteAlternative(decisionId, alternativeId)
-    .then(() => decisionApi.getDecision(decisionId))
+    .deleteAlternative(decisionId, alternativeId, token)
+    .then(() => decisionApi.getDecision(decisionId, token))
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
       decision: decision

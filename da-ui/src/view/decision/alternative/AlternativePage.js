@@ -21,7 +21,7 @@ const AlternativePage = props => {
       props.history.push("/")
     }
     if (props.decisions.length === 0) {
-      props.loadDecisions()
+      props.loadDecisions(props.user.token)
     } else {
       setAlternative({...props.alternative})
     }
@@ -40,8 +40,8 @@ const AlternativePage = props => {
     event.preventDefault()
     if (!validateForm()) return
     const savedAlternative = alternative.id
-      ? props.updateAlternative(props.decisionId, alternative, properties)
-      : props.addAlternative(props.decisionId, alternative, properties)
+      ? props.updateAlternative(props.decisionId, alternative, properties, props.user.token)
+      : props.addAlternative(props.decisionId, alternative, properties, props.user.token)
     savedAlternative.then(navigateBack)
   }
 

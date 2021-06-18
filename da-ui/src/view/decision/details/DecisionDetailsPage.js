@@ -20,7 +20,7 @@ const DecisionDetailsPage = props => {
       props.history.push("/")
     }
     if (props.decisions.length === 0) {
-      props.loadDecisions()
+      props.loadDecisions(props.user.token)
         .catch(error => alert("Loading decisions failed. " + error))
     } else {
       setDecision(props.decision)
@@ -29,7 +29,7 @@ const DecisionDetailsPage = props => {
 
 
   const handleDelete = () => {
-    props.deleteDecision(decision.id)
+    props.deleteDecision(decision.id, props.user.token)
       .then(() => props.history.push("/decisions"))
       .catch(error => alert("Delete decision failed. " + error))
   }
@@ -43,13 +43,12 @@ const DecisionDetailsPage = props => {
 
   const handleUpdateCriteria = criteriaId => props.history.push("/decision/" + decision.id + "/criteria/" + criteriaId)
 
-  const handleDeleteCriteria = criteriaId => props.deleteCriteria(props.decision.id, criteriaId)
+  const handleDeleteCriteria = criteriaId => props.deleteCriteria(props.decision.id, criteriaId, props.user.token)
 
-  const handleDeleteAlternative = alternativeId => props.deleteAlternative(props.decision.id, alternativeId)
+  const handleDeleteAlternative = alternativeId => props.deleteAlternative(props.decision.id, alternativeId, props.user.token)
 
   return (
     <div className="jumbotron">
-      {/* TODO extract components*/}
       <h1>{decision.name}</h1>
       <h5>{decision.description}</h5>
       <Link to={"/decision/" + decision.id} className="btn btn-dark m-1">Update</Link>

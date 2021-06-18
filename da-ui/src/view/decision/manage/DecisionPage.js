@@ -14,13 +14,16 @@ const DecisionPage = props => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    if (!props.user.token) {
+      props.history.push("/")
+    }
     if (props.decisions.length === 0) {
-      props.loadDecisions()
+      props.loadDecisions(props.user.token)
         .catch(error => alert("Loading decisions failed. " + error))
     } else {
       setDecision({...props.decision})
     }
-  }, [props.decision]);
+  }, [props.decision, props.user]);
 
   const navigateBack = () => decision.id
     ? props.history.push("/decision/" + decision.id + "/details")
@@ -42,8 +45,8 @@ const DecisionPage = props => {
     event.preventDefault()
     if (!validateForm()) return;
     const saveDecision = decision.id
-      ? props.updateDecision(decision)
-      : props.addDecision(decision)
+      ? props.updateDecision(decision, props.user.token)
+      : props.addDecision(decision, props.user.token)
     saveDecision.then(() => navigateBack())
   }
 
@@ -62,6 +65,7 @@ const DecisionPage = props => {
 };
 
 DecisionPage.propTypes = {
+  user: PropTypes.object.isRequired,
   decisions: PropTypes.array.isRequired,
   decision: PropTypes.object.isRequired,
   loadDecisions: PropTypes.func.isRequired,
@@ -73,6 +77,7 @@ DecisionPage.propTypes = {
 const mapStateToProps = (state, props) => {
   const decisionId = props.match.params.decisionId;
   return {
+    user: state.user,
     decisions: Object.values(state.decisions),
     decision: decisionId
       ? state.decisions[decisionId] || defaultDecision

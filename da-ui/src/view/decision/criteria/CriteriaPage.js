@@ -21,7 +21,7 @@ const CriteriaPage = props => {
       props.history.push("/")
     }
     if (props.decisions.length === 0) {
-      props.loadDecisions()
+      props.loadDecisions(props.user.token)
         .catch(error => alert("Loading decisions failed. " + error))
     } else {
       setCriteria({...props.criteria})
@@ -59,8 +59,8 @@ const CriteriaPage = props => {
     event.preventDefault()
     if (!validateForm()) return
     const saveCriteria = criteria.id
-      ? props.updateCriteria(props.decisionId, criteria, properties)
-      : props.addCriteria(props.decisionId, criteria, properties)
+      ? props.updateCriteria(props.decisionId, criteria, properties, props.user.token)
+      : props.addCriteria(props.decisionId, criteria, properties, props.user.token)
     saveCriteria.then(navigateBack)
   }
 

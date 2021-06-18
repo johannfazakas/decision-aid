@@ -15,18 +15,20 @@ const DecisionListPage = props => {
       props.history.push("/")
     }
     if (props.decisions.length === 0) {
-      props.loadDecisions()
+      props.loadDecisions(props.user.token)
         .catch(error => {
           alert("Loading courses failed." + error);
         });
     }
   }, [props.user]);
 
+  const handleDeleteDecision = decisionId => props.deleteDecision(decisionId, props.user.token)
+
   return (
     <div className="jumbotron">
       <h1>My decisions</h1>
       <Link to="/decision" className="btn btn-dark">New</Link>
-      <DecisionList decisions={props.decisions} deleteDecision={props.deleteDecision} />
+      <DecisionList decisions={props.decisions} deleteDecision={handleDeleteDecision} />
     </div>
   );
 };

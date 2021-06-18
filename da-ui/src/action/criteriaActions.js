@@ -3,15 +3,15 @@ import * as propertyApi from "../api/propertyApi";
 import * as decisionApi from "../api/decisionApi";
 import actionType from "./actionType";
 
-export const addCriteria = (decisionId, criteria, properties) => dispatch =>
+export const addCriteria = (decisionId, criteria, properties, token) => dispatch =>
   criteriaApi
-    .addCriteria(decisionId, criteria)
+    .addCriteria(decisionId, criteria, token)
     .then(addedCriteria =>
       Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
         ...property,
         criteriaId: addedCriteria.id
-      }))))
-    .then(() => decisionApi.getDecision(decisionId))
+      }, token))))
+    .then(() => decisionApi.getDecision(decisionId, token))
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
       decision: decision
@@ -20,15 +20,15 @@ export const addCriteria = (decisionId, criteria, properties) => dispatch =>
       throw error
     });
 
-export const updateCriteria = (decisionId, criteria, properties) => dispatch =>
+export const updateCriteria = (decisionId, criteria, properties, token) => dispatch =>
   criteriaApi
-    .updateCriteria(decisionId, criteria)
+    .updateCriteria(decisionId, criteria, token)
     .then(updatedCriteria =>
       Promise.all(properties.map(property => propertyApi.setProperty(decisionId, {
         ...property,
         criteriaId: updatedCriteria.id
-      }))))
-    .then(() => decisionApi.getDecision(decisionId))
+      }, token))))
+    .then(() => decisionApi.getDecision(decisionId, token))
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
       decision: decision
@@ -37,10 +37,10 @@ export const updateCriteria = (decisionId, criteria, properties) => dispatch =>
       throw error
     })
 
-export const deleteCriteria = (decisionId, criteriaId) => dispatch =>
+export const deleteCriteria = (decisionId, criteriaId, token) => dispatch =>
   criteriaApi
-    .deleteCriteria(decisionId, criteriaId)
-    .then(() => decisionApi.getDecision(decisionId))
+    .deleteCriteria(decisionId, criteriaId, token)
+    .then(() => decisionApi.getDecision(decisionId, token))
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
       decision: decision

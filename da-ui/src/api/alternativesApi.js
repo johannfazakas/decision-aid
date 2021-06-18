@@ -1,15 +1,15 @@
-import { handleError, handleResponse } from "./apiUtils";
+import { generateAuthorizationHeader, handleError, handleResponse } from "./apiUtils";
 
 const baseUrl = "http://localhost:7049/decision/v1";
 const alternativesUrl = baseUrl + "/decisions/{decisionId}/alternatives";
 const alternativeByIdUrl = baseUrl + "/decisions/{decisionId}/alternatives/{alternativeId}"
 
-export const addAlternative = (decisionId, alternative) => {
+export const addAlternative = (decisionId, alternative, token) => {
   return fetch(getAlternativesUrl(decisionId), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
+      "Authorization": generateAuthorizationHeader(token)
     },
     body: JSON.stringify({...alternative})
   })
@@ -17,13 +17,13 @@ export const addAlternative = (decisionId, alternative) => {
     .catch(handleError);
 };
 
-export const updateAlternative = (decisionId, alternative) => {
+export const updateAlternative = (decisionId, alternative, token) => {
   const {id, ...body} = alternative;
   return fetch(getAlternativeByIdUrl(decisionId, id), {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
+      "Authorization": generateAuthorizationHeader(token)
     },
     body: JSON.stringify(body)
   })
@@ -31,11 +31,11 @@ export const updateAlternative = (decisionId, alternative) => {
     .catch(handleError);
 };
 
-export const deleteAlternative = (decisionId, alternativeId) => {
+export const deleteAlternative = (decisionId, alternativeId, token) => {
   return fetch(getAlternativeByIdUrl(decisionId, alternativeId), {
     method: "DELETE",
     headers: {
-      "Authorization": "Bearer 11112222-3333-4444-5555-666677778888"
+      "Authorization": generateAuthorizationHeader(token)
     }
   })
     .then(handleResponse)

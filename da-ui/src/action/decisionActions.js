@@ -1,9 +1,9 @@
 import actionType from "./actionType";
 import * as decisionApi from "../api/decisionApi";
 
-export const loadDecisions = () => dispatch =>
+export const loadDecisions = token => dispatch =>
   decisionApi
-    .fetchDecisions()
+    .fetchDecisions(token)
     .then(decisions => dispatch({
       type: actionType.LOAD_DECISIONS,
       decisions: decisions.items
@@ -12,9 +12,9 @@ export const loadDecisions = () => dispatch =>
       throw error
     });
 
-export const getDecision = decisionId => dispatch =>
+export const getDecision = (decisionId, token) => dispatch =>
   decisionApi
-    .getDecision(decisionId)
+    .getDecision(decisionId, token)
     .then(decision => dispatch({
       type: actionType.GET_DECISION,
       decision
@@ -23,8 +23,8 @@ export const getDecision = decisionId => dispatch =>
       throw error
     })
 
-export const addDecision = decision => dispatch =>
-  decisionApi.createDecision(decision)
+export const addDecision = (decision, token) => dispatch =>
+  decisionApi.createDecision(decision, token)
     .then(addedDecision => dispatch({
       type: actionType.ADD_DECISION,
       decision: addedDecision
@@ -33,8 +33,8 @@ export const addDecision = decision => dispatch =>
       throw error
     })
 
-export const updateDecision = decision => dispatch =>
-  decisionApi.updateDecision(decision)
+export const updateDecision = (decision, token) => dispatch =>
+  decisionApi.updateDecision(decision, token)
     .then(updatedDecision => dispatch({
       type: actionType.UPDATE_DECISION,
       decision: updatedDecision
@@ -43,9 +43,9 @@ export const updateDecision = decision => dispatch =>
       throw error
     })
 
-export const deleteDecision = decisionId => dispatch =>
+export const deleteDecision = (decisionId, token) => dispatch =>
   decisionApi
-    .deleteDecision(decisionId)
+    .deleteDecision(decisionId, token)
     .then(() => dispatch({
       type: actionType.DELETE_DECISION,
       decisionId: decisionId
