@@ -17,12 +17,15 @@ const AlternativePage = props => {
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
+    if (!props.user.token) {
+      props.history.push("/")
+    }
     if (props.decisions.length === 0) {
       props.loadDecisions()
     } else {
       setAlternative({...props.alternative})
     }
-  }, [props.alternative])
+  }, [props.alternative, props.user])
 
   const navigateBack = () => props.history.push("/decision/" + props.decisionId + "/details")
 
@@ -73,6 +76,7 @@ const AlternativePage = props => {
 }
 
 AlternativePage.propTypes = {
+  user: PropTypes.object.isRequired,
   decisions: PropTypes.array.isRequired,
   decisionId: PropTypes.string.isRequired,
   alternative: PropTypes.object.isRequired,
@@ -86,6 +90,7 @@ AlternativePage.propTypes = {
 const mapStateToProps = (state, props) => {
   const {decisionId, alternativeId} = props.match.params
   return {
+    user: state.user,
     decisions: Object.values(state.decisions),
     decisionId,
     alternative: alternativeId

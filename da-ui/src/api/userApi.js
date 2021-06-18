@@ -2,7 +2,8 @@ import { handleError, handleResponse } from "./apiUtils";
 
 const baseUrl = "http://localhost:7049/user/v1";
 const registerUserUrl = baseUrl + "/users";
-const loginUserUrl = baseUrl + "/tokens"
+const generateTokenUrl = baseUrl + "/tokens";
+const deleteTokenUrl = baseUrl + "/tokens/{token}"
 
 export const registerUser = user => {
   return fetch(registerUserUrl, {
@@ -17,12 +18,21 @@ export const registerUser = user => {
 }
 
 export const loginUser = user => {
-  return fetch(loginUserUrl, {
+  return fetch(generateTokenUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({...user})
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+export const logoutUser = token => {
+  const url = deleteTokenUrl.replace("{token}", token)
+  return fetch(url, {
+    method: "DELETE"
   })
     .then(handleResponse)
     .catch(handleError);

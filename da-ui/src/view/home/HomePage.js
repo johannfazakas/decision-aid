@@ -4,7 +4,7 @@ const HomePage = () => {
   return (
     <div className="jumbotron">
       <h1>Decision Aid</h1>
-      <p>You have a hard decision in choosing a product? This will AID you.</p>
+      <p>Having a hard decision in choosing a product? This app will AID you.</p>
     </div>
   );
 };

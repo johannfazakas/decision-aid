@@ -16,13 +16,16 @@ const DecisionDetailsPage = props => {
   const [decision, setDecision] = useState(props.decision)
 
   useEffect(() => {
+    if (!props.user.token) {
+      props.history.push("/")
+    }
     if (props.decisions.length === 0) {
       props.loadDecisions()
         .catch(error => alert("Loading decisions failed. " + error))
     } else {
       setDecision(props.decision)
     }
-  }, [props.decision])
+  }, [props.decision, props.user])
 
 
   const handleDelete = () => {
@@ -65,6 +68,7 @@ const DecisionDetailsPage = props => {
 }
 
 DecisionDetailsPage.propTypes = {
+  user: PropTypes.object.isRequired,
   decisions: PropTypes.array.isRequired,
   decision: PropTypes.object.isRequired,
   loadDecisions: PropTypes.func.isRequired,
@@ -75,6 +79,7 @@ DecisionDetailsPage.propTypes = {
 }
 
 const mapStateToProps = (state, props) => ({
+  user: state.user,
   decisions: Object.values(state.decisions),
   decision: state.decisions[props.match.params.decisionId] || defaultDecision
 })

@@ -13,8 +13,11 @@ const RegisterPage = props => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    if (props.user.token) {
+      props.history.push("/")
+    }
     setUser(defaultRegisterUser)
-  }, []);
+  }, [props.user]);
 
   const handleChange = event => {
     const {name, value} = event.target
@@ -54,11 +57,14 @@ const RegisterPage = props => {
 }
 
 RegisterPage.propTypes = {
+  user: PropTypes.object.isRequired,
   registerUser: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({
+  user: state.user
+})
 
 const mapDispatchToProps = dispatch => ({
   registerUser: bindActionCreators(registerUser, dispatch)

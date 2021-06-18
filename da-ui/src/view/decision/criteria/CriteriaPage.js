@@ -17,13 +17,16 @@ const CriteriaPage = props => {
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
+    if (!props.user.token) {
+      props.history.push("/")
+    }
     if (props.decisions.length === 0) {
       props.loadDecisions()
         .catch(error => alert("Loading decisions failed. " + error))
     } else {
       setCriteria({...props.criteria})
     }
-  }, [props.criteria])
+  }, [props.criteria, props.user])
 
   const validateForm = () => {
     const _errors = {}
@@ -78,6 +81,7 @@ const CriteriaPage = props => {
 }
 
 CriteriaPage.propTypes = {
+  user: PropTypes.object.isRequired,
   decisions: PropTypes.array.isRequired,
   decisionId: PropTypes.string.isRequired,
   criteria: PropTypes.object.isRequired,
@@ -91,6 +95,7 @@ CriteriaPage.propTypes = {
 const mapStateToProps = (state, props) => {
   const {decisionId, criteriaId} = props.match.params
   return {
+    user: state.user,
     decisions: Object.values(state.decisions),
     decisionId,
     criteria: criteriaId

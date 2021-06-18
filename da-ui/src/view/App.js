@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 
 import Header from "./common/Header";
 import HomePage from "./home/HomePage";
-import AboutPage from "./about/AboutPage";
 import NotFoundPage from "./error/NotFoundPage";
 import DecisionDetailsPage from "./decision/details/DecisionDetailsPage";
 import DecisionListPage from "./decision/list/DecisionListPage";
@@ -31,7 +30,6 @@ const App = () => {
         <Route path="/register" component={RegisterPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/logout" component={LogoutPage} />
-        <Route path="/about" component={AboutPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

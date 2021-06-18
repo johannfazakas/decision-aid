@@ -13,8 +13,11 @@ const LoginPage = props => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    if (props.user.token) {
+      props.history.push("/")
+    }
     setUser(defaultLoginUser)
-  }, []);
+  }, [props.user]);
 
   const handleChange = event => {
     const {name, value} = event.target
@@ -52,11 +55,14 @@ const LoginPage = props => {
 }
 
 LoginPage.propTypes = {
+  user: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({
+  user: state.user
+})
 
 const mapDispatchToProps = dispatch => ({
   loginUser: bindActionCreators(loginUser, dispatch)

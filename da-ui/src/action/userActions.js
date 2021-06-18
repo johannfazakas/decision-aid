@@ -24,3 +24,12 @@ export const loginUser = user => dispatch =>
     .catch(error => {
       throw error
     })
+
+export const logoutUser = user => dispatch =>
+  userApi.logoutUser(user.token)
+    .then(() => dispatch({
+      type: actionType.LOGOUT_USER
+    }))
+    .catch(() => dispatch({
+      type: actionType.LOGOUT_USER
+    }));
