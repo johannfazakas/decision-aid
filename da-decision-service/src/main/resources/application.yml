@@ -6,11 +6,11 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   sql:
     init:
       platform: postgres
   datasource:
-    url: jdbc:postgresql://localhost:5432/da_decision
+    url: jdbc:postgresql://da-postgres:5432/da_decision
     username: postgres
-    password:
+    password: admin

@@ -15,10 +15,10 @@ public class Router {
       .route(r -> r
         .path("/decision/v1/**")
         .filters(f -> f.filter(authenticationFilter))
-        .uri("http://localhost:7032/"))
+        .uri("http://da-decision-service:7032/"))
       .route(r -> r
         .path("/user/v1/**")
-        .uri("http://localhost:7087"))
+        .uri("http://da-user-service:7087"))
       .build();
   }
 }
