@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  da-postgres:
+    container_name: da-postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./posgres.${APP_ENV}.env
+    volumes:
+      - ${DB_DATA}:/var/lib/postgresql/data
+    networks:
+      - da-network
+  da-decision-service:
+    container_name: da-decision-service
+    build:
+      context: ./da-decision-service/
+      dockerfile: ./da-decision-service.${APP_ENV}.dockerfile
+    ports:
+      - "7032:7032"
+    networks:
+      - da-network
+    depends_on:
+      - da-postgres
+networks:
+  da-network:
+    driver: bridge

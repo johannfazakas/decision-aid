@@ -11,6 +11,15 @@
 
     Other versions could work, these are mine.
 
+## Run with docker compose
+
+```bash
+export APP_ENV=dev
+export DB_DATA=path/to/postgres/db/data
+docker-compose build
+docker-compose up -d
+```
+
 ## Components
 
 ### Decision Service
