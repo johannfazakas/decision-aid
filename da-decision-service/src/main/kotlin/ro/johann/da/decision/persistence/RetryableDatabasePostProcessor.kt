@@ -22,6 +22,4 @@ class RetryableDatabasePostProcessor : BeanPostProcessor {
     }
     else -> super.postProcessBeforeInitialization(bean, beanName)
   }
-
-  override fun postProcessAfterInitialization(bean: Any, beanName: String): Any? = bean
 }

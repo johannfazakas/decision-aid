@@ -22,6 +22,26 @@ services:
       - da-network
     depends_on:
       - da-postgres
+  da-user-service:
+    container_name: da-user-service
+    build:
+      context: ./da-user-service/
+      dockerfile: ./da-user-service.${APP_ENV}.dockerfile
+    ports:
+      - "7087:7087"
+    networks:
+      - da-network
+    depends_on:
+      - da-postgres
+  da-gateway-service:
+    container_name: da-gateway-service
+    build:
+      context: ./da-gateway-service/
+      dockerfile: ./da-gateway-service.${APP_ENV}.dockerfile
+    ports:
+      - "7049:7049"
+    networks:
+      - da-network
 networks:
   da-network:
     driver: bridge
